@@ -350,6 +350,8 @@ export default {
 }
 
 .mainImage {
+    display: flex;
+    flex-wrap: wrap;
     min-width: 1243px;
 }
 

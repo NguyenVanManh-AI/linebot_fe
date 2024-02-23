@@ -90,7 +90,7 @@ body {
   --admin-color: #06C755;
   --blue-color: #007BFF;
   --brown-color: #8B4513;
-  --yellow-color: #ffe600;
+  --yellow-color: #c0b01d;
   /* --admin-color: #096a31; */
 }
 /* color default */

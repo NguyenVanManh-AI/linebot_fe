@@ -8,7 +8,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <form @submit.prevent="changePassword()">
-                                <h4>Form Reset Password</h4><br>
+                                <h4>Form Change Password</h4><br>
                                 <div class="input-form">
                                     <input required id="inputPassword" :type="isShow1 ? 'text' : 'password'"
                                         v-model="newPassword.current_password">

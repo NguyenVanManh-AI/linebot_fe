@@ -66,7 +66,7 @@
                     </div>
                     <div class="pr-1">
                         <div class="input-group ">
-                            <button content="Add Content" v-tippy data-toggle="modal" data-target="#addBroadcast" type="button"
+                            <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast" type="button"
                                 class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
