@@ -53,6 +53,7 @@ export default {
     margin: 6px 10px;
     background-color: white;
     padding: 10px;
+    margin-top: 16px;
 }
 
 .innerContent > div {

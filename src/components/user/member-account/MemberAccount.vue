@@ -118,22 +118,22 @@
                                 <td class="table-cell text-center">{{ formatDate(member.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(member.updated_at) }}</td>
                                 <td class="table-cell text-center">
+                                    <button data-toggle="modal" data-target="#updateMember" v-tippy="{ content: 'Update' }"
+                                        class="updateMember text-primary" @click="changeIsDelete(member)">
+                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
+                                    </button>
                                     <button data-toggle="modal" data-target="#deleteMember"
                                         v-tippy="{ content: member.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteMember" @click="changeIsDelete(member)">
+                                        class="deleteMember text-danger" @click="changeIsDelete(member)">
                                         <i
                                             :class="{ 'fa-solid': true, 'fa-trash': member.is_delete == 0, 'fa-trash-arrow-up': member.is_delete == 1 }"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#updateMember" v-tippy="{ content: 'Update' }"
-                                        class="updateMember" @click="changeIsDelete(member)">
-                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div id="divpaginate">
+                <div id="divpaginate" class="mt-2">
                     <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
                         :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
                         :container-class="'pagination'" :page-class="'page-item'">
@@ -193,6 +193,9 @@ export default {
                     else member.is_delete = 0;
                 }
             });
+        });
+        onEvent('eventRegetMembers', () => {
+            this.getMembers();
         });
     },
 
@@ -379,12 +382,12 @@ tr th {
 
 .deleteMember {
     transition: all 0.5s ease;
-    font-size: 16px;
+    font-size: 22px;
 }
 
 .updateMember {
     transition: all 0.5s ease;
-    font-size: 16px;
+    font-size: 22px;
 }
 
 .updateMember .fa-pen:hover {

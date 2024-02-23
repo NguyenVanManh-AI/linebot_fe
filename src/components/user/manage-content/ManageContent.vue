@@ -38,7 +38,8 @@
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Filter by content type" v-tippy class="form-control form-control-sm" v-model="content_type">
+                        <select content="Filter by content type" v-tippy class="form-control form-control-sm"
+                            v-model="content_type">
                             <option value="all">All Content</option>
                             <option value="text">Text</option>
                             <option value="sticker">Sticker</option>
@@ -49,7 +50,6 @@
                         <select content="Role" v-tippy class="form-control form-control-sm" v-model="role">
                             <option value="all">All</option>
                             <option value="manager">Manager</option>
-                            <option value="user">User</option>
                         </select>
                     </div>
                     <div class="col-3 pl-0">
@@ -63,23 +63,23 @@
                     </div>
                     <div class="pr-1">
                         <div class="input-group ">
-                            <button content="Add Content" v-tippy data-toggle="modal" data-target="#addMember"
-                                type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+                            <button content="Add Content" v-tippy data-toggle="modal" data-target="#addContent" type="button"
+                                class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
                     <div class="pr-0" v-if="selectedContents.length > 0">
                         <div class="input-group">
-                            <button @click="changeDeleteManyContent(1)" content="Delete Many Member" v-tippy
-                                data-toggle="modal" data-target="#deleteManyMember" type="button"
+                            <button @click="changeDeleteManyContent(1)" content="Delete Many Content" v-tippy
+                                data-toggle="modal" data-target="#deleteManyContent" type="button"
                                 class="btn btn-outline-danger mr-1"><i class="fa-solid fa-trash"></i></button>
-                            <button @click="changeDeleteManyContent(0)" content="Backup Many Member" v-tippy
-                                data-toggle="modal" data-target="#deleteManyMember" type="button"
+                            <button @click="changeDeleteManyContent(0)" content="Backup Many Content" v-tippy
+                                data-toggle="modal" data-target="#deleteManyContent" type="button"
                                 class="btn btn-outline-success"><i class="fa-solid fa-trash-arrow-up"></i></button>
                         </div>
                     </div>
                 </div>
                 <div v-if="isLoading">
-                    <TableLoading :cols="8" :rows="9"></TableLoading>
+                    <TableLoading :cols="6" :rows="9"></TableLoading>
                 </div>
                 <div v-if="!isLoading" class="tableData">
                     <table class="table table-bordered">
@@ -92,20 +92,27 @@
                                 <th scope="col"><i class="fa-solid fa-database"></i> Content Data</th>
                                 <th scope="col"><i class="fa-solid fa-user-pen"></i> Creator</th>
                                 <th scope="col"><i class="fa-solid fa-user-check"></i> Updater</th>
-                                <th scope="col"><i class="fa-solid fa-calendar-day"></i> Created at</th>
-                                <th scope="col"><i class="fa-solid fa-calendar-check"></i> Updated at</th>
-                                <th scope="col"><i class="fa-solid fa-user-lock"></i> Acction</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-user-lock"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(content, index) in contents" :key="index">
                                 <th class="table-cell" scope="row"><input :checked="isSelected(content.id)" type="checkbox"
                                         class="" @change="handleSelect(content.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (page - 1) * perPage + index + 1 }} {{ content.id }}</th>
-                                <td class="table-cell text-uppercase"> {{ content.content_type }}</td>
+                                <th class="table-cell" scope="row">#{{ (page - 1) * perPage + index + 1 }}
+                                </th>
+                                <td :class="{'table-cell':true,'text-uppercase':true, 
+                                    'colorText':content.content_type == 'text',
+                                    'colorSticker':content.content_type == 'sticker',
+                                    'colorImage':content.content_type == 'image'
+                                    }"> 
+                                    {{ content.content_type }}</td>
                                 <td class="table-cell ">
-                                    <div v-if="content.content_type == 'text'">{{ content.content_data.text }}</div> 
-                                    <div class="imgInTable" v-if="content.content_type == 'sticker'" >
+                                    <div class="contentTextTable" v-if="content.content_type == 'text'" v-html="content.content_data.text">
+                                    </div>
+                                    <div class="imgInTable" v-if="content.content_type == 'sticker'">
                                         <img :src="getStickerImageUrl(content.content_data.stickerId)" alt="Sticker" />
                                     </div>
                                     <div class="imgInTable" v-if="content.content_type == 'image'">
@@ -114,46 +121,51 @@
                                 </td>
                                 <td class="table-cell">
                                     <div class="nameAvatar">
-                                        <img :src="content.creator_avatar ? content.creator_avatar : require('@/assets/avatar.jpg')" alt="">
+                                        <img :src="content.creator_avatar ? content.creator_avatar : require('@/assets/avatar.jpg')"
+                                            alt="">
                                         <span class="nameMember">{{ content.creator_name }}</span>
                                     </div>
                                 </td>
                                 <td class="table-cell">
                                     <div class="nameAvatar">
-                                        <img :src="content.updater_avatar ? content.updater_avatar : require('@/assets/avatar.jpg')" alt="">
+                                        <img :src="content.updater_avatar ? content.updater_avatar : require('@/assets/avatar.jpg')"
+                                            alt="">
                                         <span class="nameMember">{{ content.updater_name }}</span>
                                     </div>
                                 </td>
                                 <td class="table-cell text-center">{{ formatDate(content.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(content.updated_at) }}</td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#deleteMember"
+                                    <button data-toggle="modal" data-target="#viewDetailContent" v-tippy="{ content: 'View Detail' }"
+                                        class="viewDetailContent text-success" @click="selectContent(content)">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                    <button data-toggle="modal" data-target="#updateContent" v-tippy="{ content: 'Update' }"
+                                        class="updateContent text-primary" @click="selectContent(content)">
+                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
+                                    </button>
+                                    <button data-toggle="modal" data-target="#deleteContent"
                                         v-tippy="{ content: content.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteMember" @click="changeIsDelete(content)">
+                                        class="deleteContent text-danger" @click="selectContent(content)">
                                         <i
                                             :class="{ 'fa-solid': true, 'fa-trash': content.is_delete == 0, 'fa-trash-arrow-up': content.is_delete == 1 }"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#updateMember" v-tippy="{ content: 'Update' }"
-                                        class="updateMember" @click="changeIsDelete(content)">
-                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div id="divpaginate">
+                <div id="divpaginate" class="mt-2">
                     <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
                         :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
                         :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <!-- <AddMember :getContents="getContents"></AddMember>
-                <DeleteMember :contentSelected="contentSelected"></DeleteMember>
-                <DeleteManyMember :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents"
-                    :members="members">
-                </DeleteManyMember>
-                <UpdateMember :contentSelected="contentSelected"></UpdateMember> -->
+                <AddContent :getContents="getContents"></AddContent>
+                <UpdateContent :getContents="getContents" :contentSelected="contentSelected"></UpdateContent>
+                <DeleteContent :contentSelected="contentSelected" :getStickerImageUrl="getStickerImageUrl"></DeleteContent>
+                <DetailContent :contentSelected="contentSelected" :getStickerImageUrl="getStickerImageUrl"></DetailContent>
+                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents" :getStickerImageUrl="getStickerImageUrl"></DeleteManyContent>
             </div>
         </div>
     </div>
@@ -166,20 +178,22 @@ import Paginate from 'vuejs-paginate-next';
 import config from '@/config';
 import TableLoading from '@/components/common/TableLoading'
 import _ from 'lodash';
-// import AddMember from '@/components/user/member-account/AddMember.vue'
-// import DeleteMember from '@/components/user/member-account/DeleteMember.vue'
-// import DeleteManyMember from '@/components/user/member-account/DeleteManyMember.vue'
-// import UpdateMember from '@/components/user/member-account/UpdateMember.vue'
+import AddContent from '@/components/user/manage-content/AddContent.vue'
+import DeleteContent from '@/components/user/manage-content/DeleteContent.vue'
+import DetailContent from '@/components/user/manage-content/DetailContent.vue'
+import UpdateContent from '@/components/user/manage-content/UpdateContent.vue'
+import DeleteManyContent from '@/components/user/manage-content/DeleteManyContent.vue'
 
 export default {
     name: "ManageContent",
     components: {
         paginate: Paginate,
         TableLoading,
-        // AddMember,
-        // DeleteMember,
-        // DeleteManyMember,
-        // UpdateMember,
+        AddContent,
+        DeleteContent,
+        DeleteManyContent,
+        DetailContent,
+        UpdateContent,
     },
 
     data() {
@@ -193,15 +207,16 @@ export default {
             search: '',
             is_delete: 'all',
             content_type: 'all',
-            role:'all',
+            role: 'all',
             query: '',
             contents: [],
             contentSelected: {
                 id: '',
-                name: '',
-                email: '',
-                line_user_id: '',
-                is_delete: null
+                content_type: '',
+                content_data: null,
+                is_delete: null,
+                creator_name: null,
+                updater_name: null,
             },
             selectedContents: [],
             isLoading: false,
@@ -231,11 +246,11 @@ export default {
     },
 
     setup() {
-        document.title = "Member Account | LINE Bot"
+        document.title = "Manages Content | LINE Bot"
     },
-    
+
     mounted() {
-        emitEvent('eventTitleHeader', 'Channel manages - Member Account');
+        emitEvent('eventTitleHeader', 'Channel Manages Content');
         this.user = JSON.parse(localStorage.getItem('user'));
         const queryString = window.location.search;
         const searchParams = new URLSearchParams(queryString);
@@ -248,28 +263,35 @@ export default {
         this.content_type = searchParams.get('content_type') || 'all';
         this.getContents();
 
-        onEvent('updateMemberSuccess', (memberUpdate) => {
-            this.members.forEach(member => {
-                if (member.id == memberUpdate.id) {
-                    member.name = memberUpdate.name;
-                    member.email = memberUpdate.email;
-                    member.line_user_id = memberUpdate.line_user_id;
+        onEvent('updateContentSuccess', (contentUpdate) => {
+            this.contents.forEach(content => {
+                if (content.id == contentUpdate.id) {
+                    content.name = contentUpdate.name;
+                    content.email = contentUpdate.email;
+                    content.line_user_id = contentUpdate.line_user_id;
                 }
             });
         });
-        onEvent('eventUpdateIsDelete', (id_member) => {
-            this.members.forEach(member => {
-                if (member.id == id_member) {
-                    if (member.is_delete == 0) member.is_delete = 1;
-                    else member.is_delete = 0;
+        onEvent('eventUpdateIsDelete', (id_content) => {
+            this.contents.forEach(content => {
+                if (content.id == id_content) {
+                    if (content.is_delete == 0) content.is_delete = 1;
+                    else content.is_delete = 0;
                 }
             });
+        });
+
+        onEvent('eventRegetcontents', () => {
+            this.getContents();
         });
     },
 
     methods: {
         getStickerImageUrl(stickerId) {
-            return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`; 
+            return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
+        },
+        generateNumbers(start, end) {
+            return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
         getContents: async function () {
             this.selectedContents = [];
@@ -309,7 +331,8 @@ export default {
             this.getContents();
         },
 
-        selectMember: function (contentSelected) {
+        selectContent: function (contentSelected) {
+            emitEvent('selectSimpleContent', contentSelected);
             this.contentSelected = contentSelected;
         },
 
@@ -334,6 +357,7 @@ export default {
         },
 
         changeDeleteManyContent: function (is_delete) {
+            emitEvent('selectManyContent', this.contents);
             this.isDeleteChangeMany = is_delete;
         }
 
@@ -355,6 +379,15 @@ export default {
 </script>
 
 <style scoped>
+
+.contentTextTable {
+    max-width: 120px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 .titleChannel {
     font-size: 19px;
     color: var(--user-color);
@@ -378,35 +411,44 @@ tr th {
     align-content: center;
 }
 
-.nameAvatar img  {
+.nameAvatar img {
     width: 60px;
     height: 60px;
     object-fit: cover;
 }
 
-.deleteMember .fa-trash:hover {
+.deleteContent .fa-trash:hover {
     transition: all 0.5s ease;
     color: red;
 }
 
-.deleteMember .fa-trash-arrow-up:hover {
+.deleteContent .fa-trash-arrow-up:hover {
     transition: all 0.5s ease;
     color: green;
 }
 
-.deleteMember {
+.deleteContent {
     transition: all 0.5s ease;
-    font-size: 16px;
+    font-size: 22px;
 }
 
-.updateMember {
+.updateContent {
     transition: all 0.5s ease;
-    font-size: 16px;
+    font-size: 22px;
 }
 
-.updateMember .fa-pen:hover {
+.updateContent .fa-pen:hover {
     transition: all 0.5s ease;
     color: #3366FF;
+}
+
+.viewDetailContent {
+    transition: all 0.5s ease;
+    font-size: 22px;
+}
+.viewDetailContent i:hover {
+    transition: all 0.5s ease;
+    color: var(--user-color);
 }
 
 .nameAvatar img {
@@ -445,8 +487,28 @@ table img {
     justify-content: center;
 }
 
+.imgInTable  img {
+    border-radius: 4px;
+}
+
 table button {
     padding: 1px 3px;
     margin-right: 2px;
 }
+
+.colorImage {
+    color: var(--blue-color);
+}
+
+.colorText {
+    color: var(--brown-color)
+}
+
+.colorSticker {
+    color: var(--yellow-color)
+}
+
+
+
+
 </style>

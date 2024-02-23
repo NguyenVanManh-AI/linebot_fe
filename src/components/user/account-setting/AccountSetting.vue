@@ -369,4 +369,5 @@ export default {
     top: -6px;
     right: -6px;
     width: 16px;
-}</style>
+}
+</style>

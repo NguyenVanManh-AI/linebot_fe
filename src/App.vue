@@ -68,6 +68,10 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 li {
   list-style: none;
 }
@@ -84,6 +88,9 @@ body {
 :root {
   --user-color: #06C755;
   --admin-color: #06C755;
+  --blue-color: #007BFF;
+  --brown-color: #8B4513;
+  --yellow-color: #ffe600;
   /* --admin-color: #096a31; */
 }
 /* color default */

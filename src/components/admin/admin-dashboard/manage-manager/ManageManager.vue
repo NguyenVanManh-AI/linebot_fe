@@ -100,7 +100,7 @@
             </tbody>
         </table>
         </div>
-        <div id="divpaginate">
+        <div id="divpaginate" class="mt-2">
             <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
                 :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
                 :container-class="'pagination'" :page-class="'page-item'">

@@ -30,6 +30,7 @@
     "install": "^0.13.0",
     "jquery": "^3.6.0",
     "mdb-vue-ui-kit": "^3.0.0",
+    "moment": "^2.30.1",
     "npm": "^8.19.1",
     "nprogress": "^0.2.0",
     "particles.vue3": "^1.16.1",
