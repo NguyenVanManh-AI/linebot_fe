@@ -135,16 +135,16 @@ export default {
 	},
 
 	startLoading(isLoad){
-		if(isLoad) {
+		NProgress.start() // NProgress thì luôn load thì call api  
+		if(isLoad) { // Loading thì có thể load hoặc không tùy yêu cầu 
 			emitEvent('eventLoading', true);
-			NProgress.start()
 		}
 	},
 
 	endLoading(isLoad){
+		NProgress.done()
 		if(isLoad) {
 			emitEvent('eventLoading', false);
-			NProgress.done()
 		}
 	}
 }

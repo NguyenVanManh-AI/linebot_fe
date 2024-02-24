@@ -18,6 +18,7 @@ import '../node_modules/nprogress/nprogress.css'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import VueTippy from 'vue-tippy'
+import 'tippy.js/dist/tippy.css';
 
 const app = createApp(App);
 app.use(router);

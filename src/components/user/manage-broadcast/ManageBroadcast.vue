@@ -55,7 +55,7 @@
                             <option value="user">User</option>
                         </select>
                     </div>
-                    <div class="col-3 pl-0">
+                    <div class="col-2 pl-0">
                         <div content="Search information broadcast" v-tippy class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
@@ -66,17 +66,23 @@
                     </div>
                     <div class="pr-1">
                         <div class="input-group ">
+                            <button content="Test Send Mutilcast" v-tippy data-toggle="modal" data-target="#testSendMutilcast" type="button"
+                                class="btn btn-info"><i class="fa-solid fa-message"></i></button>
+                        </div>
+                    </div>
+                    <div class="pr-1">
+                        <div class="input-group ">
                             <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast" type="button"
                                 class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
                     <div class="pr-0" v-if="selectedBroadcasts.length > 0">
                         <div class="input-group">
-                            <button @click="changeDeleteManyContent(1)" content="Delete Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyContent" type="button"
+                            <button @click="changedeleteManyBroadcast(1)" content="Delete Many Content" v-tippy
+                                data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
                                 class="btn btn-outline-danger mr-1"><i class="fa-solid fa-trash"></i></button>
-                            <button @click="changeDeleteManyContent(0)" content="Backup Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyContent" type="button"
+                            <button @click="changedeleteManyBroadcast(0)" content="Backup Many Content" v-tippy
+                                data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
                                 class="btn btn-outline-success"><i class="fa-solid fa-trash-arrow-up"></i></button>
                         </div>
                     </div>
@@ -91,13 +97,13 @@
                                 <th scope="col"><input ref="selectAllCheckbox" @change="selectAll()" type="checkbox"
                                         class=""></th>
                                 <th scope="col">#</th>
-                                <th scope="col"><i class="fa-solid fa-user-pen"></i> Status</th>
-                                <th scope="col"><i class="fa-solid fa-shapes"></i> Title</th>
-                                <th scope="col"><i class="fa-solid fa-database"></i> Sender</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Send At</th>
+                                <th scope="col"><i class="fa-solid fa-shapes"></i> Status</th>
+                                <th scope="col"><i class="fa-solid fa-heading"></i> Title</th>
+                                <th scope="col"><i class="fa-solid fa-user-clock"></i> Sender</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-clock"></i> Send At</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-user-lock"></i> Acction</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,17 +132,17 @@
                                 <td class="table-cell text-center">{{ formatDate(broadcast.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(broadcast.updated_at) }}</td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#viewDetailContent" v-tippy="{ content: 'View Detail' }"
-                                        class="viewDetailContent text-success" @click="selectContent(content)">
+                                    <button data-toggle="modal" data-target="#viewDetailBroadcast" v-tippy="{ content: 'View Detail' }"
+                                        class="viewDetailBroadcast text-success" @click="selectBroadcast(broadcast)">
                                         <i class="fa-solid fa-eye"></i>
                                     </button>
-                                    <button data-toggle="modal" data-target="#updateContent" v-tippy="{ content: 'Update' }"
-                                        class="updateContent text-primary" @click="selectContent(content)">
+                                    <button data-toggle="modal" data-target="#updateBroadcast" v-tippy="{ content: 'Update' }"
+                                        class="updateBroadcast text-primary" @click="selectBroadcast(broadcast)">
                                         <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
                                     </button>
-                                    <button data-toggle="modal" data-target="#deleteContent"
+                                    <button data-toggle="modal" data-target="#deleteBroadcast"
                                         v-tippy="{ content: broadcast.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteContent text-danger" @click="selectContent(content)">
+                                        class="deleteBroadcast text-danger" @click="selectBroadcast(broadcast)">
                                         <i
                                             :class="{ 'fa-solid': true, 'fa-trash': broadcast.is_delete == 0, 'fa-trash-arrow-up': broadcast.is_delete == 1 }"></i>
                                     </button>
@@ -151,11 +157,12 @@
                         :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddBroadcast :getContents="getContents"></AddBroadcast>
-                <UpdateContent :getContents="getContents" :broadcastSelected="broadcastSelected"></UpdateContent>
-                <DeleteContent :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DeleteContent>
-                <DetailContent :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DetailContent>
-                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts" :getStickerImageUrl="getStickerImageUrl"></DeleteManyContent>
+                <AddBroadcast :getBroadcasts="getBroadcasts"></AddBroadcast>
+                <TestSendMulticast :getBroadcasts="getBroadcasts"></TestSendMulticast>
+                <UpdateBroadcast :getBroadcasts="getBroadcasts" :broadcastSelected="broadcastSelected"></UpdateBroadcast>
+                <DeleteBroadcast :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DeleteBroadcast>
+                <DetailBroadcast :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DetailBroadcast>
+                <DeleteManyBroadcast :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts" :getStickerImageUrl="getStickerImageUrl"></DeleteManyBroadcast>
             </div>
         </div>
     </div>
@@ -169,10 +176,11 @@ import config from '@/config';
 import TableLoading from '@/components/common/TableLoading'
 import _ from 'lodash';
 import AddBroadcast from '@/components/user/manage-broadcast/AddBroadcast.vue'
-import DeleteContent from '@/components/user/manage-content/DeleteContent.vue'
-import DetailContent from '@/components/user/manage-content/DetailContent.vue'
-import UpdateContent from '@/components/user/manage-content/UpdateContent.vue'
-import DeleteManyContent from '@/components/user/manage-content/DeleteManyContent.vue'
+import TestSendMulticast from '@/components/user/manage-broadcast/TestSendMulticast.vue'
+import DeleteBroadcast from '@/components/user/manage-broadcast/DeleteBroadcast.vue'
+import DetailBroadcast from '@/components/user/manage-broadcast/DetailBroadcast.vue'
+import UpdateBroadcast from '@/components/user/manage-broadcast/UpdateBroadcast.vue'
+import DeleteManyBroadcast from '@/components/user/manage-broadcast/DeleteManyBroadcast.vue'
 
 export default {
     name: "ManageBroadcast",
@@ -180,10 +188,11 @@ export default {
         paginate: Paginate,
         TableLoading,
         AddBroadcast,
-        DeleteContent,
-        DeleteManyContent,
-        DetailContent,
-        UpdateContent,
+        DeleteBroadcast,
+        DeleteManyBroadcast,
+        DetailBroadcast,
+        UpdateBroadcast,
+        TestSendMulticast,
     },
 
     data() {
@@ -251,9 +260,9 @@ export default {
         this.is_delete = searchParams.get('is_delete') || '0';
         this.role = searchParams.get('role') || 'all';
         this.status = searchParams.get('status') || 'all';
-        this.getContents();
+        this.getBroadcasts();
 
-        onEvent('updateContentSuccess', (contentUpdate) => {
+        onEvent('updateBroadcastSuccess', (contentUpdate) => {
             this.contents.forEach(content => {
                 if (content.id == contentUpdate.id) {
                     content.name = contentUpdate.name;
@@ -262,17 +271,17 @@ export default {
                 }
             });
         });
-        onEvent('eventUpdateIsDelete', (id_content) => {
-            this.contents.forEach(content => {
-                if (content.id == id_content) {
-                    if (content.is_delete == 0) content.is_delete = 1;
-                    else content.is_delete = 0;
+        onEvent('eventUpdateIsDeleteBroadcast', (id_broadcast) => {
+            this.broadcasts.forEach(broadcast => {
+                if (broadcast.id == id_broadcast) {
+                    if (broadcast.is_delete == 0) broadcast.is_delete = 1;
+                    else broadcast.is_delete = 0;
                 }
             });
         });
 
-        onEvent('eventRegetcontents', () => {
-            this.getContents();
+        onEvent('eventRegetBroadcast', () => {
+            this.getBroadcasts();
         });
     },
 
@@ -283,7 +292,7 @@ export default {
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
-        getContents: async function () {
+        getBroadcasts: async function () {
             this.selectedBroadcasts = [];
             this.isLoading = true;
             this.query = '?search=' + this.search + '&typesort=' + this.typesort + '&sortlatest=' + this.sortlatest
@@ -318,11 +327,11 @@ export default {
 
         handleSearchSelect() {
             this.page = 1;
-            this.getContents();
+            this.getBroadcasts();
         },
 
-        selectContent: function (broadcastSelected) {
-            emitEvent('selectSimpleContent', broadcastSelected);
+        selectBroadcast: function (broadcastSelected) {
+            emitEvent('selectSimpleBroadcast', broadcastSelected);
             this.broadcastSelected = broadcastSelected;
         },
 
@@ -338,7 +347,7 @@ export default {
 
         selectAll: function () {
             const checkbox = this.$refs.selectAllCheckbox;
-            if (checkbox.checked) this.selectedBroadcasts = this.contents.map(content => content.id);
+            if (checkbox.checked) this.selectedBroadcasts = this.broadcasts.map(broadcast => broadcast.id);
             else this.selectedBroadcasts = [];
         },
 
@@ -346,8 +355,8 @@ export default {
             this.broadcastSelected = content;
         },
 
-        changeDeleteManyContent: function (is_delete) {
-            emitEvent('selectManyContent', this.contents);
+        changedeleteManyBroadcast: function (is_delete) {
+            emitEvent('selectManyBroadcast', this.broadcasts);
             this.isDeleteChangeMany = is_delete;
         }
 
@@ -358,12 +367,12 @@ export default {
         }, 500),
         'perPage': 'handleSearchSelect',
         'selectedCategory': 'handleSearchSelect',
-        'page': 'getContents',
-        'typesort': 'getContents',
-        'sortlatest': 'getContents',
-        'is_delete': 'getContents',
-        'status': 'getContents',
-        'role': 'getContents',
+        'page': 'getBroadcasts',
+        'typesort': 'getBroadcasts',
+        'sortlatest': 'getBroadcasts',
+        'is_delete': 'getBroadcasts',
+        'status': 'getBroadcasts',
+        'role': 'getBroadcasts',
     }
 }
 </script>
@@ -407,36 +416,36 @@ tr th {
     object-fit: cover;
 }
 
-.deleteContent .fa-trash:hover {
+.deleteBroadcast .fa-trash:hover {
     transition: all 0.5s ease;
     color: red;
 }
 
-.deleteContent .fa-trash-arrow-up:hover {
+.deleteBroadcast .fa-trash-arrow-up:hover {
     transition: all 0.5s ease;
     color: green;
 }
 
-.deleteContent {
+.deleteBroadcast {
     transition: all 0.5s ease;
     font-size: 22px;
 }
 
-.updateContent {
+.updateBroadcast {
     transition: all 0.5s ease;
     font-size: 22px;
 }
 
-.updateContent .fa-pen:hover {
+.updateBroadcast .fa-pen:hover {
     transition: all 0.5s ease;
     color: #3366FF;
 }
 
-.viewDetailContent {
+.viewDetailBroadcast {
     transition: all 0.5s ease;
     font-size: 22px;
 }
-.viewDetailContent i:hover {
+.viewDetailBroadcast i:hover {
     transition: all 0.5s ease;
     color: var(--user-color);
 }

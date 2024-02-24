@@ -102,7 +102,7 @@ export default {
                 emitEvent('eventSuccess', messages[0]);
                 const closeButton = this.$refs.closeButton;
                 closeButton.click();
-                emitEvent('eventUpdateIsDelete', this.contentSelected.id);
+                emitEvent('eventUpdateIsDeleteContent', this.contentSelected.id);
             }
             catch(error) {
                 if (error.messages) emitEvent('eventError', error.messages[0]);

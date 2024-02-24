@@ -64,7 +64,7 @@ export default {
                 emitEvent('eventSuccess', messages[0]);
                 const closeButton = this.$refs.closeButton;
                 closeButton.click();
-                emitEvent('eventUpdateIsDelete', this.memberSelected.id);
+                emitEvent('eventUpdateIsDeleteMember', this.memberSelected.id);
             }
             catch(error) {
                 if (error.errors) this.errors = error.errors;

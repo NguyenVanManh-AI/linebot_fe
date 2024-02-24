@@ -2,46 +2,27 @@
     <div>
         <div id="big">
             <div class="bigContainer">
-                <div class="modal fade" id="addBroadcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="testSendMutilcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <h4 class="text-center text-success"><strong><i class="fa-solid fa-business-time"></i>
-                                    Add Broadcast</strong></h4><br>
-                            <div class="row">
-                                <div class="col-12">
-                                    <form action="">
-                                        <div class="row">
-                                            <div class="col-2">
-                                                <strong>Broadcast time</strong> 
-                                            </div>
-                                            <div class="col-10">
-                                                <div class="row">
-                                                    <input v-model="optionSendnow" class="form-check-input" type="radio"
-                                                        name="sent_at" id="exampleRadios1" value="send_now"> Send Now
-                                                </div>
-                                                <div class="row">
-                                                    <input v-model="optionSendnow" class="form-check-input" type="radio"
-                                                        name="sent_at" id="exampleRadios1" value="select_time">
-                                                    <VueDatePicker class="col-6 ml-0 pl-0" v-model="dateTime" required>
-                                                    </VueDatePicker>
-                                                </div>
-                                                <span v-if="errors.sent_at" class="text-danger">{{ errors.sent_at[0]}}<br></span>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <hr>
-                                        <br>
-                                    </form>
-                                </div>
-                            </div>
-                            <form>
+                            <h4 class="text-center text-info"><strong><i class="fa-solid fa-message"></i>
+                                    Test Send Multicast</strong></h4><br>
+                            <form @submit.prevent="testSendMutilcast()">
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="row pr-2 mb-2 ">
-                                            <input class="form-control form-control-sm col-12" required
-                                                v-model="dataBroadcastSubmit.title" type="text" placeholder="Title">
-                                            <span v-if="errors.title" class="text-danger">{{ errors.title[0]}}<br></span>
+                                            <Multiselect
+                                    v-model="member_ids"
+                                    mode="tags"
+                                    placeholder="Select Members" 
+                                    :close-on-select="false"
+                                    :searchable="true"
+                                    :create-option="true"
+                                    :options="members"
+                                    />
+                                    <span v-if="errors.member_ids" class="text-danger">{{ errors.member_ids[0]}}<br></span>
+
                                         </div>
                                         <div class="row pr-2">
                                             <ul class="nav nav-tabs mainTab">
@@ -90,17 +71,14 @@
                                                     <img :src="image.content_data.originalContentUrl" alt="Sticker" />
                                                 </li>
                                             </div>
-
+                                            <span v-if="errors.content_ids" class="text-danger">{{ errors.content_ids[0]}}<br></span>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 mt-4">
                                                 <div>
-                                                    <button @click="addBroadcast('draf')" type="button"
-                                                        class="mt-4 btn-pers" id="login_button"><i
-                                                            class="fa-solid fa-plus"></i> Draf</button>  
-                                                    <button @click="addBroadcast('scheduled')" type="button" 
+                                                    <button type="submit" 
                                                         class="mt-4 ml-6 btn-pers" id="login_button"><i
-                                                            class="fa-solid fa-paper-plane"></i> Add</button>
+                                                            class="fa-solid fa-paper-plane"></i> Test Send</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,13 +138,11 @@
 import useEventBus from '@/composables/useEventBus'
 import UserRequest from '@/restful/UserRequest';
 const { emitEvent } = useEventBus();
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
-import { formatDate } from '@/helper.js';
 // import moment from 'moment';
+import Multiselect from '@vueform/multiselect'
 
 export default {
-    name: "AddBroadcast",
+    name: "TestSendMulticast",
     props: {
 
     },
@@ -174,22 +150,20 @@ export default {
 
     },
     components: {
-        VueDatePicker
+        Multiselect
     },
     data() {
         return {
-            dateTime: new Date().toISOString(),
-            optionSendnow: 'send_now',
+            member_ids: null,
+            members: [],
             dataContents: {
                 stickers: null,
                 images: null,
                 texts: null,
             },
-            dataBroadcastSubmit: {
-                title: null,
+            dataTestSendSubmit: {
                 content_ids: [],
-                sent_at: null,
-                status: null,
+                member_ids:[],
             },
             previewContents: [],
             channel: {
@@ -200,16 +174,10 @@ export default {
             },
 
             isTab: 'text',
-            member: {
-                name: null,
-                email: null,
-                line_user_id: null,
-            },
+            selectStickerId: null,
             errors: {
-                title: null,
+                member_ids: null,
                 content_ids: null,
-                sent_at: null,
-                status: null
             },
             packageStickers: [
                 {
@@ -245,6 +213,7 @@ export default {
     },
     mounted() {
         this.getInforChannel();
+        this.getAllMember();
         this.getDataContents();
     },
 
@@ -260,17 +229,17 @@ export default {
         },
         selectedIdContent: function (content, id_content) {
             if (event.target.checked == true) {
-                if (this.dataBroadcastSubmit.content_ids.length == 5) {
-                    this.dataBroadcastSubmit.content_ids.shift(); // nếu đã đủ 5 thì xóa phần tử đầu tiên đi 
+                if (this.dataTestSendSubmit.content_ids.length == 5) {
+                    this.dataTestSendSubmit.content_ids.shift(); // nếu đã đủ 5 thì xóa phần tử đầu tiên đi 
                     this.previewContents.shift();
                 }
-                this.dataBroadcastSubmit.content_ids.push(id_content);
+                this.dataTestSendSubmit.content_ids.push(id_content);
                 this.previewContents.push(content);
             }
             else {
                 // xóa id ra khỏi mảng 
-                let indexId = this.dataBroadcastSubmit.content_ids.indexOf(id_content);
-                if (indexId !== -1) this.dataBroadcastSubmit.content_ids.splice(indexId, 1);
+                let indexId = this.dataTestSendSubmit.content_ids.indexOf(id_content);
+                if (indexId !== -1) this.dataTestSendSubmit.content_ids.splice(indexId, 1);
 
                 // xóa content ra khỏi mảng 
                 let indexToRemove = this.previewContents.findIndex(content => content.id === id_content);
@@ -300,27 +269,32 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
-        addBroadcast: async function (status) {
-            this.dataBroadcastSubmit.status = status;
-            if (this.optionSendnow == 'send_now') {
-                const now = new Date();
-                const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-                this.dataBroadcastSubmit.sent_at = formattedDate;
-            }
+        getAllMember: async function() {
             try {
-                const { messages } = await UserRequest.post('broadcast/add', this.dataBroadcastSubmit, true);
+                const { data } = await UserRequest.get('user/members');
+                var members = data;
+                members.forEach((member) => {
+                    var option = { value: member.id, label: member.name }
+                    this.members.push(option);
+                });
+            }
+            catch (error) {
+                if (error.messages) emitEvent('eventError', error.messages[0]);
+            }
+        },
+        testSendMutilcast: async function () {
+            try {
+                const { messages } = await UserRequest.post('broadcast/test-send', this.dataTestSendSubmit, true);
                 emitEvent('eventSuccess', messages[0]);
                 for (let key in this.errors) this.errors[key] = null;
-                var closePW = window.document.getElementById('addBroadcast');
+                var closePW = window.document.getElementById('testSendMutilcast');
                 closePW.click();
-                this.dataBroadcastSubmit = {
-                    title: null,
+                this.member_ids = [];
+                this.dataTestSendSubmit = {
                     content_ids: [],
-                    sent_at: null,
-                    status: null,
+                    member_ids: null,
                 },
                 this.previewContents = [];
-                emitEvent('eventRegetBroadcast', '');
             }
             catch (error) {
                 if (error.errors) this.errors = error.errors;
@@ -329,22 +303,18 @@ export default {
             }
         },
         checkChecked: function (id_content) {
-            return this.dataBroadcastSubmit.content_ids.includes(parseInt(id_content));
+            return this.dataTestSendSubmit.content_ids.includes(parseInt(id_content));
         }
     },
     watch: {
-        dateTime: function (newDateTime) {
-            if (newDateTime) {
-                const formattedDate = formatDate(newDateTime);
-                this.dataBroadcastSubmit.sent_at = formattedDate;
-                this.optionSendnow = 'select_time';
-                console.log(this.dataBroadcastSubmit.sent_at);
-            }
-        },
+        member_ids: function(member_ids) {
+            this.dataTestSendSubmit.member_ids = member_ids;
+        }
     },
 }
 </script>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
 .itemSticker {
     width: 80px;

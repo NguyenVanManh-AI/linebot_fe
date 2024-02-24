@@ -94,7 +94,7 @@
                                 <th scope="col"><i class="fa-solid fa-venus-mars"></i> Gender</th>
                                 <th scope="col">Created at</th>
                                 <th scope="col">Updated at</th>
-                                <th scope="col"><i class="fa-solid fa-user-lock"></i> Acction</th>
+                                <th scope="col"><i class="fa-solid fa-user-pen"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -186,7 +186,7 @@ export default {
                 }
             });
         });
-        onEvent('eventUpdateIsDelete', (id_member) => {
+        onEvent('eventUpdateIsDeleteMember', (id_member) => {
             this.members.forEach(member => {
                 if (member.id == id_member) {
                     if (member.is_delete == 0) member.is_delete = 1;

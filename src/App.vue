@@ -80,6 +80,14 @@ a {
   text-decoration: none;
 }
 
+/* .tippy-box[data-state="visible"] .tippy-content {
+  background-color: black !important;
+  color: white;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+*/
+
 body {
   background-color: #F0F2F5 !important;
 }

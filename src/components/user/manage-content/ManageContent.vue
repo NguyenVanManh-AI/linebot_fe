@@ -94,7 +94,7 @@
                                 <th scope="col"><i class="fa-solid fa-user-check"></i> Updater</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-user-lock"></i> Acction</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -272,7 +272,7 @@ export default {
                 }
             });
         });
-        onEvent('eventUpdateIsDelete', (id_content) => {
+        onEvent('eventUpdateIsDeleteContent', (id_content) => {
             this.contents.forEach(content => {
                 if (content.id == id_content) {
                     if (content.is_delete == 0) content.is_delete = 1;

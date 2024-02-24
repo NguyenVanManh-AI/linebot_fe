@@ -135,16 +135,16 @@ export default {
 	},
 
 	startLoading(isLoad){
+		NProgress.start()
 		if(isLoad) {
 			emitEvent('eventLoading', true);
-			NProgress.start()
 		}
 	},
 
 	endLoading(isLoad){
+		NProgress.done()
 		if(isLoad) {
 			emitEvent('eventLoading', false);
-			NProgress.done()
 		}
 	}
 }
