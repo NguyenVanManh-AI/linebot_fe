@@ -56,8 +56,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-4 btn-pers" id="login_button"><i
-                                        class="fa-solid fa-paper-plane"></i> Add</button>
+                                <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-floppy-disk"></i> Update</button>
                             </form>
                         </div>
                     </div>

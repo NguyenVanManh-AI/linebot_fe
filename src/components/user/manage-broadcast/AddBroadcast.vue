@@ -111,7 +111,7 @@
                                             <div v-for="content, index in previewContents" :key="index">
                                                 <div class="rowContent" v-if="content.content_type == 'text'">
                                                     <div class="avatar_chat">
-                                                        <img :src="require('@/assets/line_logo.jpg')" alt="">
+                                                        <img :src="channel.picture_url ? channel.picture_url : require('@/assets/line_logo.jpg')" alt="">
                                                     </div>
                                                     <div class="content_chat">
                                                         <div class="nameChannel">{{ channel.channel_name }}</div>
@@ -122,7 +122,7 @@
                                                 </div>
                                                 <div class="rowContent imgInTable" v-if="content.content_type == 'sticker'">
                                                     <div class="avatar_chat">
-                                                        <img :src="require('@/assets/line_logo.jpg')" alt="">
+                                                        <img :src="channel.picture_url ? channel.picture_url : require('@/assets/line_logo.jpg')" alt="">
                                                     </div>
                                                     <div class="content_chat">
                                                         <div class="nameChannel">{{ channel.channel_name }}</div>
@@ -134,7 +134,7 @@
                                                 </div>
                                                 <div class="rowContent imgInTable" v-if="content.content_type == 'image'">
                                                     <div class="avatar_chat">
-                                                        <img :src="require('@/assets/line_logo.jpg')" alt="">
+                                                        <img :src="channel.picture_url ? channel.picture_url : require('@/assets/line_logo.jpg')" alt="">
                                                     </div>
                                                     <div class="content_chat">
                                                         <div class="nameChannel">{{ channel.channel_name }}</div>
@@ -197,6 +197,7 @@ export default {
                 channel_name : null,
                 channel_secret : null,
                 channel_access_token : null,
+                picture_url: null,
             },
 
             isTab: 'text',
