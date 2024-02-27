@@ -168,7 +168,8 @@ import { formatDate } from '@/helper.js';
 export default {
     name: "AddBroadcast",
     props: {
-
+        channel: Object,
+        dataContents: Object,
     },
     setup() {
 
@@ -180,11 +181,6 @@ export default {
         return {
             dateTime: new Date().toISOString(),
             optionSendnow: 'send_now',
-            dataContents: {
-                stickers: null,
-                images: null,
-                texts: null,
-            },
             dataBroadcastSubmit: {
                 title: null,
                 content_ids: [],
@@ -192,14 +188,6 @@ export default {
                 status: null,
             },
             previewContents: [],
-            channel: {
-                channel_id : null,
-                channel_name : null,
-                channel_secret : null,
-                channel_access_token : null,
-                picture_url: null,
-            },
-
             isTab: 'text',
             member: {
                 name: null,
@@ -245,8 +233,6 @@ export default {
         }
     },
     mounted() {
-        this.getInforChannel();
-        this.getDataContents();
     },
 
     computed: {
@@ -276,29 +262,6 @@ export default {
                 // xóa content ra khỏi mảng 
                 let indexToRemove = this.previewContents.findIndex(content => content.id === id_content);
                 if (indexToRemove !== -1) this.previewContents.splice(indexToRemove, 1);
-            }
-        },
-        getDataContents: async function () {
-            var dataQuery = {
-                search: ''
-            };
-            try {
-                const { data } = await UserRequest.post('content/for-broadcast', dataQuery)
-                this.dataContents = data;
-                this.total = data.total;
-            }
-            catch (error) {
-                if (error.messages) emitEvent('eventError', error.messages[0]);
-                this.isLoading = false;
-            }
-        },
-        getInforChannel: async function() {
-            try {
-                const { data } = await UserRequest.get('user/infor-channel');
-                this.channel = data;
-            }
-            catch (error) {
-                if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
         addBroadcast: async function (status) {

@@ -101,7 +101,8 @@ import '@vuepic/vue-datepicker/dist/main.css';
 export default {
     name: "DeleteBroadcast",
     props: {
-
+        channel: Object,
+        dataContents: Object,
     },
     setup() {
 
@@ -110,11 +111,6 @@ export default {
     },
     data() {
         return {
-            dataContents: {
-                stickers: null,
-                images: null,
-                texts: null,
-            },
             broadcastSelected: {
                 id:null,
                 is_delete: null,
@@ -127,13 +123,6 @@ export default {
                 is_delete : '',
             },
             previewContents: [],
-            channel: {
-                channel_id : null,
-                channel_name : null,
-                channel_secret : null,
-                channel_access_token : null,
-                picture_url: null,
-            },
             packageStickers: [
                 {
                     packageId: "446",
@@ -167,8 +156,6 @@ export default {
         }
     },
     mounted() {
-        this.getInforChannel();
-        this.getDataContents();
         onEvent('selectSimpleBroadcast', (broadcast) => {
             this.broadcastSelected = Object.assign({}, broadcast); // tránh gán tham chiếu 
             this.dateTime = broadcast.sent_at;
@@ -186,29 +173,6 @@ export default {
         },
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-        },
-        getDataContents: async function () {
-            var dataQuery = {
-                search: ''
-            };
-            try {
-                const { data } = await UserRequest.post('content/for-broadcast', dataQuery)
-                this.dataContents = data;
-                this.total = data.total;
-            }
-            catch (error) {
-                if (error.messages) emitEvent('eventError', error.messages[0]);
-                this.isLoading = false;
-            }
-        },
-        getInforChannel: async function() {
-            try {
-                const { data } = await UserRequest.get('user/infor-channel');
-                this.channel = data;
-            }
-            catch (error) {
-                if (error.messages) emitEvent('eventError', error.messages[0]);
-            }
         },
         deleteBroadcast: async function () {
             try {

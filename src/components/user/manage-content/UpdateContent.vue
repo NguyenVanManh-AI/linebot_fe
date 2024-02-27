@@ -8,7 +8,7 @@
                         <div class="modal-content">
                             <form @submit.prevent="updateContent()">
                                 <h4 class="text-center text-success"><strong><i class="fa-solid fa-envelope-open-text"></i>
-                                        Add Content Channel</strong></h4><br>
+                                        Update Content Channel</strong></h4><br>
                                 <ul class="nav nav-tabs mainTab">
                                     <li @click="isTab = 'text'" class="nav-item  font-weight-bold">
                                         <a :class="{ 'nav-link': true, 'colorText': true, 'active': isTab == 'text' }"

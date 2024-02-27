@@ -10,7 +10,7 @@
                 </div>
                 <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
                     <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control form-control-sm" v-model="perPage">
+                        <select content="Pagination" v-tippy class="form-control form-control-sm" v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -18,20 +18,20 @@
                         </select>
                     </div>
                     <div class="col-1 pl-0">
-                        <select content="Sort by" v-tippy class="form-control form-control-sm" v-model="typesort">
+                        <select content="Sort by" v-tippy class="form-control form-control-sm" v-model="big_search.typesort">
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="content_type">Content type</option>
                         </select>
                     </div>
                     <div class="col-1 pl-0">
-                        <select content="In direction" v-tippy class="form-control form-control-sm" v-model="sortlatest">
+                        <select content="In direction" v-tippy class="form-control form-control-sm" v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Filter by delete" v-tippy class="form-control form-control-sm" v-model="is_delete">
+                        <select content="Filter by delete" v-tippy class="form-control form-control-sm" v-model="big_search.is_delete">
                             <option value="all">All Content</option>
                             <option value="1">Deleted Content</option>
                             <option value="0">Normal Content</option>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-2 pl-0">
                         <select content="Filter by content type" v-tippy class="form-control form-control-sm"
-                            v-model="content_type">
+                            v-model="big_search.content_type">
                             <option value="all">All Content</option>
                             <option value="text">Text</option>
                             <option value="sticker">Sticker</option>
@@ -47,7 +47,7 @@
                         </select>
                     </div>
                     <div class="col-1 pl-0" v-if="user.role == 'manager'">
-                        <select content="Role" v-tippy class="form-control form-control-sm" v-model="role">
+                        <select content="Role" v-tippy class="form-control form-control-sm" v-model="big_search.role">
                             <option value="all">All</option>
                             <option value="manager">Manager</option>
                         </select>
@@ -58,7 +58,7 @@
                                 <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                             </div>
                             <input v-model="search" type="text" class="form-control form-control-sm"
-                                id="inlineFormInputGroup" placeholder="Seach...">
+                                id="inlineFormInputGroup" placeholder="Search...">
                         </div>
                     </div>
                     <div class="pr-1">
@@ -101,7 +101,7 @@
                             <tr v-for="(content, index) in contents" :key="index">
                                 <th class="table-cell" scope="row"><input :checked="isSelected(content.id)" type="checkbox"
                                         class="" @change="handleSelect(content.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (page - 1) * perPage + index + 1 }}
+                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage + index + 1 }}
                                 </th>
                                 <td :class="{'table-cell':true,'text-uppercase':true, 
                                     'colorText':content.content_type == 'text',
@@ -156,8 +156,8 @@
                     </table>
                 </div>
                 <div id="divpaginate" class="mt-2">
-                    <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
-                        :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
+                    <paginate v-if="paginateVisible" :page-count="last_page" :page-range="3" :margin-pages="2"
+                        :click-handler="clickCallback" :initial-page="big_search.page" :prev-text="'Prev'" :next-text="'Next'"
                         :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
@@ -200,14 +200,18 @@ export default {
         return {
             config: config,
             total: 0,
-            perPage: 5,
-            page: 1,
-            typesort: 'new',
-            sortlatest: 'true',
+            last_page: 1,
+            paginateVisible: true,
             search: '',
-            is_delete: 'all',
-            content_type: 'all',
-            role: 'all',
+            big_search: {
+                perPage: 5,
+                page: 1,
+                typesort: 'new',
+                sortlatest: 'true',
+                is_delete: '0',
+                content_type: 'all',
+                role: 'all',
+            },
             query: '',
             contents: [],
             contentSelected: {
@@ -242,6 +246,13 @@ export default {
                 token_type: null,
                 access_token: null,
             },
+            // perPage: 5,
+            // page: 1,
+            // typesort: 'new',
+            // sortlatest: 'true',
+            // is_delete: 'all',
+            // content_type: 'all',
+            // role: 'all',
         }
     },
 
@@ -254,15 +265,17 @@ export default {
         this.user = JSON.parse(localStorage.getItem('user'));
         const queryString = window.location.search;
         const searchParams = new URLSearchParams(queryString);
-        this.perPage = parseInt(searchParams.get('paginate')) || 5;
-        this.typesort = searchParams.get('typesort') || 'new';
-        this.sortlatest = searchParams.get('sortlatest') || 'true';
         this.search = searchParams.get('search') || '';
-        this.is_delete = searchParams.get('is_delete') || '0';
-        this.role = searchParams.get('role') || 'all';
-        this.content_type = searchParams.get('content_type') || 'all';
+        this.big_search = {
+            perPage : parseInt(searchParams.get('paginate')) || 5,
+            page : searchParams.get('page') || 1,
+            typesort : searchParams.get('typesort') || 'new',
+            sortlatest : searchParams.get('sortlatest') || 'true',
+            is_delete : searchParams.get('is_delete') || '0',
+            role : searchParams.get('role') || 'all',
+            content_type : searchParams.get('content_type') || 'all',
+        }
         this.getContents();
-
         onEvent('updateContentSuccess', (contentUpdate) => {
             this.contents.forEach(content => {
                 if (content.id == contentUpdate.id) {
@@ -293,25 +306,31 @@ export default {
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
+        reRenderPaginate: function () { 
+            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page;
+            this.paginateVisible = false;
+            this.$nextTick(() => { this.paginateVisible = true; });
+        },
         getContents: async function () {
             this.selectedContents = [];
             this.isLoading = true;
-            this.query = '?search=' + this.search + '&typesort=' + this.typesort + '&sortlatest=' + this.sortlatest
-                + '&is_delete=' + this.is_delete + '&content_type=' + this.content_type + '&role=' + this.role + '&paginate=' + this.perPage + '&page=' + this.page;
+            this.query = '?search=' + this.search + '&typesort=' + this.big_search.typesort + '&sortlatest=' + this.big_search.sortlatest
+                + '&is_delete=' + this.big_search.is_delete + '&content_type=' + this.big_search.content_type + '&role=' + this.big_search.role + '&paginate=' + this.big_search.perPage + '&page=' + this.big_search.page;
             window.history.pushState({}, null, this.query);
 
             try {
                 const { data } = await UserRequest.get('content/all' + this.query)
                 this.contents = data.data
                 this.total = data.total;
+                this.last_page = data.last_page;
                 this.isLoading = false;
             }
             catch (error) {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
                 this.isLoading = false;
             }
+            this.reRenderPaginate();
         },
-
         truncatedTitle(title) {
             const maxLength = 150;
             if (title.length > maxLength) return title.slice(0, maxLength) + '...';
@@ -323,12 +342,7 @@ export default {
         },
 
         clickCallback: function (pageNum) {
-            this.page = pageNum;
-        },
-
-        handleSearchSelect() {
-            this.page = 1;
-            this.getContents();
+            this.big_search.page = pageNum;
         },
 
         selectContent: function (contentSelected) {
@@ -363,17 +377,15 @@ export default {
 
     },
     watch: {
+        big_search: {
+            handler: function () {
+                this.getContents();
+            },
+            deep: true 
+        },
         search: _.debounce(function () {
-            this.handleSearchSelect();
+            this.getContents();
         }, 500),
-        'perPage': 'handleSearchSelect',
-        'selectedCategory': 'handleSearchSelect',
-        'page': 'getContents',
-        'typesort': 'getContents',
-        'sortlatest': 'getContents',
-        'is_delete': 'getContents',
-        'content_type': 'getContents',
-        'role': 'getContents',
     }
 }
 </script>

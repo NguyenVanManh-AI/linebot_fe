@@ -10,7 +10,8 @@
                 </div>
                 <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
                     <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control form-control-sm" v-model="perPage">
+                        <select content="Pagination" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -18,7 +19,8 @@
                         </select>
                     </div>
                     <div class="col-1 pl-0">
-                        <select content="Sort by" v-tippy class="form-control form-control-sm" v-model="typesort">
+                        <select content="Sort by" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.typesort">
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="status">Status</option>
@@ -26,13 +28,15 @@
                         </select>
                     </div>
                     <div class="col-1 pl-0">
-                        <select content="In direction" v-tippy class="form-control form-control-sm" v-model="sortlatest">
+                        <select content="In direction" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Filter by delete" v-tippy class="form-control form-control-sm" v-model="is_delete">
+                        <select content="Filter by delete" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.is_delete">
                             <option value="all">All Content</option>
                             <option value="1">Deleted Broadcast</option>
                             <option value="0">Normal Broadcast</option>
@@ -40,7 +44,7 @@
                     </div>
                     <div class="col-2 pl-0">
                         <select content="Filter by broadcast status" v-tippy class="form-control form-control-sm"
-                            v-model="status">
+                            v-model="big_search.status">
                             <option value="all">All Broadcast</option>
                             <option value="draf">Draf</option>
                             <option value="scheduled">Scheduled</option>
@@ -49,7 +53,7 @@
                         </select>
                     </div>
                     <div class="col-1 pl-0" v-if="user.role == 'manager'">
-                        <select content="Role" v-tippy class="form-control form-control-sm" v-model="role">
+                        <select content="Role" v-tippy class="form-control form-control-sm" v-model="big_search.role">
                             <option value="all">All</option>
                             <option value="manager">Manager</option>
                             <option value="user">User</option>
@@ -66,14 +70,15 @@
                     </div>
                     <div class="pr-1">
                         <div class="input-group ">
-                            <button content="Test Send Mutilcast" v-tippy data-toggle="modal" data-target="#testSendMutilcast" type="button"
-                                class="btn btn-info"><i class="fa-solid fa-message"></i></button>
+                            <button content="Test Send Mutilcast" v-tippy data-toggle="modal"
+                                data-target="#testSendMutilcast" type="button" class="btn btn-info"><i
+                                    class="fa-solid fa-message"></i></button>
                         </div>
                     </div>
                     <div class="pr-1">
                         <div class="input-group ">
-                            <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast" type="button"
-                                class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+                            <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast"
+                                type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
                     <div class="pr-0" v-if="selectedBroadcasts.length > 0">
@@ -102,21 +107,24 @@
                                 <th scope="col"><i class="fa-solid fa-user-clock"></i> Sender</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-clock"></i> Send At</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at
+                                </th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(broadcast, index) in broadcasts" :key="index">
-                                <th class="table-cell" scope="row"><input :checked="isSelected(broadcast.id)" type="checkbox"
-                                        class="" @change="handleSelect(broadcast.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (page - 1) * perPage + index + 1 }}</th>
-                                <td :class="{'table-cell':true,'text-uppercase':true, 
-                                    'colorDraf':broadcast.status == 'draf',
-                                    'colorScheduled':broadcast.status == 'scheduled',
-                                    'colorSent':broadcast.status == 'sent',
-                                    'colorFailed':broadcast.status == 'failed',
-                                    }"> 
+                                <th class="table-cell" scope="row"><input :checked="isSelected(broadcast.id)"
+                                        type="checkbox" class="" @change="handleSelect(broadcast.id)"></th>
+                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage + index +
+                                    1 }}</th>
+                                <td :class="{
+                                    'table-cell': true, 'text-uppercase': true,
+                                    'colorDraf': broadcast.status == 'draf',
+                                    'colorScheduled': broadcast.status == 'scheduled',
+                                    'colorSent': broadcast.status == 'sent',
+                                    'colorFailed': broadcast.status == 'failed',
+                                }">
                                     {{ broadcast.status }}</td>
                                 <td class="table-cell ">
                                     <div class="contentTextTable" v-html="broadcast.title"></div>
@@ -132,12 +140,14 @@
                                 <td class="table-cell text-center">{{ formatDate(broadcast.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(broadcast.updated_at) }}</td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#viewDetailBroadcast" v-tippy="{ content: 'View Detail' }"
-                                        class="viewDetailBroadcast text-success" @click="selectBroadcast(broadcast)">
+                                    <button data-toggle="modal" data-target="#viewDetailBroadcast"
+                                        v-tippy="{ content: 'View Detail' }" class="viewDetailBroadcast text-success"
+                                        @click="selectBroadcast(broadcast)">
                                         <i class="fa-solid fa-eye"></i>
                                     </button>
-                                    <button data-toggle="modal" data-target="#updateBroadcast" v-tippy="{ content: 'Update' }"
-                                        class="updateBroadcast text-primary" @click="selectBroadcast(broadcast)">
+                                    <button data-toggle="modal" data-target="#updateBroadcast"
+                                        v-tippy="{ content: 'Update' }" class="updateBroadcast text-primary"
+                                        @click="selectBroadcast(broadcast)">
                                         <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
                                     </button>
                                     <button data-toggle="modal" data-target="#deleteBroadcast"
@@ -152,17 +162,22 @@
                     </table>
                 </div>
                 <div id="divpaginate" class="mt-2">
-                    <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
-                        :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
-                        :container-class="'pagination'" :page-class="'page-item'">
+                    <paginate v-if="paginateVisible" :page-count="last_page" :page-range="3" :margin-pages="2"
+                        :click-handler="clickCallback" :initial-page="big_search.page" :prev-text="'Prev'"
+                        :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddBroadcast :getBroadcasts="getBroadcasts"></AddBroadcast>
-                <TestSendMulticast :getBroadcasts="getBroadcasts"></TestSendMulticast>
-                <UpdateBroadcast :getBroadcasts="getBroadcasts" :broadcastSelected="broadcastSelected"></UpdateBroadcast>
-                <DeleteBroadcast :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DeleteBroadcast>
-                <DetailBroadcast :broadcastSelected="broadcastSelected" :getStickerImageUrl="getStickerImageUrl"></DetailBroadcast>
-                <DeleteManyBroadcast :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts" :getStickerImageUrl="getStickerImageUrl"></DeleteManyBroadcast>
+                <AddBroadcast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></AddBroadcast>
+                <TestSendMulticast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts">
+                </TestSendMulticast>
+                <UpdateBroadcast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"
+                    :broadcastSelected="broadcastSelected"></UpdateBroadcast>
+                <DeleteBroadcast :dataContents="dataContents" :channel="channel" :broadcastSelected="broadcastSelected"
+                    :getStickerImageUrl="getStickerImageUrl"></DeleteBroadcast>
+                <DetailBroadcast :dataContents="dataContents" :channel="channel" :broadcastSelected="broadcastSelected"
+                    :getStickerImageUrl="getStickerImageUrl"></DetailBroadcast>
+                <DeleteManyBroadcast :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts"
+                    :getStickerImageUrl="getStickerImageUrl"></DeleteManyBroadcast>
             </div>
         </div>
     </div>
@@ -199,15 +214,19 @@ export default {
         return {
             config: config,
             total: 0,
-            perPage: 5,
-            page: 1,
-            typesort: 'new',
-            sortlatest: 'true',
-            search: '',
-            is_delete: 'all',
-            status: 'all',
-            role: 'all',
+            last_page: 1,
             query: '',
+            search: '',
+            paginateVisible: true,
+            big_search: {
+                perPage: 5,
+                page: 1,
+                typesort: 'new',
+                sortlatest: 'true',
+                is_delete: '0',
+                status: 'all',
+                role: 'all',
+            },
             broadcasts: [],
             broadcastSelected: {
                 id: '',
@@ -216,6 +235,18 @@ export default {
                 is_delete: null,
                 creator_name: null,
                 updater_name: null,
+            },
+            channel: {
+                channel_id: null,
+                channel_name: null,
+                channel_secret: null,
+                channel_access_token: null,
+                picture_url: null,
+            },
+            dataContents: {
+                stickers: null,
+                images: null,
+                texts: null,
             },
             selectedBroadcasts: [],
             isLoading: false,
@@ -241,6 +272,14 @@ export default {
                 token_type: null,
                 access_token: null,
             },
+            // perPage: 5,
+            // page: 1,
+            // typesort: 'new',
+            // sortlatest: 'true',
+            // search: '',
+            // is_delete: '0',
+            // status: 'all',
+            // role: 'all',
         }
     },
 
@@ -253,14 +292,21 @@ export default {
         this.user = JSON.parse(localStorage.getItem('user'));
         const queryString = window.location.search;
         const searchParams = new URLSearchParams(queryString);
-        this.perPage = parseInt(searchParams.get('paginate')) || 5;
-        this.typesort = searchParams.get('typesort') || 'new';
-        this.sortlatest = searchParams.get('sortlatest') || 'true';
         this.search = searchParams.get('search') || '';
-        this.is_delete = searchParams.get('is_delete') || '0';
-        this.role = searchParams.get('role') || 'all';
-        this.status = searchParams.get('status') || 'all';
+        this.big_search = {
+            perPage : parseInt(searchParams.get('paginate')) || 5,
+            page : searchParams.get('page') || 1,
+            typesort : searchParams.get('typesort') || 'new',
+            sortlatest : searchParams.get('sortlatest') || 'true',
+            is_delete : searchParams.get('is_delete') || '0',
+            role : searchParams.get('role') || 'all',
+            status : searchParams.get('status') || 'all',
+        }
+        // Note vì dưới có watch nên các tham số khởi tạo ban đầu này phải giống return data nếu không có sẽ gọi nhiều lần ứng với số param khác trên kia 
+        // ví dụ trên is_delete là 'all' mà dưới này là 0 thì nó khác 
+        this.getInforChannel();
         this.getBroadcasts();
+        this.getDataContents();
 
         onEvent('updateBroadcastSuccess', (contentUpdate) => {
             this.contents.forEach(content => {
@@ -292,93 +338,110 @@ export default {
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
+        getInforChannel: async function () {
+            try {
+                const { data } = await UserRequest.get('user/infor-channel');
+                this.channel = data;
+            }
+            catch (error) {
+                if (error.messages) emitEvent('eventError', error.messages[0]);
+            }
+        },
+        getDataContents: async function () {
+            var dataQuery = {
+                search: ''
+            };
+            try {
+                const { data } = await UserRequest.post('content/for-broadcast', dataQuery)
+                this.dataContents = data;
+            }
+            catch (error) {
+                if (error.messages) emitEvent('eventError', error.messages[0]);
+            }
+        },
+        reRenderPaginate: function () { // cách xử lí initial-page cho paginate và v-if nó vì vuejs v-if là xóa hoàn toàn khỏi DOM 
+            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page; // cách xử lí page vượt quá dữ liệu đổ ra  
+            this.paginateVisible = false;
+            this.$nextTick(() => { this.paginateVisible = true; });
+        },
         getBroadcasts: async function () {
             this.selectedBroadcasts = [];
             this.isLoading = true;
-            this.query = '?search=' + this.search + '&typesort=' + this.typesort + '&sortlatest=' + this.sortlatest
-                + '&is_delete=' + this.is_delete + '&status=' + this.status + '&role=' + this.role + '&paginate=' + this.perPage + '&page=' + this.page;
+            this.query = '?search=' + this.search + '&typesort=' + this.big_search.typesort + '&sortlatest=' + this.big_search.sortlatest
+                + '&is_delete=' + this.big_search.is_delete + '&status=' + this.big_search.status + '&role=' + this.big_search.role + '&paginate=' + this.big_search.perPage + '&page=' + this.big_search.page;
             window.history.pushState({}, null, this.query);
 
             try {
                 const { data } = await UserRequest.get('broadcast/all' + this.query)
                 this.broadcasts = data.data
                 this.total = data.total;
+                this.last_page = data.last_page;
                 this.isLoading = false;
             }
             catch (error) {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
                 this.isLoading = false;
             }
+            this.reRenderPaginate();
         },
-
         truncatedTitle(title) {
             const maxLength = 150;
             if (title.length > maxLength) return title.slice(0, maxLength) + '...';
             else return title;
         },
-
         formatDate: function (date) {
             return date.split('T')[0]
         },
-
         clickCallback: function (pageNum) {
-            this.page = pageNum;
+            this.big_search.page = pageNum;
         },
-
-        handleSearchSelect() {
-            this.page = 1;
-            this.getBroadcasts();
-        },
-
         selectBroadcast: function (broadcastSelected) {
             emitEvent('selectSimpleBroadcast', broadcastSelected);
             this.broadcastSelected = broadcastSelected;
         },
-
         isSelected(contentId) {
             return this.selectedBroadcasts.includes(contentId);
         },
-
         handleSelect: function (contentId) {
             const index = this.selectedBroadcasts.indexOf(contentId);
             if (index === -1) this.selectedBroadcasts.push(contentId);
             else this.selectedBroadcasts.splice(index, 1);
         },
-
         selectAll: function () {
             const checkbox = this.$refs.selectAllCheckbox;
             if (checkbox.checked) this.selectedBroadcasts = this.broadcasts.map(broadcast => broadcast.id);
             else this.selectedBroadcasts = [];
         },
-
         changeIsDelete: async function (content) {
             this.broadcastSelected = content;
         },
-
         changedeleteManyBroadcast: function (is_delete) {
             emitEvent('selectManyBroadcast', this.broadcasts);
             this.isDeleteChangeMany = is_delete;
-        }
-
+        },
     },
     watch: {
+        big_search: {
+            handler: function () {
+                this.getBroadcasts();
+            },
+            deep: true // Theo dõi sâu vào các thuộc tính con của big_search
+        }, // nên dùng như này thay vì tách các param ra riêng vì nó sẽ gọi hàm getBroadcasts nhiều lần , các param con thay đổi thì chỉ gọi hàm getBroadcasts 1 lần 
         search: _.debounce(function () {
-            this.handleSearchSelect();
+            this.getBroadcasts();
         }, 500),
-        'perPage': 'handleSearchSelect',
-        'selectedCategory': 'handleSearchSelect',
-        'page': 'getBroadcasts',
-        'typesort': 'getBroadcasts',
-        'sortlatest': 'getBroadcasts',
-        'is_delete': 'getBroadcasts',
-        'status': 'getBroadcasts',
-        'role': 'getBroadcasts',
+        // 'perPage': 'handleSearchSelect',
+        // 'page': 'getBroadcasts',
+        // 'typesort': 'getBroadcasts',
+        // 'sortlatest': 'getBroadcasts',
+        // 'is_delete': 'getBroadcasts',
+        // 'status': 'getBroadcasts',
+        // 'role': 'getBroadcasts',
     }
 }
 </script>
 
 <style scoped>
-
 .contentTextTable {
     max-width: 120px;
     overflow: hidden;
@@ -445,6 +508,7 @@ tr th {
     transition: all 0.5s ease;
     font-size: 22px;
 }
+
 .viewDetailBroadcast i:hover {
     transition: all 0.5s ease;
     color: var(--user-color);
@@ -486,7 +550,7 @@ table img {
     justify-content: center;
 }
 
-.imgInTable  img {
+.imgInTable img {
     border-radius: 4px;
 }
 
@@ -510,8 +574,4 @@ table button {
 .colorFailed {
     color: red;
 }
-
-
-
-
 </style>
