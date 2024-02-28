@@ -2,14 +2,14 @@
     <div>
         <div id="big">
             <div class="bigContainer">
-                <div class="modal fade" id="addBroadcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="updateBroadcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel"><strong><i
                                             class="fa-solid fa-business-time"></i>
-                                        Add Broadcast</strong></h5>
+                                        Update Broadcast</strong></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" class="text-danger"><i
                                             class="fa-regular fa-circle-xmark"></i></span>
@@ -108,12 +108,12 @@
                                             <div class="row">
                                                 <div class="col-12 mt-4">
                                                     <div>
-                                                        <button @click="addBroadcast('draf')" type="button"
+                                                        <button @click="updateBroadcast('draf')" type="button"
                                                             class="mt-4 btn-pers" id="login_button"><i
                                                                 class="fa-solid fa-plus"></i> Draf</button>
-                                                        <button @click="addBroadcast('scheduled')" type="button"
+                                                        <button @click="updateBroadcast('scheduled')" type="button"
                                                             class="mt-4 ml-6 btn-pers" id="login_button"><i
-                                                                class="fa-solid fa-paper-plane"></i> Add</button>
+                                                                class="fa-solid fa-floppy-disk"></i> Update</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,17 +181,16 @@
 <script>
 import useEventBus from '@/composables/useEventBus'
 import UserRequest from '@/restful/UserRequest';
-const { emitEvent } = useEventBus();
+const { emitEvent, onEvent } = useEventBus();
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { formatDate } from '@/helper.js';
 // import moment from 'moment';
-// sortable 
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui'; // Import jQuery UI
 
 export default {
-    name: "AddBroadcast",
+    name: "UpdateBroadcast",
     props: {
         channel: Object,
         dataContents: Object,
@@ -205,20 +204,18 @@ export default {
     data() {
         return {
             dateTime: new Date().toISOString(),
-            optionSendnow: 'send_now',
+            optionSendnow: 'select_time',
             dataBroadcastSubmit: {
+                id: null,
                 title: null,
                 content_ids: [],
                 sent_at: null,
                 status: null,
             },
             previewContents: [],
+
             isTab: 'text',
-            member: {
-                name: null,
-                email: null,
-                line_user_id: null,
-            },
+            previewImageSrc: null,
             errors: {
                 title: null,
                 content_ids: null,
@@ -259,6 +256,12 @@ export default {
     },
     mounted() {
         $(this.$el).find(".inner_preview").sortable(); // Sắp xếp cho inner_preview
+        onEvent('selectSimpleBroadcast', (broadcast) => {
+            this.dataBroadcastSubmit = Object.assign({}, broadcast); // tránh gán tham chiếu 
+            this.dateTime = broadcast.sent_at;
+            this.previewContents = broadcast.contents;
+        });
+
     },
 
     computed: {
@@ -301,7 +304,7 @@ export default {
             });
             return idMessages;
         },
-        addBroadcast: async function (status) {
+        updateBroadcast: async function (status) {
             this.dataBroadcastSubmit.content_ids = this.updateNewArrayId();
             this.dataBroadcastSubmit.status = status;
             if (this.optionSendnow == 'send_now') {
@@ -310,10 +313,10 @@ export default {
                 this.dataBroadcastSubmit.sent_at = formattedDate;
             }
             try {
-                const { messages } = await UserRequest.post('broadcast/add', this.dataBroadcastSubmit, true);
+                const { messages } = await UserRequest.post('broadcast/update/' + this.dataBroadcastSubmit.id, this.dataBroadcastSubmit, true);
                 emitEvent('eventSuccess', messages[0]);
                 for (let key in this.errors) this.errors[key] = null;
-                var closePW = window.document.getElementById('addBroadcast');
+                var closePW = window.document.getElementById('updateBroadcast');
                 closePW.click();
                 this.dataBroadcastSubmit = {
                     title: null,
@@ -336,11 +339,16 @@ export default {
     },
     watch: {
         dateTime: function (newDateTime) {
-            if (newDateTime) {
-                const formattedDate = formatDate(newDateTime);
-                this.dataBroadcastSubmit.sent_at = formattedDate;
-                this.optionSendnow = 'select_time';
-                console.log(this.dataBroadcastSubmit.sent_at);
+            if (typeof newDateTime === 'string') { // mounted gán cho dateTime đầu tiên {
+                this.dataBroadcastSubmit.sent_at = newDateTime;
+            }
+            else {
+                if (newDateTime) { // tránh trường hợp clear input dateTime 
+                    const formattedDate = formatDate(newDateTime);
+                    this.dataBroadcastSubmit.sent_at = formattedDate;
+                    this.optionSendnow = 'select_time';
+                    console.log(this.dataBroadcastSubmit.sent_at);
+                }
             }
         },
     },

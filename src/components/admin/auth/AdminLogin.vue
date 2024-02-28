@@ -12,21 +12,25 @@
 					<form @submit.prevent="login()">
 						<h4>Admin Login</h4><br>
 						<div class="input-form">
-							<input v-model="loginAdmin.email" required><div class="underline"></div>
+							<input v-model="loginAdmin.email" required>
+							<div class="underline"></div>
 							<label><i class="fa-solid fa-envelope"></i> Email</label>
 						</div>
 						<span v-if="errors.email" class="text-danger">{{ errors.email[0] }}</span>
 						<br>
 						<br>
 						<div class="input-form">
-							<input required id="inputPassword" :type="isShow ? 'text' : 'password'" v-model="loginAdmin.password">
-							<strong id="iconEye"><i @click="isShow = !isShow" :class="{ 'fa-solid': true, 'fa-eye': !isShow, 'fa-eye-slash': isShow }"></i></strong>
+							<input required id="inputPassword" :type="isShow ? 'text' : 'password'"
+								v-model="loginAdmin.password">
+							<strong id="iconEye"><i @click="isShow = !isShow"
+									:class="{ 'fa-solid': true, 'fa-eye': !isShow, 'fa-eye-slash': isShow }"></i></strong>
 							<!-- replace strong element by span element will result in an error -->
 							<div class="underline"></div><label><i class="fa-solid fa-lock"></i> Password</label>
 						</div>
 						<span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
 						<br>
-						<button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</button>
+						<button type="submit" class="mt-4 btn-pers" id="login_button"><i
+								class="fa-solid fa-arrow-right-to-bracket"></i> Login</button>
 					</form>
 				</div>
 			</div>
@@ -81,7 +85,7 @@ export default {
 	},
 	mounted() {
 		var appMain = window.document.getElementById('appMain');
-		appMain.style.paddingLeft  = '0px'
+		appMain.style.paddingLeft = '0px'
 	},
 	methods: {
 		login: function () {
@@ -92,7 +96,7 @@ export default {
 					data.messages.forEach(message => {
 						emitEvent('eventSuccess', message);
 					});
-					this.$router.push({ name: 'ManageManager' }); 
+					this.$router.push({ name: 'ManageManager' });
 				})
 				.catch(error => {
 					if (error.errors) this.errors = error.errors;

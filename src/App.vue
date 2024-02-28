@@ -1,13 +1,13 @@
 <template>
-  <div >
+  <div>
     <!-- ta có thể thêm style="background-color: aqua;" vào thẻ breeding-rhombus-spinner-->
-    <template :class="{loading:true, hide:!isLoading, show:isLoading}">
-      <breeding-rhombus-spinner class="loading-component" :animation-duration="2000" :size="65" color="#06C755"  />
+    <template :class="{ loading: true, hide: !isLoading, show: isLoading }">
+      <breeding-rhombus-spinner class="loading-component" :animation-duration="2000" :size="65" color="#06C755" />
       <div id="titleLoading">
         <i class="fa-brands fa-line"></i> LINE Bot - Support LINE OA
       </div>
     </template>
-    <template id="appMain" :class="{hide:isLoading, show:!isLoading}">
+    <template id="appMain" :class="{ hide: isLoading, show: !isLoading }">
       <router-view></router-view>
       <CommonNotification></CommonNotification>
     </template>
@@ -35,11 +35,11 @@ export default {
     }
   },
   mounted() {
-    onEvent('eventLoading',(isLoading)=>{
+    onEvent('eventLoading', (isLoading) => {
       this.isLoading = isLoading;
     })
   },
-  watch:{
+  watch: {
 
   }
   // async mounted() {
@@ -61,7 +61,6 @@ export default {
   => dùng bind class cũng được 
 -->
 <style >
-
 * {
   margin: 0;
   padding: 0;
@@ -69,7 +68,7 @@ export default {
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 li {
@@ -79,6 +78,14 @@ li {
 a {
   text-decoration: none;
 }
+
+/* .tippy-box[data-state="visible"] .tippy-content {
+  background-color: black !important;
+  color: white;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+*/
 
 body {
   background-color: #F0F2F5 !important;
@@ -93,6 +100,7 @@ body {
   --yellow-color: #c0b01d;
   /* --admin-color: #096a31; */
 }
+
 /* color default */
 
 
@@ -175,6 +183,7 @@ button {
     opacity: 0;
   }
 }
+
 /* animation */
 
 .hide {
@@ -189,35 +198,48 @@ button {
 
 /*  */
 .btn-pers {
-	position: relative;
-	left: 50%;
-	padding: 1em 2.5em;
-	font-size: 12px;
-	text-transform: uppercase;
-	letter-spacing: 2.5px;
-	font-weight: 700;
-	color: #000;
-	background-color: #fff;
-	border: none;
-	border-radius: 45px;
-	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease 0s;
-	cursor: pointer;
-	outline: none;
-	transform: translateX(-50%);
+  position: relative;
+  left: 50%;
+  padding: 1em 2.5em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  transform: translateX(-50%);
 }
 
 .btn-pers:hover {
-	background-color: var(--user-color);
-	box-shadow: 0px 15px 20px #80ffb5;
-	color: #fff;
-	transform: translate(-50%, -7px);
+  background-color: var(--user-color);
+  box-shadow: 0px 15px 20px #80ffb5;
+  color: #fff;
+  transform: translate(-50%, -7px);
 }
 
 .btn-pers:active {
-	transform: translate(-50%, -1px);
+  transform: translate(-50%, -1px);
 }
+
 /*  */
 
+button.close span {
+  color: black !important;
+  transition: color 0.5s ease !important;
+}
 
+button.close:hover span {
+  color: red !important;
+  transition: color 0.5s ease !important;
+}
+
+.color-header {
+  color: var(--user-color);
+}
 </style>

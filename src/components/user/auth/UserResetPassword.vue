@@ -9,7 +9,7 @@
 			<br><br>
 			<div id="big">
 				<div class="container">
-                    <form @submit.prevent="resetPassword()">
+					<form @submit.prevent="resetPassword()">
 						<h4>Form Reset Password</h4><br>
 						<br>
 						<div class="input-form">
@@ -20,22 +20,25 @@
 							<div class="underline"></div><label><i class="fa-solid fa-lock"></i> New Password</label>
 						</div>
 						<span v-if="errors.new_password" class="text-danger">{{ errors.new_password[0] }}<br></span>
-                        <br>
+						<br>
 						<div class="input-form">
 							<input required id="inputPassword" :type="isShow2 ? 'text' : 'password'"
 								v-model="submitPassword.new_password_confirmation">
 							<strong id="iconEye"><i @click="isShow2 = !isShow2"
 									:class="{ 'fa-solid': true, 'fa-eye': !isShow2, 'fa-eye-slash': isShow2 }"></i></strong>
-							<div class="underline"></div><label><i class="fa-solid fa-lock"></i>  New Password Confirmation </label>
+							<div class="underline"></div><label><i class="fa-solid fa-lock"></i> New Password Confirmation
+							</label>
 						</div>
-						<span v-if="errors.new_password_confirmation" class="text-danger">{{ errors.new_password_confirmation[0] }}</span>
+						<span v-if="errors.new_password_confirmation" class="text-danger">{{
+							errors.new_password_confirmation[0] }}</span>
 						<br>
-						<button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-paper-plane"></i> Submit</button>
+						<button type="submit" class="mt-4 btn-pers" id="login_button"><i
+								class="fa-solid fa-paper-plane"></i> Submit</button>
 					</form>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 import useEventBus from '@/composables/useEventBus'
@@ -43,53 +46,53 @@ import UserRequest from '@/restful/UserRequest';
 const { emitEvent } = useEventBus();
 
 export default {
-    name: "UserResetPassword",
-    components: {
-        
-    },
-    data(){
-        return {
-            token:null,
-            submitPassword:{
-                new_password:'',
-                new_password_confirmation:'',
-                token:''
-            },
+	name: "UserResetPassword",
+	components: {
+
+	},
+	data() {
+		return {
+			token: null,
+			submitPassword: {
+				new_password: '',
+				new_password_confirmation: '',
+				token: ''
+			},
 			errors: {
-                new_password:'',
-                new_password_confirmation:'',
+				new_password: '',
+				new_password_confirmation: '',
 			},
 			isShow1: false,
 			isShow2: false,
-        }
-    },
-    mounted(){
-        var appMain = window.document.getElementById('appMain');
-		appMain.style.paddingLeft  = '0px'
-        
-        window.document.title='LINE OA Reset Password | LINE Bot';
-        let urlParams = new URLSearchParams(window.location.search);
-        if(urlParams.has('token')) this.submitPassword.token = urlParams.get('token');
-    },
-    methods: {
-        resetPassword: async function(){
-            try {
-                const {messages} = await UserRequest.post('user/forgot-update', this.submitPassword, true);
-                emitEvent('eventSuccess', messages[0]);
-                for (let key in this.errors) this.errors[key] = null;
-                this.$router.push({ name: 'UserLogin' }); 
-            }
-            catch(error) {
-                if (error.errors) this.errors = error.errors;
-                else for (let key in this.errors) this.errors[key] = null;
-                if (error.messages) {
-                    error.messages.forEach(message => {
-                        emitEvent('eventError', message);
-                    });
-                }
-            }
-        },
-    }
+		}
+	},
+	mounted() {
+		var appMain = window.document.getElementById('appMain');
+		appMain.style.paddingLeft = '0px'
+
+		window.document.title = 'LINE OA Reset Password | LINE Bot';
+		let urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.has('token')) this.submitPassword.token = urlParams.get('token');
+	},
+	methods: {
+		resetPassword: async function () {
+			try {
+				const { messages } = await UserRequest.post('user/forgot-update', this.submitPassword, true);
+				emitEvent('eventSuccess', messages[0]);
+				for (let key in this.errors) this.errors[key] = null;
+				this.$router.push({ name: 'UserLogin' });
+			}
+			catch (error) {
+				if (error.errors) this.errors = error.errors;
+				else for (let key in this.errors) this.errors[key] = null;
+				if (error.messages) {
+					error.messages.forEach(message => {
+						emitEvent('eventError', message);
+					});
+				}
+			}
+		},
+	}
 }
 </script>
 

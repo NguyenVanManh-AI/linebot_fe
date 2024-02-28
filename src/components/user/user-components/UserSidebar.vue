@@ -24,7 +24,7 @@
                   class="fa-brands fa-keycdn"></i><span class="links_name">Information channel</span></router-link>
             </li>
           </span> -->
-          <span :class="{'hide':user.role !='manager'}" > <!-- nếu dùng v-if ở đây thì một số style not working -->
+          <span :class="{ 'hide': user.role != 'manager' }"> <!-- nếu dùng v-if ở đây thì một số style not working -->
             <li>
               <router-link class="links" data-path="member-account" :to="{ name: 'MemberAccount' }"><i
                   class="fa-solid fa-users"></i><span class="links_name">Channel manages</span></router-link>
@@ -43,7 +43,7 @@
                   broadcast</span></router-link>
             </li>
           </span>
-          <span :class="{'hide':user.role !='manager'}" >
+          <span :class="{ 'hide': user.role != 'manager' }">
             <li>
               <router-link class="links" data-path="statistical-channel" :to="{ name: 'StatisticalChannel' }"><i
                   class="fa-solid fa-chart-pie"></i><span class="links_name">Statistical channel</span></router-link>

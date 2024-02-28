@@ -21,7 +21,8 @@
       </div>
       <div class="profile">
         <div class="profile-details">
-          <img id="avatar_sidebar" :src="admin.avatar ? admin.avatar : require('@/assets/avatar-admin.jpg')" alt="Avatar Admin">
+          <img id="avatar_sidebar" :src="admin.avatar ? admin.avatar : require('@/assets/avatar-admin.jpg')"
+            alt="Avatar Admin">
           <div class="name_job">
             <div class="name">Admin LINE OA</div>
             <div class="job"><i class="fa-solid fa-user-shield"></i> admin</div>
@@ -52,15 +53,15 @@ export default {
   data() {
     return {
       isAdminOpened: true,
-			admin: {
-				id: null,
-				email: null,
-				created_at: null,
-				updated_at: null,
-				access_token: null,
-				token_type: null,
-				expires_in: null,
-			},
+      admin: {
+        id: null,
+        email: null,
+        created_at: null,
+        updated_at: null,
+        access_token: null,
+        token_type: null,
+        expires_in: null,
+      },
     }
   },
   methods: {
@@ -72,7 +73,7 @@ export default {
       window.localStorage.removeItem('admin');
       this.$router.push({ name: "AdminLogin" });
       var appMain = window.document.getElementById('appMain');
-      appMain.style.paddingLeft  = '0px'
+      appMain.style.paddingLeft = '0px'
     }
   },
   mounted() {
@@ -153,6 +154,7 @@ body {
   border-radius: 6px;
   margin-right: 10px;
 }
+
 .active {
   background-color: var(--admin-color);
 }
@@ -264,6 +266,7 @@ body {
   list-style: none;
   cursor: pointer;
 }
+
 .sidebar li a {
   display: flex;
   height: 100%;

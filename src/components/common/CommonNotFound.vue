@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 #page_not_found {
-  color: #027CFB; 
+  color: #027CFB;
   text-align: center;
   width: 100%;
   height: 100vh;

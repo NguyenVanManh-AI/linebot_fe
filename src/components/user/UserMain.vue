@@ -22,13 +22,13 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 
 export default {
     name: "UserMain",
-    mounted(){
-        
+    mounted() {
+
     },
     data() {
-      return {
+        return {
 
-    };
+        };
     },
     components: {
         UserSidebar,
@@ -36,7 +36,7 @@ export default {
         CommonHeader,
     },
     methods: {
-        
+
     },
 
 }
@@ -56,12 +56,11 @@ export default {
     margin-top: 16px;
 }
 
-.innerContent > div {
+.innerContent>div {
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     border-radius: 4px;
     padding: 10px 15px;
     padding-bottom: 20px;
     background-color: white;
 }
-
 </style>

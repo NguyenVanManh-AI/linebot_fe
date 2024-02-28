@@ -6,59 +6,73 @@
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form @submit.prevent="addContent()">
-                                <h4 class="text-center text-success"><strong><i class="fa-solid fa-envelope-open-text"></i>
-                                        Add Content Channel</strong></h4><br>
-                                <ul class="nav nav-tabs mainTab">
-                                    <li @click="isTab = 'text'" class="nav-item  font-weight-bold">
-                                        <a :class="{ 'nav-link': true, 'colorText': true, 'active': isTab == 'text' }"
-                                            aria-current="page" href="#"><i class="fa-solid fa-quote-left"></i> Text</a>
-                                    </li>
-                                    <li @click="isTab = 'sticker'" class="nav-item font-weight-bold">
-                                        <a :class="{ 'nav-link': true, 'colorSticker': true, 'active': isTab == 'sticker' }"
-                                            href="#"><i class="fa-solid fa-icons"></i> Sticker</a>
-                                    </li>
-                                    <li @click="isTab = 'image'" class="nav-item font-weight-bold">
-                                        <a :class="{ 'nav-link': true, 'colorImage': true, 'active': isTab == 'image' }"
-                                            href="#"><i class="fa-solid fa-image"></i> Image</a>
-                                    </li>
-                                </ul>
-                                <div class="loadContent" v-if="isTab == 'text'">
-                                    <div class="col-12 mx-auto">
-                                        <div class="input-form">
-                                            <textarea v-model="dataText.content_data.text" type="text" required
-                                                class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                placeholder="Content Text">
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="loadContent mainSticker" v-if="isTab == 'sticker'">
-                                    <div class="listSticker"
-                                        v-for="(packageSticker, indexPackageSticker) in packageStickers"
-                                        :key="indexPackageSticker">
-                                        <li @click="selectedSticker(stickerId, packageSticker.packageId)" class="itemSticker" v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
-                                            :key="stickerId">
-                                            <input :checked="this.dataSticker.content_data.stickerId == stickerId" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-                                            <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong><i
+                                            class="fa-solid fa-envelope-open-text"></i>
+                                        Add Content Channel</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="text-danger"><i
+                                            class="fa-regular fa-circle-xmark"></i></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form @submit.prevent="addContent()">
+                                    <ul class="nav nav-tabs mainTab">
+                                        <li @click="isTab = 'text'" class="nav-item  font-weight-bold">
+                                            <a :class="{ 'nav-link': true, 'colorText': true, 'active': isTab == 'text' }"
+                                                aria-current="page" href="#"><i class="fa-solid fa-quote-left"></i> Text</a>
                                         </li>
-                                    </div>
-                                </div>
-                                <div class="loadContent" v-if="isTab == 'image'">
-                                    <div class="minAvatar">
-                                        <input required class="input-file" type="file" @change="previewImage" accept="image/*"
-                                            ref="fileInput" />
-                                        <span class="iconClound" v-if="previewImageSrc == null"><i
-                                                class="fa-solid fa-cloud-arrow-up"></i></span>
-                                        <div v-if="previewImageSrc" class="box-preview">
-                                            <img class="preview" :src="previewImageSrc" alt="Preview" />
-                                            <img src="@/assets/error.png" @click="removeFile" class="close" alt="Remove">
+                                        <li @click="isTab = 'sticker'" class="nav-item font-weight-bold">
+                                            <a :class="{ 'nav-link': true, 'colorSticker': true, 'active': isTab == 'sticker' }"
+                                                href="#"><i class="fa-solid fa-icons"></i> Sticker</a>
+                                        </li>
+                                        <li @click="isTab = 'image'" class="nav-item font-weight-bold">
+                                            <a :class="{ 'nav-link': true, 'colorImage': true, 'active': isTab == 'image' }"
+                                                href="#"><i class="fa-solid fa-image"></i> Image</a>
+                                        </li>
+                                    </ul>
+                                    <div class="loadContent" v-if="isTab == 'text'">
+                                        <div class="col-12 mx-auto">
+                                            <div class="input-form">
+                                                <textarea v-model="dataText.content_data.text" type="text" required
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" placeholder="Content Text">
+                                            </textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button type="submit" class="mt-4 btn-pers" id="login_button"><i
-                                        class="fa-solid fa-paper-plane"></i> Add</button>
-                            </form>
+                                    <div class="loadContent mainSticker" v-if="isTab == 'sticker'">
+                                        <div class="listSticker"
+                                            v-for="(packageSticker, indexPackageSticker) in packageStickers"
+                                            :key="indexPackageSticker">
+                                            <li @click="selectedSticker(stickerId, packageSticker.packageId)"
+                                                class="itemSticker"
+                                                v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
+                                                :key="stickerId">
+                                                <input :checked="this.dataSticker.content_data.stickerId == stickerId"
+                                                    class="form-check-input" type="radio" name="exampleRadios"
+                                                    id="exampleRadios1" value="option1">
+                                                <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
+                                            </li>
+                                        </div>
+                                    </div>
+                                    <div class="loadContent" v-if="isTab == 'image'">
+                                        <div class="minAvatar">
+                                            <input required class="input-file" type="file" @change="previewImage"
+                                                accept="image/*" ref="fileInput" />
+                                            <span class="iconClound" v-if="previewImageSrc == null"><i
+                                                    class="fa-solid fa-cloud-arrow-up"></i></span>
+                                            <div v-if="previewImageSrc" class="box-preview">
+                                                <img class="preview" :src="previewImageSrc" alt="Preview" />
+                                                <img src="@/assets/error.png" @click="removeFile" class="close"
+                                                    alt="Remove">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i
+                                            class="fa-solid fa-paper-plane"></i> Add</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,7 +121,7 @@ export default {
             },
             dataSticker: {
                 content_type: 'sticker',
-                content_data : {
+                content_data: {
                     type: 'sticker',
                     packageId: null,
                     stickerId: null
@@ -164,7 +178,7 @@ export default {
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
-        selectedSticker: function(stickerId, packageId){
+        selectedSticker: function (stickerId, packageId) {
             this.dataSticker.content_data.packageId = String(packageId);
             this.dataSticker.content_data.stickerId = String(stickerId);
         },
@@ -238,11 +252,11 @@ export default {
 </script>
 
 <style scoped>
-
 .mainSticker {
     max-height: 400px;
     overflow-y: scroll;
 }
+
 .itemSticker {
     width: 80px;
     display: flex;
@@ -263,10 +277,12 @@ export default {
 .itemSticker img {
     transition: all 0.5s ease;
 }
+
 .itemSticker:hover img {
     transform: scale(1.5);
     transition: all 0.5s ease;
 }
+
 .itemSticker img {
     object-fit: contain;
 }
@@ -322,7 +338,6 @@ export default {
 
 .modal-content {
     margin-top: 100px;
-    padding: 26px;
     border-radius: 10px;
 }
 
@@ -421,13 +436,5 @@ export default {
     font-size: 60px;
     color: var(--user-color);
 }
-
-.close {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 16px;
-}
-
 </style>
 

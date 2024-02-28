@@ -269,105 +269,104 @@ export default {
 <!-- bỏ scoped đi thì style này áp dụng cho tất cả những gì đang hiển thị trên màng hình component con 
     và cả những component như sidebar , header,... đang tồn tại trên DOM  -->
 <!-- <style >  -->
-<style scoped> 
-.account_setting {
-    font-weight: bold;
-}
+<style scoped> .account_setting {
+     font-weight: bold;
+ }
 
-.account_setting input {
-    color: #0085FF;
-    font-weight: bold;
-}
+ .account_setting input {
+     color: #0085FF;
+     font-weight: bold;
+ }
 
-.account_setting label {
-    color: var(--user-color);
-    margin-bottom: 1px;
-}
+ .account_setting label {
+     color: var(--user-color);
+     margin-bottom: 1px;
+ }
 
-.colorTitle {
-    color: gray;
-}
+ .colorTitle {
+     color: gray;
+ }
 
-.bigTitle {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+ .bigTitle {
+     margin-top: 10px;
+     margin-bottom: 10px;
+ }
 
-.groupCheckbox {
-    border: 1px solid #ced4da;
-    padding: 4px;
-    padding-left: 10px;
-    border-radius: 0.25rem;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    height: 36px;
-    background-color: rgba(255, 255, 255, 0.605);
-}
+ .groupCheckbox {
+     border: 1px solid #ced4da;
+     padding: 4px;
+     padding-left: 10px;
+     border-radius: 0.25rem;
+     display: flex;
+     align-content: center;
+     align-items: center;
+     height: 36px;
+     background-color: rgba(255, 255, 255, 0.605);
+ }
 
-/* avatarUser */
-.avatarUser {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    height: 100%;
-}
+ /* avatarUser */
+ .avatarUser {
+     display: flex;
+     align-items: center;
+     align-content: center;
+     height: 100%;
+ }
 
-.innerAvatar {
-    height: 50%;
-}
+ .innerAvatar {
+     height: 50%;
+ }
 
-.minAvatar {
-    background-color: #e9ecef;
-    position: relative;
-    text-align: center;
-    width: 170px;
-    height: 170px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.5s ease;
-}
+ .minAvatar {
+     background-color: #e9ecef;
+     position: relative;
+     text-align: center;
+     width: 170px;
+     height: 170px;
+     border-radius: 6px;
+     cursor: pointer;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     transition: all 0.5s ease;
+ }
 
-.minAvatar .preview {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 6px;
-    cursor: default;
-}
+ .minAvatar .preview {
+     width: 150px;
+     height: 150px;
+     object-fit: cover;
+     border-radius: 6px;
+     cursor: default;
+ }
 
-.minAvatar:hover {
-    transition: all 0.5s ease;
-    background: #E8F5E9;
-}
+ .minAvatar:hover {
+     transition: all 0.5s ease;
+     background: #E8F5E9;
+ }
 
-.input-file {
-    opacity: 0;
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    cursor: pointer;
-    width: 150px;
-    height: 150px;
-}
+ .input-file {
+     opacity: 0;
+     top: 0px;
+     left: 0px;
+     position: absolute;
+     cursor: pointer;
+     width: 150px;
+     height: 150px;
+ }
 
-.box-preview {
-    position: relative;
-}
+ .box-preview {
+     position: relative;
+ }
 
-.iconClound {
-    cursor: pointer;
-    font-size: 60px;
-    color: var(--user-color);
-}
+ .iconClound {
+     cursor: pointer;
+     font-size: 60px;
+     color: var(--user-color);
+ }
 
-.close {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 16px;
-}
+ .close {
+     position: absolute;
+     top: -6px;
+     right: -6px;
+     width: 16px;
+ }
 </style>

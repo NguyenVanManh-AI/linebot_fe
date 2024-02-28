@@ -44,7 +44,7 @@
 								<h5 class="modal-title" id="exampleModalLabel"><i class="fa-brands fa-keycdn"></i>
 									Forgot your password !</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-										aria-hidden="true">&times;</span></button>
+										aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></span></button>
 							</div>
 							<form @submit.prevent="userResetPassword">
 								<div class="modal-body">

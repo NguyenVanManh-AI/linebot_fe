@@ -21,8 +21,8 @@
 export default {
     name: "TableLoading",
     props: {
-        cols:Number,
-        rows:Number,
+        cols: Number,
+        rows: Number,
     },
     setup() {
 
@@ -49,8 +49,13 @@ export default {
 
 <style scoped>
 @keyframes moving-gradient {
-    0% { background-position: -250px 0; }
-    100% { background-position: 250px 0; }
+    0% {
+        background-position: -250px 0;
+    }
+
+    100% {
+        background-position: 250px 0;
+    }
 }
 
 table {
@@ -113,5 +118,4 @@ table td.td-5 span {
     background-color: rgba(0, 0, 0, 0.15);
     width: 100%;
     height: 30px;
-}
-</style>
+}</style>

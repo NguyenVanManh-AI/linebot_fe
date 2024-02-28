@@ -6,30 +6,43 @@
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form @submit.prevent="updateMember()">
-                                <h4><strong><i class="fa-solid fa-user-pen"></i> Update Account Member</strong></h4><br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="member.name">
-                                    <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Full
-                                        Name</label>
-                                </div>
-                                <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}<br></span>
-                                <br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="member.email">
-                                    <div class="underline"></div><label><i class="fa-solid fa-envelope"></i> Email</label>
-                                </div>
-                                <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}<br></span>
-                                <br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="member.line_user_id">
-                                    <div class="underline"></div><label><i class="fa-brands fa-line"></i> LINE User
-                                        ID</label>
-                                </div>
-                                <span v-if="errors.line_user_id" class="text-danger">{{ errors.line_user_id[0] }}<br></span>
-                                <br>
-                                <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-floppy-disk"></i> Update</button>
-                            </form>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong><i class="fa-solid fa-user-pen"></i>
+                                        Update Account Member</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="text-danger"><i
+                                            class="fa-regular fa-circle-xmark"></i></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form @submit.prevent="updateMember()">
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="member.name">
+                                        <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Full
+                                            Name</label>
+                                    </div>
+                                    <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}<br></span>
+                                    <br>
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="member.email">
+                                        <div class="underline"></div><label><i class="fa-solid fa-envelope"></i>
+                                            Email</label>
+                                    </div>
+                                    <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}<br></span>
+                                    <br>
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="member.line_user_id">
+                                        <div class="underline"></div><label><i class="fa-brands fa-line"></i> LINE User
+                                            ID</label>
+                                    </div>
+                                    <span v-if="errors.line_user_id" class="text-danger">{{ errors.line_user_id[0]
+                                    }}<br></span>
+                                    <br>
+                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i
+                                            class="fa-solid fa-floppy-disk"></i> Update</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,10 +83,10 @@ export default {
 
     mounted() {
         if (this.memberSelected) {
-                this.member.name = this.memberSelected.name;
-                this.member.email = this.memberSelected.email;
-                this.member.line_user_id = this.memberSelected.line_user_id;
-            }
+            this.member.name = this.memberSelected.name;
+            this.member.email = this.memberSelected.email;
+            this.member.line_user_id = this.memberSelected.line_user_id;
+        }
     },
 
     components: {
@@ -119,7 +132,6 @@ export default {
 
 .modal-content {
     margin-top: 100px;
-    padding: 26px;
     border-radius: 10px;
 }
 
@@ -227,6 +239,5 @@ export default {
 
 #inputPassword {
     padding-right: 26px;
-}
-</style>
+}</style>
 

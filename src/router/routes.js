@@ -81,10 +81,10 @@ const routes = [
         name: 'AdminMain',
         children: [
             { path: 'login', name: 'AdminLogin', component: AdminLogin, beforeEnter: loggedAdmin },
-            { 
-                path: '', 
-                name: 'AdminDashboard', 
-                component: AdminDashboard, 
+            {
+                path: '',
+                name: 'AdminDashboard',
+                component: AdminDashboard,
                 beforeEnter: authAdmin,
                 children: [{ path: 'manage-manager', name: 'ManageManager', component: ManageManager }]
             }

@@ -22,13 +22,13 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 
 export default {
     name: "AdminDashboard",
-    mounted(){
-        
+    mounted() {
+
     },
     data() {
-      return {
+        return {
 
-    };
+        };
     },
     components: {
         AdminSideBar,
@@ -36,7 +36,7 @@ export default {
         // CommonFooter,
     },
     methods: {
-        
+
     },
 
 }
@@ -47,6 +47,7 @@ export default {
     min-height: 100vh;
     padding: 6px;
 }
+
 .innerContent {
     border-radius: 4px;
     margin: 6px 10px;
@@ -54,7 +55,7 @@ export default {
     padding: 6px;
 }
 
-.innerContent > div {
+.innerContent>div {
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     border-radius: 4px;
     padding: 10px 15px;

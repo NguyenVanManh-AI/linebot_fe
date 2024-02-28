@@ -4,36 +4,56 @@
             <div class="col-2">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label><i @click="isShow1i = !isShow1i" :class="{ 'fa-solid': true, 'fa-eye': !isShow1i, 'fa-eye-slash': isShow1i }"></i> Channel ID</label>
-                        <input v-if="!isShow1i" readonly class="form-control"  v-model="channel.channel_id" placeholder="Channel ID" :type="isShow1i ? 'text' : 'password'">
-                        <input v-if="isShow1i" :content="channel.channel_id"  v-tippy="{ maxWidth: '100vw' }" readonly class="form-control"  v-model="channel.channel_id" placeholder="Channel ID" :type="isShow1i ? 'text' : 'password'">
+                        <label><i @click="isShow1i = !isShow1i"
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow1i, 'fa-eye-slash': isShow1i }"></i> Channel
+                            ID</label>
+                        <input v-if="!isShow1i" readonly class="form-control" v-model="channel.channel_id"
+                            placeholder="Channel ID" :type="isShow1i ? 'text' : 'password'">
+                        <input v-if="isShow1i" :content="channel.channel_id" v-tippy="{ maxWidth: '100vw' }" readonly
+                            class="form-control" v-model="channel.channel_id" placeholder="Channel ID"
+                            :type="isShow1i ? 'text' : 'password'">
                     </div>
                 </div>
             </div>
             <div class="col-2">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label><i @click="isShow2i = !isShow2i" :class="{ 'fa-solid': true, 'fa-eye': !isShow2i, 'fa-eye-slash': isShow2i }"></i> Channel Name</label>
-                        <input v-if="!isShow2i" class="form-control" readonly v-model="channel.channel_name" placeholder="Channel Name" :type="isShow2i ? 'text' : 'password'">
-                        <input v-if="isShow2i" :content="channel.channel_name" v-tippy="{ maxWidth: '100vw' }" class="form-control" readonly v-model="channel.channel_name" placeholder="Channel Name" :type="isShow2i ? 'text' : 'password'">
+                        <label><i @click="isShow2i = !isShow2i"
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow2i, 'fa-eye-slash': isShow2i }"></i> Channel
+                            Name</label>
+                        <input v-if="!isShow2i" class="form-control" readonly v-model="channel.channel_name"
+                            placeholder="Channel Name" :type="isShow2i ? 'text' : 'password'">
+                        <input v-if="isShow2i" :content="channel.channel_name" v-tippy="{ maxWidth: '100vw' }"
+                            class="form-control" readonly v-model="channel.channel_name" placeholder="Channel Name"
+                            :type="isShow2i ? 'text' : 'password'">
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label><i @click="isShow3i = !isShow3i" :class="{ 'fa-solid': true, 'fa-eye': !isShow3i, 'fa-eye-slash': isShow3i }"></i> Channel Secret</label>
-                        <input v-if="!isShow3i" class="form-control" readonly v-model="channel.channel_secret" placeholder="Channel Secret" :type="isShow3i ? 'text' : 'password'">
-                        <input v-if="isShow3i" :content="channel.channel_secret" v-tippy="{ maxWidth: '100vw' }" class="form-control" readonly v-model="channel.channel_secret" placeholder="Channel Secret" :type="isShow3i ? 'text' : 'password'">
+                        <label><i @click="isShow3i = !isShow3i"
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow3i, 'fa-eye-slash': isShow3i }"></i> Channel
+                            Secret</label>
+                        <input v-if="!isShow3i" class="form-control" readonly v-model="channel.channel_secret"
+                            placeholder="Channel Secret" :type="isShow3i ? 'text' : 'password'">
+                        <input v-if="isShow3i" :content="channel.channel_secret" v-tippy="{ maxWidth: '100vw' }"
+                            class="form-control" readonly v-model="channel.channel_secret" placeholder="Channel Secret"
+                            :type="isShow3i ? 'text' : 'password'">
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label><i @click="isShow4i = !isShow4i" :class="{ 'fa-solid': true, 'fa-eye': !isShow4i, 'fa-eye-slash': isShow4i }"></i> Channel Access Token</label>
-                        <input v-if="!isShow4i" class="form-control" readonly v-model="channel.channel_access_token" placeholder="Channel Access Token" :type="isShow4i ? 'text' : 'password'">
-                        <input v-if="isShow4i" :content="channel.channel_access_token" v-tippy="{ maxWidth: '100vw' }" class="form-control" readonly v-model="channel.channel_access_token" placeholder="Channel Access Token" :type="isShow4i ? 'text' : 'password'">
+                        <label><i @click="isShow4i = !isShow4i"
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow4i, 'fa-eye-slash': isShow4i }"></i> Channel
+                            Access Token</label>
+                        <input v-if="!isShow4i" class="form-control" readonly v-model="channel.channel_access_token"
+                            placeholder="Channel Access Token" :type="isShow4i ? 'text' : 'password'">
+                        <input v-if="isShow4i" :content="channel.channel_access_token" v-tippy="{ maxWidth: '100vw' }"
+                            class="form-control" readonly v-model="channel.channel_access_token"
+                            placeholder="Channel Access Token" :type="isShow4i ? 'text' : 'password'">
                     </div>
                 </div>
             </div>
@@ -43,56 +63,71 @@
         <div id="main">
             <div id="big">
                 <div class="bigContainer">
-                    <button @click="openUpdate()" data-toggle="modal" data-target="#exampleModalChangePassword" id="openChangePassword"
-                        type="button" class="mt-4 btn-pers"><i class="fa-solid fa-gear"></i> Change</button>
+                    <button @click="openUpdate()" data-toggle="modal" data-target="#exampleModalChangePassword"
+                        id="openChangePassword" type="button" class="mt-4 btn-pers"><i class="fa-solid fa-gear"></i>
+                        Change</button>
                     <div class="modal fade" id="exampleModalChangePassword" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form @submit.prevent="updateInforChannel()">
-                                    <h4><i class="fa-brands fa-line"></i> Form Update Information Channel</h4><br>
-                                    <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow1 ? 'text' : 'password'"
-                                            v-model="newChannel.channel_id">
-                                        <strong id="iconEye"><i @click="isShow1 = !isShow1"
-                                                :class="{ 'fa-solid': true, 'fa-eye': !isShow1, 'fa-eye-slash': isShow1 }"></i></strong>
-                                        <div class="underline"></div><label><i class="fa-brands fa-line"></i> Channel ID</label>
-                                    </div>
-                                    <span v-if="errors.channel_id" class="text-danger">{{ errors.channel_id[0]
-                                    }}<br></span>
-                                    <br>
-                                    <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow2 ? 'text' : 'password'"
-                                            v-model="newChannel.channel_name">
-                                        <strong id="iconEye"><i @click="isShow2 = !isShow2"
-                                                :class="{ 'fa-solid': true, 'fa-eye': !isShow2, 'fa-eye-slash': isShow2 }"></i></strong>
-                                        <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Channel Name</label>
-                                    </div>
-                                    <span v-if="errors.channel_name" class="text-danger">{{ errors.channel_name[0]
-                                    }}<br></span>
-                                    <br>
-                                    <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow3 ? 'text' : 'password'"
-                                            v-model="newChannel.channel_secret">
-                                        <strong id="iconEye"><i @click="isShow3 = !isShow3"
-                                                :class="{ 'fa-solid': true, 'fa-eye': !isShow3, 'fa-eye-slash': isShow3 }"></i></strong>
-                                        <div class="underline"></div><label><i class="fa-solid fa-key"></i> Channel Secret</label>
-                                    </div>
-                                    <span v-if="errors.channel_secret" class="text-danger">{{
-                                        errors.channel_secret[0] }}<br></span>
-                                    <br>
-                                    <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow4 ? 'text' : 'password'"
-                                            v-model="newChannel.channel_access_token">
-                                        <strong id="iconEye"><i @click="isShow4 = !isShow4"
-                                                :class="{ 'fa-solid': true, 'fa-eye': !isShow4, 'fa-eye-slash': isShow4 }"></i></strong>
-                                        <div class="underline"></div><label><i class="fa-brands fa-keycdn"></i> Channel Access Token</label>
-                                    </div>
-                                    <span v-if="errors.channel_access_token" class="text-danger">{{
-                                        errors.channel_access_token[0] }}<br></span>
-                                    <br>
-                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                                </form>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><strong><i class="fa-brands fa-line"></i>
+                                            Form Update Information Channel</strong></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="text-danger"><i
+                                                class="fa-regular fa-circle-xmark"></i></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form @submit.prevent="updateInforChannel()">
+                                        <div class="input-form">
+                                            <input required id="inputPassword" :type="isShow1 ? 'text' : 'password'"
+                                                v-model="newChannel.channel_id">
+                                            <strong id="iconEye"><i @click="isShow1 = !isShow1"
+                                                    :class="{ 'fa-solid': true, 'fa-eye': !isShow1, 'fa-eye-slash': isShow1 }"></i></strong>
+                                            <div class="underline"></div><label><i class="fa-brands fa-line"></i> Channel
+                                                ID</label>
+                                        </div>
+                                        <span v-if="errors.channel_id" class="text-danger">{{ errors.channel_id[0]
+                                        }}<br></span>
+                                        <br>
+                                        <div class="input-form">
+                                            <input required id="inputPassword" :type="isShow2 ? 'text' : 'password'"
+                                                v-model="newChannel.channel_name">
+                                            <strong id="iconEye"><i @click="isShow2 = !isShow2"
+                                                    :class="{ 'fa-solid': true, 'fa-eye': !isShow2, 'fa-eye-slash': isShow2 }"></i></strong>
+                                            <div class="underline"></div><label><i class="fa-solid fa-signature"></i>
+                                                Channel Name</label>
+                                        </div>
+                                        <span v-if="errors.channel_name" class="text-danger">{{ errors.channel_name[0]
+                                        }}<br></span>
+                                        <br>
+                                        <div class="input-form">
+                                            <input required id="inputPassword" :type="isShow3 ? 'text' : 'password'"
+                                                v-model="newChannel.channel_secret">
+                                            <strong id="iconEye"><i @click="isShow3 = !isShow3"
+                                                    :class="{ 'fa-solid': true, 'fa-eye': !isShow3, 'fa-eye-slash': isShow3 }"></i></strong>
+                                            <div class="underline"></div><label><i class="fa-solid fa-key"></i> Channel
+                                                Secret</label>
+                                        </div>
+                                        <span v-if="errors.channel_secret" class="text-danger">{{
+                                            errors.channel_secret[0] }}<br></span>
+                                        <br>
+                                        <div class="input-form">
+                                            <input required id="inputPassword" :type="isShow4 ? 'text' : 'password'"
+                                                v-model="newChannel.channel_access_token">
+                                            <strong id="iconEye"><i @click="isShow4 = !isShow4"
+                                                    :class="{ 'fa-solid': true, 'fa-eye': !isShow4, 'fa-eye-slash': isShow4 }"></i></strong>
+                                            <div class="underline"></div><label><i class="fa-brands fa-keycdn"></i> Channel
+                                                Access Token</label>
+                                        </div>
+                                        <span v-if="errors.channel_access_token" class="text-danger">{{
+                                            errors.channel_access_token[0] }}<br></span>
+                                        <br>
+                                        <button type="submit" class="mt-4 btn-pers" id="login_button"><i
+                                                class="fa-solid fa-floppy-disk"></i> Save</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,31 +153,31 @@ export default {
     data() {
         return {
             channel: {
-                channel_id : null,
-                channel_name : null,
-                channel_secret : null,
-                channel_access_token : null,
+                channel_id: null,
+                channel_name: null,
+                channel_secret: null,
+                channel_access_token: null,
             },
             newChannel: {
-                channel_id : null,
-                channel_name : null,
-                channel_secret : null,
-                channel_access_token : null,
+                channel_id: null,
+                channel_name: null,
+                channel_secret: null,
+                channel_access_token: null,
             },
             isShow1: false,
             isShow2: false,
             isShow3: false,
             isShow4: false,
-            
+
             isShow1i: false,
             isShow2i: false,
             isShow3i: false,
             isShow4i: false,
             errors: {
-                channel_id : null,
-                channel_name : null,
-                channel_secret : null,
-                channel_access_token : null,
+                channel_id: null,
+                channel_name: null,
+                channel_secret: null,
+                channel_access_token: null,
             }
         }
     },
@@ -156,7 +191,7 @@ export default {
 
     },
     methods: {
-        getInforChannel: async function() {
+        getInforChannel: async function () {
             try {
                 const { data } = await UserRequest.get('user/infor-channel');
                 this.channel = data;
@@ -168,7 +203,7 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
-        openUpdate: function() {
+        openUpdate: function () {
             this.newChannel = Object.assign({}, this.channel); // gán không tham chiếu 
         },
         updateInforChannel: async function () {
@@ -195,14 +230,15 @@ export default {
 </script>
 
 <style scoped>
-
 .modal-dialog {
     max-width: 600px;
 }
+
 .inputInforChannel i {
     cursor: pointer;
     transition: all 0.5s ease;
 }
+
 .inputInforChannel i:hover {
     transition: all 0.5s ease;
     color: var(--user-color);
@@ -223,7 +259,6 @@ body.modal-open {
 
 .modal-content {
     margin-top: 100px;
-    padding: 20px;
 }
 
 .bigContainer .input-form {

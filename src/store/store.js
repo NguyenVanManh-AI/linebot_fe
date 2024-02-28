@@ -1,16 +1,16 @@
 import { createStore } from "vuex";
 
 const storeConfigs = createStore({
-    state:{
+    state: {
 
     },
-    getters:{
+    getters: {
 
     },
-    mutations:{
-        
+    mutations: {
+
     },
-    actions:{
+    actions: {
 
     }
 });

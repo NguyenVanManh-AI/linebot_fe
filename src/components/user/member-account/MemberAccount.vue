@@ -21,7 +21,8 @@
                 </div>
                 <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
                     <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control form-control-sm" v-model="perPage">
+                        <select content="Pagination" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -29,7 +30,8 @@
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Sort by" v-tippy class="form-control form-control-sm" v-model="typesort">
+                        <select content="Sort by" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.typesort">
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="gender">Gender</option>
@@ -38,13 +40,15 @@
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="In direction" v-tippy class="form-control form-control-sm" v-model="sortlatest">
+                        <select content="In direction" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Filter by delete" v-tippy class="form-control form-control-sm" v-model="is_delete">
+                        <select content="Filter by delete" v-tippy class="form-control form-control-sm"
+                            v-model="big_search.is_delete">
                             <option value="all">All Member</option>
                             <option value="1">Deleted Member</option>
                             <option value="0">Normal Member</option>
@@ -55,8 +59,11 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                             </div>
+                            <div @click="startSpeechRecognition" class="div_microphone input-group-prepend">
+                                <div class="input-group-text"><i class="fa-solid fa-microphone"></i></div>
+                            </div>
                             <input v-model="search" type="text" class="form-control form-control-sm"
-                                id="inlineFormInputGroup" placeholder="Seach...">
+                                id="inlineFormInputGroup" placeholder="Search...">
                         </div>
                     </div>
                     <div class="pr-1">
@@ -94,14 +101,15 @@
                                 <th scope="col"><i class="fa-solid fa-venus-mars"></i> Gender</th>
                                 <th scope="col">Created at</th>
                                 <th scope="col">Updated at</th>
-                                <th scope="col"><i class="fa-solid fa-user-lock"></i> Acction</th>
+                                <th scope="col"><i class="fa-solid fa-user-pen"></i> Acction</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(member, index) in members" :key="index">
                                 <th class="table-cell" scope="row"><input :checked="isSelected(member.id)" type="checkbox"
                                         class="" @change="handleSelect(member.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (page - 1) * perPage + index + 1 }}</th>
+                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage + index +
+                                    1 }}</th>
                                 <td class="table-cell">
                                     <div class="nameAvatar">
                                         <img :src="member.avatar ? member.avatar : require('@/assets/avatar.jpg')" alt="">
@@ -134,9 +142,9 @@
                     </table>
                 </div>
                 <div id="divpaginate" class="mt-2">
-                    <paginate :page-count="Math.ceil(this.total / this.perPage)" :page-range="3" :margin-pages="2"
-                        :click-handler="clickCallback" :initial-page="this.page" :prev-text="'Prev'" :next-text="'Next'"
-                        :container-class="'pagination'" :page-class="'page-item'">
+                    <paginate v-if="paginateVisible" :page-count="last_page" :page-range="3" :margin-pages="2"
+                        :click-handler="clickCallback" :initial-page="big_search.page" :prev-text="'Prev'"
+                        :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
                 <AddMember :getMembers="getMembers"></AddMember>
@@ -165,50 +173,32 @@ import UpdateInformationChannel from '@/components/user/member-account/UpdateInf
 
 export default {
     name: "ManageMember",
-    mounted() {
-        this.checkManager();
-        emitEvent('eventTitleHeader', 'Channel manages - Member Account');
-        const queryString = window.location.search;
-        const searchParams = new URLSearchParams(queryString);
-        this.perPage = parseInt(searchParams.get('paginate')) || 5;
-        this.typesort = searchParams.get('typesort') || 'new';
-        this.sortlatest = searchParams.get('sortlatest') || 'true';
-        this.search = searchParams.get('search') || '';
-        this.is_delete = searchParams.get('is_delete') || '0';
-        this.getMembers();
-
-        onEvent('updateMemberSuccess', (memberUpdate) => {
-            this.members.forEach(member => {
-                if (member.id == memberUpdate.id) {
-                    member.name = memberUpdate.name;
-                    member.email = memberUpdate.email;
-                    member.line_user_id = memberUpdate.line_user_id;
-                }
-            });
-        });
-        onEvent('eventUpdateIsDelete', (id_member) => {
-            this.members.forEach(member => {
-                if (member.id == id_member) {
-                    if (member.is_delete == 0) member.is_delete = 1;
-                    else member.is_delete = 0;
-                }
-            });
-        });
-        onEvent('eventRegetMembers', () => {
-            this.getMembers();
-        });
+    components: {
+        paginate: Paginate,
+        TableLoading,
+        AddMember,
+        DeleteMember,
+        DeleteManyMember,
+        UpdateMember,
+        UpdateInformationChannel
     },
-
+    setup() {
+        document.title = "Member Account | LINE Bot"
+    },
     data() {
         return {
             config: config,
             total: 0,
-            perPage: 5,
-            page: 1,
-            typesort: 'new',
-            sortlatest: 'true',
+            last_page: 1,
+            paginateVisible: true,
             search: '',
-            is_delete: 'all',
+            big_search: {
+                perPage: 5,
+                page: 1,
+                typesort: 'new',
+                sortlatest: 'true',
+                is_delete: '0',
+            },
             query: '',
             members: [],
             memberSelected: {
@@ -244,19 +234,40 @@ export default {
             },
         }
     },
-
-    setup() {
-        document.title = "Member Account | LINE Bot"
-    },
-
-    components: {
-        paginate: Paginate,
-        TableLoading,
-        AddMember,
-        DeleteMember,
-        DeleteManyMember,
-        UpdateMember,
-        UpdateInformationChannel
+    mounted() {
+        this.checkManager();
+        emitEvent('eventTitleHeader', 'Channel manages - Member Account');
+        const queryString = window.location.search;
+        const searchParams = new URLSearchParams(queryString);
+        this.search = searchParams.get('search') || '';
+        this.big_search = {
+            perPage: parseInt(searchParams.get('paginate')) || 5,
+            page: searchParams.get('page') || 1,
+            typesort: searchParams.get('typesort') || 'new',
+            sortlatest: searchParams.get('sortlatest') || 'true',
+            is_delete: searchParams.get('is_delete') || '0',
+        }
+        this.getMembers();
+        onEvent('updateMemberSuccess', (memberUpdate) => {
+            this.members.forEach(member => {
+                if (member.id == memberUpdate.id) {
+                    member.name = memberUpdate.name;
+                    member.email = memberUpdate.email;
+                    member.line_user_id = memberUpdate.line_user_id;
+                }
+            });
+        });
+        onEvent('eventUpdateIsDeleteMember', (id_member) => {
+            this.members.forEach(member => {
+                if (member.id == id_member) {
+                    if (member.is_delete == 0) member.is_delete = 1;
+                    else member.is_delete = 0;
+                }
+            });
+        });
+        onEvent('eventRegetMembers', () => {
+            this.getMembers();
+        });
     },
 
     methods: {
@@ -265,25 +276,45 @@ export default {
             if (user.role != 'manager') this.$router.push({ name: 'AccountSetting' });
             else this.user = user;
         },
+        reRenderPaginate: function () {
+            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page;
+            this.paginateVisible = false;
+            this.$nextTick(() => { this.paginateVisible = true; });
+        },
         getMembers: async function () {
             this.selectedMembers = [];
             this.isLoading = true;
-            this.query = '?search=' + this.search + '&typesort=' + this.typesort + '&sortlatest=' + this.sortlatest
-                + '&is_delete=' + this.is_delete + '&is_delete=' + this.is_delete + '&role=user' + '&paginate=' + this.perPage + '&page=' + this.page;
+            this.query = '?search=' + this.search + '&typesort=' + this.big_search.typesort + '&sortlatest=' + this.big_search.sortlatest
+                + '&is_delete=' + this.big_search.is_delete + '&role=user' + '&paginate=' + this.big_search.perPage + '&page=' + this.big_search.page;
             window.history.pushState({}, null, this.query);
 
             try {
                 const { data } = await UserRequest.get('user/members' + this.query)
                 this.members = data.data
                 this.total = data.total;
+                this.last_page = data.last_page;
                 this.isLoading = false;
             }
             catch (error) {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
                 this.isLoading = false;
             }
+            this.reRenderPaginate();
         },
-
+        startSpeechRecognition() {
+            const recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
+            recognition.lang = "vi-VN";
+            recognition.onresult = event => {
+                this.search = event.results[0][0].transcript;
+            };
+            recognition.onerror = event => {
+                console.error("Speech recognition error:", event.error);
+            };
+            recognition.onend = () => {
+                console.log("Speech recognition ended.");
+            };
+            recognition.start();
+        },
         truncatedTitle(title) {
             const maxLength = 150;
             if (title.length > maxLength) return title.slice(0, maxLength) + '...';
@@ -295,12 +326,7 @@ export default {
         },
 
         clickCallback: function (pageNum) {
-            this.page = pageNum;
-        },
-
-        handleSearchSelect() {
-            this.page = 1;
-            this.getMembers();
+            this.big_search.page = pageNum;
         },
 
         selectMember: function (memberSelected) {
@@ -333,20 +359,24 @@ export default {
 
     },
     watch: {
+        big_search: {
+            handler: function () {
+                this.getMembers();
+            },
+            deep: true
+        },
         search: _.debounce(function () {
-            this.handleSearchSelect();
+            this.getMembers();
         }, 500),
-        'perPage': 'handleSearchSelect',
-        'selectedCategory': 'handleSearchSelect',
-        'page': 'getMembers',
-        'typesort': 'getMembers',
-        'sortlatest': 'getMembers',
-        'is_delete': 'getMembers',
     }
 }
 </script>
 
 <style scoped>
+.div_microphone {
+    cursor: pointer;
+}
+
 .titleChannel {
     font-size: 19px;
     color: var(--user-color);
@@ -429,5 +459,4 @@ table img {
 table button {
     padding: 1px 3px;
     margin-right: 2px;
-}
-</style>
+}</style>

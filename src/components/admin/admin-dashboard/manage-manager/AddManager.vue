@@ -2,32 +2,46 @@
     <div id="main">
         <div id="big">
             <div class="bigContainer">
-                <div class="modal fade" id="addManager" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="addManager" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form @submit.prevent="addManager()">
-                                <h4><strong><i class="fa-solid fa-user-plus"></i> Add Account Manager</strong></h4><br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="manager.name">
-                                    <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Full Name</label>
-                                </div>
-                                <span v-if="errors.name" class="text-danger">{{ errors.name[0]}}<br></span>
-                                <br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="manager.email">
-                                    <div class="underline"></div><label><i class="fa-solid fa-envelope"></i> Email</label>
-                                </div>
-                                <span v-if="errors.email" class="text-danger">{{ errors.email[0]}}<br></span>
-                                <br>
-                                <div class="input-form">
-                                    <input required id="inputPassword" type="text" v-model="manager.line_user_id">
-                                    <div class="underline"></div><label><i class="fa-brands fa-line"></i> LINE User ID</label>
-                                </div>
-                                <span v-if="errors.line_user_id" class="text-danger">{{ errors.line_user_id[0]}}<br></span>
-                                <br>
-                                <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-user-plus"></i> Add</button>
-                            </form>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><strong><i class="fa-solid fa-user-plus"></i>
+                                        Add Account Manager</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="text-danger"><i
+                                            class="fa-regular fa-circle-xmark"></i></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form @submit.prevent="addManager()">
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="manager.name">
+                                        <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Full
+                                            Name</label>
+                                    </div>
+                                    <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}<br></span>
+                                    <br>
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="manager.email">
+                                        <div class="underline"></div><label><i class="fa-solid fa-envelope"></i>
+                                            Email</label>
+                                    </div>
+                                    <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}<br></span>
+                                    <br>
+                                    <div class="input-form">
+                                        <input required id="inputPassword" type="text" v-model="manager.line_user_id">
+                                        <div class="underline"></div><label><i class="fa-brands fa-line"></i> LINE User
+                                            ID</label>
+                                    </div>
+                                    <span v-if="errors.line_user_id" class="text-danger">{{
+                                        errors.line_user_id[0] }}<br></span>
+                                    <br>
+                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i
+                                            class="fa-solid fa-user-plus"></i> Add</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -73,7 +87,7 @@ export default {
 
     },
     methods: {
-        addManager: async function(){
+        addManager: async function () {
             try {
                 const { messages } = await AdminRequest.post('admin/add-manager', this.manager, true);
                 emitEvent('eventSuccess', messages[0]);
@@ -87,7 +101,7 @@ export default {
                 };
                 emitEvent('eventRegetManagers', ''); // reget data 
             }
-            catch(error) {
+            catch (error) {
                 if (error.errors) this.errors = error.errors;
                 else for (let key in this.errors) this.errors[key] = null;
                 if (error.messages) emitEvent('eventError', error.messages[0]);
@@ -105,12 +119,13 @@ export default {
 body.modal-open {
     padding-right: 0px !important;
 }
+
 .modal.fade.show {
     padding-left: 0px;
 }
+
 .modal-content {
     margin-top: 100px;
-    padding: 26px;
     border-radius: 10px;
 }
 
@@ -247,7 +262,5 @@ body.modal-open {
 
 #inputPassword {
     padding-right: 26px;
-}
-
-</style>
+}</style>
 

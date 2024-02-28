@@ -5,36 +5,44 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-envelope-open-text"></i> Detail Content</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-envelope-open-text"></i> Detail
+                            Content</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-info" role="alert">
                             <div class="ml-3">
-                                <p> Creator : <strong>{{ contentSelected.creator_name }}</strong>  </p>
-                                <p> Updater : <strong>{{ contentSelected.updater_name }}</strong>  </p>
+                                <p> Creator : <strong>{{ contentSelected.creator_name }}</strong> </p>
+                                <p> Updater : <strong>{{ contentSelected.updater_name }}</strong> </p>
                             </div>
                             <div v-if="contentSelected.content_type == 'text'">
                                 <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorText"> {{ contentSelected.content_type }} </strong><br>
-                                    Content Data : <strong class="contentText">{{ contentSelected.content_data.text }}</strong> 
+                                    Content Type : <strong class="text-uppercase colorText"> {{ contentSelected.content_type
+                                    }} </strong><br>
+                                    Content Data : <strong class="contentText">{{ contentSelected.content_data.text
+                                    }}</strong>
                                 </div>
                             </div>
                             <div class="imgInTable" v-if="contentSelected.content_type == 'sticker'">
                                 <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorSticker"> {{ contentSelected.content_type }} </strong><br>
+                                    Content Type : <strong class="text-uppercase colorSticker"> {{
+                                        contentSelected.content_type }} </strong><br>
                                     <div class="innerData">
-                                        Content Data : <img :src="getStickerImageUrl(contentSelected.content_data.stickerId)" alt="Sticker" />
+                                        Content Data : <img
+                                            :src="getStickerImageUrl(contentSelected.content_data.stickerId)"
+                                            alt="Sticker" />
                                     </div>
                                 </div>
                             </div>
                             <div class="imgInTable" v-if="contentSelected.content_type == 'image'">
                                 <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorImage"> {{ contentSelected.content_type }} </strong><br>
+                                    Content Type : <strong class="text-uppercase colorImage"> {{
+                                        contentSelected.content_type }} </strong><br>
                                     <div class="innerData">
-                                        Content Data : <img :src="contentSelected.content_data.originalContentUrl" alt="Image" />
+                                        Content Data : <img :src="contentSelected.content_data.originalContentUrl"
+                                            alt="Image" />
                                     </div>
                                 </div>
                             </div>
@@ -58,11 +66,11 @@ export default {
     name: "viewDetailContent",
 
     props: {
-        getStickerImageUrl:Function
+        getStickerImageUrl: Function
     },
 
     components: {
-        
+
     },
 
     data() {
@@ -77,7 +85,7 @@ export default {
             },
         }
     },
-    
+
     mounted() {
         onEvent('selectSimpleContent', (contentSelected) => {
             this.contentSelected = contentSelected;
@@ -91,7 +99,6 @@ export default {
 </script>
 
 <style scoped>
-
 .modal-header .close {
     outline: none;
 }
@@ -111,6 +118,7 @@ export default {
     margin-left: 3px;
     border-radius: 6px;
 }
+
 .modal-dialog {
     max-width: 600px;
 }
@@ -129,6 +137,4 @@ export default {
 
 .colorSticker {
     color: var(--yellow-color)
-}
-
-</style>
+}</style>
