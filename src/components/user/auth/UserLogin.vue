@@ -24,7 +24,6 @@
 								v-model="loginUser.password">
 							<strong id="iconEye"><i @click="isShow = !isShow"
 									:class="{ 'fa-solid': true, 'fa-eye': !isShow, 'fa-eye-slash': isShow }"></i></strong>
-							<!-- replace strong element by span element will result in an error -->
 							<div class="underline"></div><label><i class="fa-solid fa-lock"></i> Password</label>
 						</div>
 						<span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
@@ -138,8 +137,7 @@ export default {
 					data.messages.forEach(message => {
 						emitEvent('eventSuccess', message);
 					});
-					this.$router.push({ name: 'AccountSetting' }); // không cần setimeout để router khác 
-					// vào đây rồi nó vẫn hiện thông báo 
+					this.$router.push({ name: 'AccountSetting' }); 
 				})
 				.catch(error => {
 					if (error.errors) this.errors = error.errors;
@@ -203,7 +201,6 @@ h4 {
 	border-color: var(--user-color);
 }
 
-/* RESET COLOR INPUT AND BUTTON */
 #main {
 	background: var(--user-color);
 	background: -moz-linear-gradient(-45deg, var(--user-color) 0%, #0076e5 100%);
@@ -323,8 +320,6 @@ h4 {
 	}
 }
 
-/* HIỆU ỨNG BACKGROUND HÌNH TRÒN */
-
 * {
 	margin: 0;
 	padding: 0;
@@ -349,7 +344,6 @@ body {
 	background: linear-gradient(to right, #EF629F, #EECDA3);
 }
 
-/* input */
 .container {
 	border-radius: 10px;
 	width: 450px;

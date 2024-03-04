@@ -178,14 +178,6 @@ export default {
         this.user = JSON.parse(localStorage.getItem('user'));
         this.previewImageSrc = this.user.avatar;
         emitEvent('eventTitleHeader', 'Account Setting');
-        // emitEvent('eventTitleHeader', '<i class="fa-solid fa-user-gear"></i> Account Setting');
-        // UserRequest.get('user/profile')
-        //     .then((data) => {
-        //         console.log(data);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     })
     },
     components: {
         ChangePassword,
@@ -218,32 +210,19 @@ export default {
                 var fields = ['name', 'address', 'date_of_birth', 'phone', 'gender'];
                 if (this.updateImage) formData.append('avatar', this.user.avatar);
                 for (var field of fields) formData.append(field, this.user[field]);
-
-                const { data, messages } = await UserRequest.post('user/update', formData, true);  // (2)
-                // kết quả trả về gồm : data, messages, status => bỏ trong dấu {} nó sẽ bind ra 
-                // var access_token = this.user.access_token;
-                // // this.user = data.data ; // lỗi , không được gán như này 
-                // Object.assign(this.user, data.data); // ok 
-                // // this.user = { ...this.user, ...data.data }; // ok
-                // this.user.avatar = data.avatar;
-                // this.user.access_token = access_token;
-
-
-                // hoặc code như này cũng được 
+                const { data, messages } = await UserRequest.post('user/update', formData, true);
                 this.user.name = data.name;
                 this.user.address = data.address;
                 this.user.date_of_birth = data.date_of_birth;
                 this.user.phone = data.phone;
                 this.user.gender = data.gender;
                 this.user.avatar = data.avatar;
-
-                // gán lại avatar vì avatar trong this.user là File , còn avatar trong data là link , nó không ghi đè lên 
                 this.previewImageSrc = this.user.avatar;
                 this.updateImage = false;
 
                 localStorage.setItem('user', JSON.stringify(this.user));
                 emitEvent('eventSuccess', messages[0]);
-                emitEvent('updateProfileUser', JSON.stringify(this.user)); // JSON stringify để không tham chiếu 
+                emitEvent('updateProfileUser', JSON.stringify(this.user)); 
             } catch (error) {
                 if (error.errors) {
                     this.errors = error.errors;
@@ -263,12 +242,7 @@ export default {
     },
 }
 
-// (1) , (2) : xử lí bất đồng bộ cho lấy được data rồi mới thực hiện tiếp 
 </script>
-
-<!-- bỏ scoped đi thì style này áp dụng cho tất cả những gì đang hiển thị trên màng hình component con 
-    và cả những component như sidebar , header,... đang tồn tại trên DOM  -->
-<!-- <style >  -->
 <style scoped> .account_setting {
      font-weight: bold;
  }
@@ -303,8 +277,6 @@ export default {
      height: 36px;
      background-color: rgba(255, 255, 255, 0.605);
  }
-
- /* avatarUser */
  .avatarUser {
      display: flex;
      align-items: center;

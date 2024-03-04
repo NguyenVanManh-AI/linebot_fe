@@ -64,7 +64,6 @@ export default {
   border-radius: 4px;
   padding-right: 30px;
   z-index: 1;
-  /* fix class bootstrap col đè lên header */
 }
 
 .title {

@@ -72,9 +72,9 @@ export default {
         emitEvent('eventTitleHeader', 'Statistical Channel');
         const queryString = window.location.search;
         const searchParams = new URLSearchParams(queryString);
-        this.big_search.start_date = searchParams.get('start_date') || ''; // null 
-        this.big_search.end_date = searchParams.get('end_date') || ''; // như thế này thì lên api có nghĩ là null
-        this.big_search.type_chart = searchParams.get('type_chart') || 'bar'; // như thế này thì lên api có nghĩ là null
+        this.big_search.start_date = searchParams.get('start_date') || ''; 
+        this.big_search.end_date = searchParams.get('end_date') || ''; 
+        this.big_search.type_chart = searchParams.get('type_chart') || 'bar'; 
         this.getDataChannel();
     },
     computed: {

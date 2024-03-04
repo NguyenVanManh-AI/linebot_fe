@@ -36,9 +36,8 @@ export default {
         onEvent('eventPropStatistical', dataChannel => {
             this.paginateVisible = false;
             this.$nextTick(() => { this.paginateVisible = true; });
-            chartMessage.destroy(); // phải xóa thì nó mới tạo lại 
-            chartFollow.destroy(); // phải xóa thì nó mới tạo lại
-            // message 
+            chartMessage.destroy(); 
+            chartFollow.destroy(); 
             let dataMessage = {
                 labels: dataChannel.bar_chart.label,
                 datasets: [
@@ -46,7 +45,7 @@ export default {
                         label: 'Api Broadcast',
                         data: dataChannel.bar_chart.api_broadcast,
                         borderColor: ['rgb(29, 215, 48)'],
-                        backgroundColor: ['rgb(29, 215, 48, 0.6'], // 0.6 là opacity của nó 
+                        backgroundColor: ['rgb(29, 215, 48, 0.6'], 
                     },
                     {
                         label: 'Api Multicast',
@@ -73,7 +72,6 @@ export default {
                 },
             });
 
-            // follow 
             let dataFollow = {
                 labels: dataChannel.bar_chart.label,
                 datasets: [

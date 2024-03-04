@@ -25,17 +25,6 @@
                                     }}</strong>
                                 </div>
                             </div>
-                            <div class="imgInTable" v-if="contentSelected.content_type == 'sticker'">
-                                <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorSticker"> {{
-                                        contentSelected.content_type }} </strong><br>
-                                    <div class="innerData">
-                                        Content Data : <img
-                                            :src="getStickerImageUrl(contentSelected.content_data.stickerId)"
-                                            alt="Sticker" />
-                                    </div>
-                                </div>
-                            </div>
                             <div class="imgInTable" v-if="contentSelected.content_type == 'image'">
                                 <div class="ml-3">
                                     Content Type : <strong class="text-uppercase colorImage"> {{
@@ -66,7 +55,6 @@ export default {
     name: "viewDetailContent",
 
     props: {
-        getStickerImageUrl: Function
     },
 
     components: {
@@ -135,6 +123,4 @@ export default {
     color: var(--brown-color)
 }
 
-.colorSticker {
-    color: var(--yellow-color)
-}</style>
+</style>

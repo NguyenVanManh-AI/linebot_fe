@@ -24,7 +24,7 @@
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="status">Status</option>
-                            <option value="status">Titile</option>
+                            <option value="title">Title</option>
                         </select>
                     </div>
                     <div class="col-1 pl-0">
@@ -37,7 +37,7 @@
                     <div class="col-2 pl-0">
                         <select content="Filter by delete" v-tippy class="form-control form-control-sm"
                             v-model="big_search.is_delete">
-                            <option value="all">All Content</option>
+                            <option value="all">All Broadcast</option>
                             <option value="1">Deleted Broadcast</option>
                             <option value="0">Normal Broadcast</option>
                         </select>
@@ -150,9 +150,9 @@
                                         @click="selectBroadcast(broadcast)">
                                         <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
                                     </button>
-                                    <button data-toggle="modal" data-target="#deleteBroadcast"
+                                    <button 
                                         v-tippy="{ content: broadcast.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteBroadcast text-danger" @click="selectBroadcast(broadcast)">
+                                        class="deleteBroadcast text-danger" @click="showAlert(broadcast)">
                                         <i
                                             :class="{ 'fa-solid': true, 'fa-trash': broadcast.is_delete == 0, 'fa-trash-arrow-up': broadcast.is_delete == 1 }"></i>
                                     </button>
@@ -167,13 +167,10 @@
                         :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddBroadcast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></AddBroadcast>
-                <TestSendMulticast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts">
-                </TestSendMulticast>
-                <UpdateBroadcast :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"
+                <AddBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></AddBroadcast>
+                <TestSendMulticast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></TestSendMulticast>
+                <UpdateBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"
                     :broadcastSelected="broadcastSelected"></UpdateBroadcast>
-                <DeleteBroadcast :dataContents="dataContents" :channel="channel" :broadcastSelected="broadcastSelected"
-                    :getStickerImageUrl="getStickerImageUrl"></DeleteBroadcast>
                 <DetailBroadcast :dataContents="dataContents" :channel="channel" :broadcastSelected="broadcastSelected"
                     :getStickerImageUrl="getStickerImageUrl"></DetailBroadcast>
                 <DeleteManyBroadcast :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts"
@@ -192,7 +189,6 @@ import TableLoading from '@/components/common/TableLoading'
 import _ from 'lodash';
 import AddBroadcast from '@/components/user/manage-broadcast/AddBroadcast.vue'
 import TestSendMulticast from '@/components/user/manage-broadcast/TestSendMulticast.vue'
-import DeleteBroadcast from '@/components/user/manage-broadcast/DeleteBroadcast.vue'
 import DetailBroadcast from '@/components/user/manage-broadcast/DetailBroadcast.vue'
 import UpdateBroadcast from '@/components/user/manage-broadcast/UpdateBroadcast.vue'
 import DeleteManyBroadcast from '@/components/user/manage-broadcast/DeleteManyBroadcast.vue'
@@ -203,7 +199,6 @@ export default {
         paginate: Paginate,
         TableLoading,
         AddBroadcast,
-        DeleteBroadcast,
         DeleteManyBroadcast,
         DetailBroadcast,
         UpdateBroadcast,
@@ -244,7 +239,6 @@ export default {
                 picture_url: null,
             },
             dataContents: {
-                stickers: null,
                 images: null,
                 texts: null,
             },
@@ -272,14 +266,36 @@ export default {
                 token_type: null,
                 access_token: null,
             },
-            // perPage: 5,
-            // page: 1,
-            // typesort: 'new',
-            // sortlatest: 'true',
-            // search: '',
-            // is_delete: '0',
-            // status: 'all',
-            // role: 'all',
+            packageStickers: [
+                {
+                    packageId: "446",
+                    stickerIds: {
+                        start: 1988,
+                        end: 2027
+                    }
+                },
+                {
+                    packageId: "789",
+                    stickerIds: {
+                        start: 10855,
+                        end: 10894
+                    }
+                },
+                {
+                    packageId: "6136",
+                    stickerIds: {
+                        start: 10551376,
+                        end: 10551399
+                    }
+                },
+                {
+                    packageId: "6325",
+                    stickerIds: {
+                        start: 10979904,
+                        end: 10979927
+                    }
+                }
+            ],
         }
     },
 
@@ -302,8 +318,6 @@ export default {
             role : searchParams.get('role') || 'all',
             status : searchParams.get('status') || 'all',
         }
-        // Note vì dưới có watch nên các tham số khởi tạo ban đầu này phải giống return data nếu không có sẽ gọi nhiều lần ứng với số param khác trên kia 
-        // ví dụ trên is_delete là 'all' mà dưới này là 0 thì nó khác 
         this.getInforChannel();
         this.getBroadcasts();
         this.getDataContents();
@@ -332,11 +346,48 @@ export default {
     },
 
     methods: {
+        showAlert(broadcast) {
+            this.$swal({
+                title: 'Are you sure you want change is delete broadcast with this ' + broadcast.title + ' title ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Close',
+            }).then((result) => {
+                if (result.value) {
+                    this.deleteBroadcast.bind(this)(broadcast);
+                } else if (result.dismiss === this.$swal.DismissReason.cancel) {
+                    this.handleClose();
+                }
+            });
+        },
+        async deleteBroadcast (broadcast) {
+            var dataSubmit = {
+                is_delete: '',
+            };
+            try {
+                if (broadcast.is_delete == 0) dataSubmit.is_delete = 1;
+                else dataSubmit.is_delete = 0;
+                const { messages } = await UserRequest.post('broadcast/delete-broadcast/' + broadcast.id, dataSubmit, true);
+                emitEvent('eventSuccess', messages[0]);
+                emitEvent('eventUpdateIsDeleteBroadcast', broadcast.id);
+            }
+            catch (error) {
+                if (error.messages) emitEvent('eventError', error.messages[0]);
+            }
+        },
+        handleClose() {
+
+        },
         getStickerImageUrl(stickerId) {
             return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
         },
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+        },
+        selectedSticker: function (stickerId, packageId) {
+            this.dataSticker.content_data.packageId = String(packageId);
+            this.dataSticker.content_data.stickerId = String(stickerId);
         },
         getInforChannel: async function () {
             try {
@@ -359,8 +410,8 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
-        reRenderPaginate: function () { // cách xử lí initial-page cho paginate và v-if nó vì vuejs v-if là xóa hoàn toàn khỏi DOM 
-            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page; // cách xử lí page vượt quá dữ liệu đổ ra  
+        reRenderPaginate: function () {
+            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page; 
             this.paginateVisible = false;
             this.$nextTick(() => { this.paginateVisible = true; });
         },
@@ -425,18 +476,11 @@ export default {
             handler: function () {
                 this.getBroadcasts();
             },
-            deep: true // Theo dõi sâu vào các thuộc tính con của big_search
-        }, // nên dùng như này thay vì tách các param ra riêng vì nó sẽ gọi hàm getBroadcasts nhiều lần , các param con thay đổi thì chỉ gọi hàm getBroadcasts 1 lần 
+            deep: true 
+        }, 
         search: _.debounce(function () {
             this.getBroadcasts();
         }, 500),
-        // 'perPage': 'handleSearchSelect',
-        // 'page': 'getBroadcasts',
-        // 'typesort': 'getBroadcasts',
-        // 'sortlatest': 'getBroadcasts',
-        // 'is_delete': 'getBroadcasts',
-        // 'status': 'getBroadcasts',
-        // 'role': 'getBroadcasts',
     }
 }
 </script>

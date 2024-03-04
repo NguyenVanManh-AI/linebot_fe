@@ -24,7 +24,6 @@
 								v-model="loginAdmin.password">
 							<strong id="iconEye"><i @click="isShow = !isShow"
 									:class="{ 'fa-solid': true, 'fa-eye': !isShow, 'fa-eye-slash': isShow }"></i></strong>
-							<!-- replace strong element by span element will result in an error -->
 							<div class="underline"></div><label><i class="fa-solid fa-lock"></i> Password</label>
 						</div>
 						<span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
@@ -146,7 +145,6 @@ h4 {
 	border-color: var(--admin-color);
 }
 
-/* RESET COLOR INPUT AND BUTTON */
 #main {
 	background: var(--admin-color);
 	background: -moz-linear-gradient(-45deg, var(--admin-color) 0%, #0076e5 100%);
@@ -265,8 +263,6 @@ h4 {
 		transform: scale(1.1);
 	}
 }
-
-/* HIỆU ỨNG BACKGROUND HÌNH TRÒN */
 
 * {
 	margin: 0;

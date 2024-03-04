@@ -3,7 +3,6 @@
     <div id="top-line">
       <div id="big" class="row">
         <div id="logo" class="col-2" @click="gotoAdmin">
-          <!-- <img src="../../../dist/logo.png"> -->
           <p>META SHOP</p>
         </div>
         <div id="address" class="col">
@@ -73,10 +72,6 @@ a:hover {
   width: 100%;
   background-color: #282C2F;
   position: relative;
-  /* chỉ cần để postion là fix được cái background */
-  /* z-index: 1; */
-  /* còn không cần để z-index vì để thêm cũng chẳng được gì mà còn che đi những cái được hiện ra của header
-  khi hover vào , vì cái nào cũng z-index mà footer nằm dưới nên ưu tiên hơn nên đè lên  */
 }
 
 #top-line {

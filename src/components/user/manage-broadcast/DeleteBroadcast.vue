@@ -179,7 +179,7 @@ export default {
     },
     mounted() {
         onEvent('selectSimpleBroadcast', (broadcast) => {
-            this.broadcastSelected = Object.assign({}, broadcast); // tránh gán tham chiếu 
+            this.broadcastSelected = Object.assign({}, broadcast); 
             this.dateTime = broadcast.sent_at;
             this.previewContents = broadcast.contents;
         });

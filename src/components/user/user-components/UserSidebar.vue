@@ -10,7 +10,6 @@
       style="display: flex ; flex-direction:column; justify-content: space-between; flex-grow: 1; max-height: calc(100% - 60px); ">
       <div id="my-scroll" style="margin: 0px 14px 0 14px;">
         <ul class="nav-list" style="overflow: visible;">
-          <!-- <span v-tippy="{ content: isUserOpened ? '' : 'Account setting' }"> -->
           <span>
             <li>
               <router-link class="links" data-path="account-setting" :to="{ name: 'AccountSetting' }"><i
@@ -18,13 +17,7 @@
                   setting</span></router-link>
             </li>
           </span>
-          <!-- <span>
-            <li>
-              <router-link class="links" data-path="information-channel" :to="{ name: 'InformationChannel' }"><i
-                  class="fa-brands fa-keycdn"></i><span class="links_name">Information channel</span></router-link>
-            </li>
-          </span> -->
-          <span :class="{ 'hide': user.role != 'manager' }"> <!-- nếu dùng v-if ở đây thì một số style not working -->
+          <span :class="{ 'hide': user.role != 'manager' }"> 
             <li>
               <router-link class="links" data-path="member-account" :to="{ name: 'MemberAccount' }"><i
                   class="fa-solid fa-users"></i><span class="links_name">Channel manages</span></router-link>
@@ -137,9 +130,8 @@ export default {
         $(this).addClass('active');
       }
     });
-    // this.isUserOpened = this.isMenuOpen;
     this.user = JSON.parse(window.localStorage.getItem('user'));
-    onEvent('updateProfileUser', (user) => { this.user = JSON.parse(user); }) // update lại thông tin trên sidebar khi update profile
+    onEvent('updateProfileUser', (user) => { this.user = JSON.parse(user); }) 
   },
   computed: {
     cssVars() {
@@ -163,7 +155,6 @@ export default {
 </script>
   
 <style scoped>
-/* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import url('https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css');
 

@@ -82,15 +82,14 @@
                                                     </li>
                                                 </div>
                                                 <div class="loadContent col-12 mainSticker" v-if="isTab == 'sticker'">
-                                                    <li v-for="sticker, index in dataContents.stickers" :key="index"
-                                                        class="itemSticker">
-                                                        <input @click="selectedIdContent(sticker, sticker.id)"
-                                                            :checked="checkChecked(sticker.id)" class="form-check-input"
-                                                            type="checkbox" name="exampleRadios" id="exampleRadios1"
-                                                            value="option1">
-                                                        <img :src="getStickerImageUrl(sticker.content_data.stickerId)"
-                                                            alt="Sticker" />
-                                                    </li>
+                                                    <div v-for="(packageSticker, indexPackageSticker) in packageStickers"
+                                                        :key="indexPackageSticker">
+                                                        <li class="itemSticker" v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
+                                                            :key="stickerId">
+                                                            <input :checked="checkChecked(handleIdSticker(String(stickerId), packageSticker.packageId))" @click="selectedSticker(String(stickerId), packageSticker.packageId)" class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                            <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
+                                                        </li>
+                                                    </div>
                                                 </div>
                                                 <div class="loadContent col-12 mainImage" v-if="isTab == 'image'">
                                                     <li v-for="image, index in dataContents.images" :key="index"
@@ -121,9 +120,9 @@
                                         <div class="col-3 preViewMessage p-0">
                                             <div class="title_preview"> <i class="fa-solid fa-caret-down"></i>
                                                 <span>Preview</span> <i class="fa-solid fa-circle-question"></i> </div>
-                                            <ul class="inner_preview">
+                                            <ul class="inner_preview_update">
                                                 <li v-for="content, index in previewContents" :key="index"
-                                                    :data-id_message="content.id">
+                                                    :data-id_message="JSON.stringify(content.id)">
                                                     <div class="rowContent" v-if="content.content_type == 'text'">
                                                         <div class="avatar_chat">
                                                             <img :src="channel.picture_url ? channel.picture_url : require('@/assets/line_logo.jpg')"
@@ -185,15 +184,15 @@ const { emitEvent, onEvent } = useEventBus();
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { formatDate } from '@/helper.js';
-// import moment from 'moment';
 import $ from 'jquery';
-import 'jquery-ui-dist/jquery-ui'; // Import jQuery UI
+import 'jquery-ui-dist/jquery-ui';
 
 export default {
     name: "UpdateBroadcast",
     props: {
         channel: Object,
         dataContents: Object,
+        packageStickers: Array
     },
     setup() {
 
@@ -222,44 +221,17 @@ export default {
                 sent_at: null,
                 status: null
             },
-            packageStickers: [
-                {
-                    packageId: "446",
-                    stickerIds: {
-                        start: 1988,
-                        end: 2027
-                    }
-                },
-                {
-                    packageId: "789",
-                    stickerIds: {
-                        start: 10855,
-                        end: 10894
-                    }
-                },
-                {
-                    packageId: "6136",
-                    stickerIds: {
-                        start: 10551376,
-                        end: 10551399
-                    }
-                },
-                {
-                    packageId: "6325",
-                    stickerIds: {
-                        start: 10979904,
-                        end: 10979927
-                    }
-                }
-            ],
         }
     },
     mounted() {
-        $(this.$el).find(".inner_preview").sortable(); // Sắp xếp cho inner_preview
+        $(this.$el).find(".inner_preview_update").sortable(); 
         onEvent('selectSimpleBroadcast', (broadcast) => {
-            this.dataBroadcastSubmit = Object.assign({}, broadcast); // tránh gán tham chiếu 
+            this.dataBroadcastSubmit = Object.assign({}, broadcast);
+            this.dataBroadcastSubmit.content_ids = this.dataBroadcastSubmit.content_ids.map((content_id) => JSON.stringify(content_id));
+            console.log(this.dataBroadcastSubmit.content_ids);
             this.dateTime = broadcast.sent_at;
             this.previewContents = broadcast.contents;
+            console.log(this.previewContents);
         });
 
     },
@@ -277,29 +249,45 @@ export default {
         selectedIdContent: function (content, id_content) {
             if (event.target.checked == true) {
                 if (this.dataBroadcastSubmit.content_ids.length == 5) {
-                    this.dataBroadcastSubmit.content_ids.shift(); // nếu đã đủ 5 thì xóa phần tử đầu tiên đi 
+                    this.dataBroadcastSubmit.content_ids.shift(); 
                     this.previewContents.shift();
                 }
-                this.dataBroadcastSubmit.content_ids.push(id_content);
+                this.dataBroadcastSubmit.content_ids.push(JSON.stringify(id_content));
                 this.previewContents.push(content);
             }
             else {
-                // xóa id ra khỏi mảng 
-                let indexId = this.dataBroadcastSubmit.content_ids.indexOf(id_content);
+                let indexId = this.dataBroadcastSubmit.content_ids.indexOf(JSON.stringify(id_content));
                 if (indexId !== -1) this.dataBroadcastSubmit.content_ids.splice(indexId, 1);
 
-                // xóa content ra khỏi mảng 
-                let indexToRemove = this.previewContents.findIndex(content => content.id === id_content);
+                let indexToRemove = this.previewContents.findIndex(content => JSON.stringify(content.id) === JSON.stringify(id_content));
                 if (indexToRemove !== -1) this.previewContents.splice(indexToRemove, 1);
             }
         },
+        selectedSticker: function(stickerId, packageId) {
+            var id_content = {
+                stickerId: stickerId, 
+                packageId: packageId 
+            }
+            var content = {
+                content_type : 'sticker',
+                id : id_content,
+                content_data : id_content
+            }
+            this.selectedIdContent(content, id_content);
+        },
+        handleIdSticker: function(stickerId, packageId) {
+            return {
+                stickerId: stickerId, 
+                packageId: packageId 
+            };
+        },
         updateNewArrayId() {
-            const listItems = document.querySelectorAll('.inner_preview li');
+            const listItems = document.querySelectorAll('.inner_preview_update li');
             const idMessages = [];
             listItems.forEach((item) => {
                 const idMessage = item.getAttribute('data-id_message');
                 if (idMessage) {
-                    idMessages.push(idMessage);
+                    idMessages.push(JSON.parse(idMessage));
                 }
             });
             return idMessages;
@@ -334,16 +322,17 @@ export default {
             }
         },
         checkChecked: function (id_content) {
-            return this.dataBroadcastSubmit.content_ids.includes(parseInt(id_content));
+            id_content = JSON.stringify(id_content);
+            return this.dataBroadcastSubmit.content_ids.includes(id_content);
         }
     },
     watch: {
         dateTime: function (newDateTime) {
-            if (typeof newDateTime === 'string') { // mounted gán cho dateTime đầu tiên {
+            if (typeof newDateTime === 'string') {
                 this.dataBroadcastSubmit.sent_at = newDateTime;
             }
             else {
-                if (newDateTime) { // tránh trường hợp clear input dateTime 
+                if (newDateTime) { 
                     const formattedDate = formatDate(newDateTime);
                     this.dataBroadcastSubmit.sent_at = formattedDate;
                     this.optionSendnow = 'select_time';
@@ -434,7 +423,6 @@ export default {
     border-color: #dee2e6;
     margin-top: -1px;
     padding: 10px;
-    /* min-height: 200px; */
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -444,16 +432,14 @@ export default {
     flex-wrap: wrap;
 }
 
-.mainText {
+.mainSticker {
     max-height: 400px;
     overflow-y: scroll;
 }
 
-.mainSticker {
+.mainSticker > div {
     display: flex;
     flex-wrap: wrap;
-    max-height: 400px;
-    overflow-y: scroll;
 }
 
 .colorImage {
@@ -505,14 +491,14 @@ export default {
     margin: 0px 6px;
 }
 
-.inner_preview {
+.inner_preview_update {
     padding: 10px;
     height: 60vh;
     background-color: #8CABD9;
     overflow-y: scroll;
 }
 
-.inner_preview::-webkit-scrollbar-track {
+.inner_preview_update::-webkit-scrollbar-track {
     background: #8CABD9;
 }
 

@@ -19,6 +19,8 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import VueTippy from 'vue-tippy'
 import 'tippy.js/dist/tippy.css';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const app = createApp(App);
 app.use(router);
@@ -32,4 +34,5 @@ app.use(print)
 app.use(Particles)
 app.use(VueDatePicker)
 app.use(VueTippy)
+app.use(VueSweetalert2)
 app.mount('#app')

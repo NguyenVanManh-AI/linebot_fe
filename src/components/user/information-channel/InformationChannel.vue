@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import UserRequest from '@/restful/UserRequest';
 import useEventBus from '@/composables/useEventBus'
 const { emitEvent } = useEventBus();
 

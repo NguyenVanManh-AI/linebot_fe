@@ -22,10 +22,6 @@
                                             <a :class="{ 'nav-link': true, 'colorText': true, 'active': isTab == 'text' }"
                                                 aria-current="page" href="#"><i class="fa-solid fa-quote-left"></i> Text</a>
                                         </li>
-                                        <li @click="isTab = 'sticker'" class="nav-item font-weight-bold">
-                                            <a :class="{ 'nav-link': true, 'colorSticker': true, 'active': isTab == 'sticker' }"
-                                                href="#"><i class="fa-solid fa-icons"></i> Sticker</a>
-                                        </li>
                                         <li @click="isTab = 'image'" class="nav-item font-weight-bold">
                                             <a :class="{ 'nav-link': true, 'colorImage': true, 'active': isTab == 'image' }"
                                                 href="#"><i class="fa-solid fa-image"></i> Image</a>
@@ -39,21 +35,6 @@
                                                     aria-describedby="emailHelp" placeholder="Content Text">
                                             </textarea>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="loadContent mainSticker" v-if="isTab == 'sticker'">
-                                        <div class="listSticker"
-                                            v-for="(packageSticker, indexPackageSticker) in packageStickers"
-                                            :key="indexPackageSticker">
-                                            <li @click="selectedSticker(stickerId, packageSticker.packageId)"
-                                                class="itemSticker"
-                                                v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
-                                                :key="stickerId">
-                                                <input :checked="this.dataSticker.content_data.stickerId == stickerId"
-                                                    class="form-check-input" type="radio" name="exampleRadios"
-                                                    id="exampleRadios1" value="option1">
-                                                <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
-                                            </li>
                                         </div>
                                     </div>
                                     <div class="loadContent" v-if="isTab == 'image'">
@@ -97,7 +78,6 @@ export default {
     data() {
         return {
             isTab: 'text',
-            selectStickerId: null,
             previewImageSrc: null,
             member: {
                 name: null,
@@ -108,8 +88,6 @@ export default {
                 content_type: null,
                 content_data_type: null,
                 content_data_text: null,
-                content_data_packageId: null,
-                content_data_stickerId: null,
                 image_content: null,
             },
             dataText: {
@@ -119,48 +97,10 @@ export default {
                     text: null,
                 },
             },
-            dataSticker: {
-                content_type: 'sticker',
-                content_data: {
-                    type: 'sticker',
-                    packageId: null,
-                    stickerId: null
-                }
-            },
             dataImage: {
                 content_type: 'image',
                 image_content: null,
             },
-            packageStickers: [
-                {
-                    packageId: "446",
-                    stickerIds: {
-                        start: 1988,
-                        end: 2027
-                    }
-                },
-                {
-                    packageId: "789",
-                    stickerIds: {
-                        start: 10855,
-                        end: 10894
-                    }
-                },
-                {
-                    packageId: "6136",
-                    stickerIds: {
-                        start: 10551376,
-                        end: 10551399
-                    }
-                },
-                {
-                    packageId: "6325",
-                    stickerIds: {
-                        start: 10979904,
-                        end: 10979927
-                    }
-                }
-            ],
         }
     },
     mounted() {
@@ -172,21 +112,10 @@ export default {
 
     },
     methods: {
-        getStickerImageUrl(stickerId) {
-            return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
-        },
-        generateNumbers(start, end) {
-            return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-        },
-        selectedSticker: function (stickerId, packageId) {
-            this.dataSticker.content_data.packageId = String(packageId);
-            this.dataSticker.content_data.stickerId = String(stickerId);
-        },
         addContent: async function () {
             try {
                 var dataSubmit = null;
                 if (this.isTab == 'text') dataSubmit = this.dataText;
-                if (this.isTab == 'sticker') dataSubmit = this.dataSticker;
                 if (this.isTab == 'image') {
                     dataSubmit = new FormData();
                     dataSubmit.append('content_type', 'image');
@@ -214,20 +143,11 @@ export default {
                     text: null,
                 },
             };
-            this.dataSticker = {
-                content_type: 'sticker',
-                content_data: {
-                    type: "sticker",
-                    packageId: null,
-                    stickerId: null
-                }
-            };
             this.dataImage = {
                 content_type: 'image',
                 image_content: null,
             };
         },
-        // data Image 
         previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -252,62 +172,11 @@ export default {
 </script>
 
 <style scoped>
-.mainSticker {
-    max-height: 400px;
-    overflow-y: scroll;
-}
-
-.itemSticker {
-    width: 80px;
-    display: flex;
-    justify-content: center;
-    border: 1px solid silver;
-    position: relative;
-    margin: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.5s ease;
-}
-
-.itemSticker:hover {
-    transition: all 0.5s ease;
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-}
-
-.itemSticker img {
-    transition: all 0.5s ease;
-}
-
-.itemSticker:hover img {
-    transform: scale(1.5);
-    transition: all 0.5s ease;
-}
-
-.itemSticker img {
-    object-fit: contain;
-}
-
-.itemSticker input {
-    position: absolute;
-    top: -2px;
-    right: 2px;
-}
-
-.listSticker {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.listSticker img {
-    max-width: 60px
-}
-
 .loadContent {
     border: 1px solid;
     border-color: #dee2e6;
     margin-top: -1px;
     padding: 10px;
-    /* min-height: 200px; */
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -326,10 +195,6 @@ export default {
 
 .mainTab>li {
     transition: all 0.5s;
-}
-
-.colorSticker {
-    color: var(--yellow-color)
 }
 
 .modal.fade.show {
@@ -388,8 +253,6 @@ export default {
     max-width: 1000px;
 }
 
-
-/* data Image */
 .minAvatar {
     background-color: #e9ecef;
     position: relative;
@@ -436,5 +299,13 @@ export default {
     font-size: 60px;
     color: var(--user-color);
 }
+
+img.close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+}
+
 </style>
 

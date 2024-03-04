@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- ta có thể thêm style="background-color: aqua;" vào thẻ breeding-rhombus-spinner-->
     <template :class="{ loading: true, hide: !isLoading, show: isLoading }">
       <breeding-rhombus-spinner class="loading-component" :animation-duration="2000" :size="65" color="#06C755" />
       <div id="titleLoading">
@@ -42,24 +41,8 @@ export default {
   watch: {
 
   }
-  // async mounted() {
-  //   await new Promise((r) => setTimeout(r, 10000));
-  //   this.loading = true;
-  // },
 }
 </script>
-<!-- Giải thích không được dùng v-if và v-else đối với ẩn hiện loading 
-  Trong mounted() của các component con , khi mà cho isLoading true và false dẫn đến sẽ cho v-if làm cho 
-  <template id="appMain" :class="{hide:isLoading, show:!isLoading}">
-    <router-view></router-view>
-    <CommonNotification></CommonNotification>
-  </template>
-
-  xóa đi khỏi DOM nếu isLoading là true và render ra lại nếu là fase 
-  => khi render ra lại thì vô tình nó cũng làm cho các component con nằm trong nó render ra lại và khi render ra lại 
-  thì các component con đó lại mounted() dẫn đến vòng lặp  
-  => dùng bind class cũng được 
--->
 <style >
 * {
   margin: 0;
@@ -79,30 +62,17 @@ a {
   text-decoration: none;
 }
 
-/* .tippy-box[data-state="visible"] .tippy-content {
-  background-color: black !important;
-  color: white;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-}
-*/
-
 body {
   background-color: #F0F2F5 !important;
 }
 
-/* color default */
 :root {
   --user-color: #06C755;
   --admin-color: #06C755;
   --blue-color: #007BFF;
   --brown-color: #8B4513;
   --yellow-color: #c0b01d;
-  /* --admin-color: #096a31; */
 }
-
-/* color default */
-
 
 ::-webkit-scrollbar {
   width: 13px;
@@ -141,14 +111,6 @@ body {
   scrollbar-width: none;
 }
 
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-} */
-
 .modal-open .modal {
   background-color: #0000008a;
 }
@@ -173,7 +135,6 @@ button {
   color: var(--user-color);
 }
 
-/* animation */
 #titleLoading {
   animation: titleLoading 2s linear infinite;
 }
@@ -184,8 +145,6 @@ button {
   }
 }
 
-/* animation */
-
 .hide {
   display: none;
 }
@@ -194,9 +153,6 @@ button {
   display: block;
 }
 
-
-
-/*  */
 .btn-pers {
   position: relative;
   left: 50%;
@@ -226,8 +182,6 @@ button {
 .btn-pers:active {
   transform: translate(-50%, -1px);
 }
-
-/*  */
 
 button.close span {
   color: black !important;

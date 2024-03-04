@@ -7,7 +7,6 @@
             <CommonHeader></CommonHeader>
             <div class="innerContent">
                 <router-view></router-view>
-                <!-- <CommonFooter></CommonFooter> -->
             </div>
         </div>
     </div>
@@ -15,10 +14,7 @@
 <script>
 
 import AdminSideBar from '@/components/admin/admin-components/AdminSideBar.vue'
-// import CommonFooter from '@/components/common/CommonFooter.vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
-// import useEventBus from '@/composables/useEventBus'
-// const { onEvent } = useEventBus()
 
 export default {
     name: "AdminDashboard",
@@ -33,7 +29,6 @@ export default {
     components: {
         AdminSideBar,
         CommonHeader,
-        // CommonFooter,
     },
     methods: {
 

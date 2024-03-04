@@ -8,17 +8,13 @@
             <div class="innerContent">
                 <router-view></router-view>
             </div>
-            <!-- <CommonFooter></CommonFooter> -->
         </div>
     </div>
 </template>
 <script>
 
 import UserSidebar from '@/components/user/user-components/UserSidebar.vue'
-// import CommonFooter from '@/components/common/CommonFooter.vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
-// import useEventBus from '@/composables/useEventBus'
-// const { onEvent } = useEventBus()
 
 export default {
     name: "UserMain",
@@ -32,7 +28,6 @@ export default {
     },
     components: {
         UserSidebar,
-        // CommonFooter,
         CommonHeader,
     },
     methods: {
@@ -45,7 +40,6 @@ export default {
 .rightBar {
     transition: width 0.5s ease;
     min-height: 100vh;
-    /* padding: 6px; */
 }
 
 .innerContent {

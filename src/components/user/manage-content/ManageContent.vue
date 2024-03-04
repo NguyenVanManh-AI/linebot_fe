@@ -46,7 +46,6 @@
                             v-model="big_search.content_type">
                             <option value="all">All Content</option>
                             <option value="text">Text</option>
-                            <option value="sticker">Sticker</option>
                             <option value="image">Image</option>
                         </select>
                     </div>
@@ -112,16 +111,12 @@
                                 <td :class="{
                                     'table-cell': true, 'text-uppercase': true,
                                     'colorText': content.content_type == 'text',
-                                    'colorSticker': content.content_type == 'sticker',
                                     'colorImage': content.content_type == 'image'
                                 }">
                                     {{ content.content_type }}</td>
                                 <td class="table-cell ">
-                                    <div class="contentTextTable" v-if="content.content_type == 'text'"
+                                    <div class="contentTextTable " v-if="content.content_type == 'text'"
                                         v-html="content.content_data.text">
-                                    </div>
-                                    <div class="imgInTable" v-if="content.content_type == 'sticker'">
-                                        <img :src="getStickerImageUrl(content.content_data.stickerId)" alt="Sticker" />
                                     </div>
                                     <div class="imgInTable" v-if="content.content_type == 'image'">
                                         <img :src="content.content_data.originalContentUrl" alt="Image" />
@@ -172,10 +167,9 @@
                 </div>
                 <AddContent :getContents="getContents"></AddContent>
                 <UpdateContent :getContents="getContents" :contentSelected="contentSelected"></UpdateContent>
-                <DeleteContent :contentSelected="contentSelected" :getStickerImageUrl="getStickerImageUrl"></DeleteContent>
-                <DetailContent :contentSelected="contentSelected" :getStickerImageUrl="getStickerImageUrl"></DetailContent>
-                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents"
-                    :getStickerImageUrl="getStickerImageUrl"></DeleteManyContent>
+                <DeleteContent :contentSelected="contentSelected" ></DeleteContent>
+                <DetailContent :contentSelected="contentSelected" ></DetailContent>
+                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents" ></DeleteManyContent>
             </div>
         </div>
     </div>
@@ -256,13 +250,6 @@ export default {
                 token_type: null,
                 access_token: null,
             },
-            // perPage: 5,
-            // page: 1,
-            // typesort: 'new',
-            // sortlatest: 'true',
-            // is_delete: 'all',
-            // content_type: 'all',
-            // role: 'all',
         }
     },
 
@@ -310,12 +297,6 @@ export default {
     },
 
     methods: {
-        getStickerImageUrl(stickerId) {
-            return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
-        },
-        generateNumbers(start, end) {
-            return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-        },
         reRenderPaginate: function () {
             if (this.big_search.page > this.last_page) this.big_search.page = this.last_page;
             this.paginateVisible = false;
@@ -506,10 +487,11 @@ table img {
 
 .imgInTable {
     display: flex;
-    justify-content: center;
+    justify-content: start ;
 }
 
 .imgInTable img {
+    height: 100px;
     border-radius: 4px;
 }
 
@@ -525,7 +507,4 @@ table button {
 .colorText {
     color: var(--brown-color)
 }
-
-.colorSticker {
-    color: var(--yellow-color)
-}</style>
+</style>

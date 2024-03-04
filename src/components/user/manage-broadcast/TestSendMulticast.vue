@@ -58,15 +58,14 @@
                                                 </li>
                                             </div>
                                             <div class="loadContent col-12 mainSticker" v-if="isTab == 'sticker'">
-                                                <li v-for="sticker, index in dataContents.stickers" :key="index"
-                                                    class="itemSticker">
-                                                    <input @click="selectedIdContent(sticker, sticker.id)"
-                                                        :checked="checkChecked(sticker.id)" class="form-check-input"
-                                                        type="checkbox" name="exampleRadios" id="exampleRadios1"
-                                                        value="option1">
-                                                    <img :src="getStickerImageUrl(sticker.content_data.stickerId)"
-                                                        alt="Sticker" />
-                                                </li>
+                                                <div v-for="(packageSticker, indexPackageSticker) in packageStickers"
+                                                    :key="indexPackageSticker">
+                                                    <li class="itemSticker" v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
+                                                        :key="stickerId">
+                                                        <input :checked="checkChecked(handleIdSticker(String(stickerId), packageSticker.packageId))" @click="selectedSticker(String(stickerId), packageSticker.packageId)" class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                        <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
+                                                    </li>
+                                                </div>
                                             </div>
                                             <div class="loadContent col-12 mainImage" v-if="isTab == 'image'">
                                                 <li v-for="image, index in dataContents.images" :key="index"
@@ -92,8 +91,8 @@
                                     </div>
                                     <div class="col-3 preViewMessage p-0">
                                         <div class="title_preview"> <i class="fa-solid fa-caret-down"></i> <span>Preview</span> <i class="fa-solid fa-circle-question"></i> </div>
-                                        <ul class="inner_preview">
-                                            <li v-for="content, index in previewContents" :key="index" :data-id_message="content.id">
+                                        <ul class="inner_preview_test">
+                                            <li v-for="content, index in previewContents" :key="index" :data-id_message="JSON.stringify(content.id)">
                                                 <div class="rowContent" v-if="content.content_type == 'text'">
                                                     <div class="avatar_chat">
                                                         <img :src="channel.picture_url ? channel.picture_url : require('@/assets/line_logo.jpg')" alt="">
@@ -146,15 +145,15 @@
 import useEventBus from '@/composables/useEventBus'
 import UserRequest from '@/restful/UserRequest';
 const { emitEvent } = useEventBus();
-// import moment from 'moment';
 import Multiselect from '@vueform/multiselect'
 import $ from 'jquery';
-import 'jquery-ui-dist/jquery-ui'; // Import jQuery UI
+import 'jquery-ui-dist/jquery-ui'; 
 export default {
     name: "TestSendMulticast",
     props: {
         channel: Object,
         dataContents: Object,
+        packageStickers: Array
     },
     setup() {
 
@@ -177,40 +176,10 @@ export default {
                 member_ids: null,
                 content_ids: null,
             },
-            packageStickers: [
-                {
-                    packageId: "446",
-                    stickerIds: {
-                        start: 1988,
-                        end: 2027
-                    }
-                },
-                {
-                    packageId: "789",
-                    stickerIds: {
-                        start: 10855,
-                        end: 10894
-                    }
-                },
-                {
-                    packageId: "6136",
-                    stickerIds: {
-                        start: 10551376,
-                        end: 10551399
-                    }
-                },
-                {
-                    packageId: "6325",
-                    stickerIds: {
-                        start: 10979904,
-                        end: 10979927
-                    }
-                }
-            ],
         }
     },
     mounted() {
-        $(this.$el).find(".inner_preview").sortable(); // Sắp xếp cho inner_preview
+        $(this.$el).find(".inner_preview_test").sortable(); 
         this.getAllMember();
     },
 
@@ -227,21 +196,37 @@ export default {
         selectedIdContent: function (content, id_content) {
             if (event.target.checked == true) {
                 if (this.dataTestSendSubmit.content_ids.length == 5) {
-                    this.dataTestSendSubmit.content_ids.shift(); // nếu đã đủ 5 thì xóa phần tử đầu tiên đi 
+                    this.dataTestSendSubmit.content_ids.shift(); 
                     this.previewContents.shift();
                 }
-                this.dataTestSendSubmit.content_ids.push(id_content);
+                this.dataTestSendSubmit.content_ids.push(JSON.stringify(id_content));
                 this.previewContents.push(content);
             }
             else {
-                // xóa id ra khỏi mảng 
-                let indexId = this.dataTestSendSubmit.content_ids.indexOf(id_content);
+                let indexId = this.dataTestSendSubmit.content_ids.indexOf(JSON.stringify(id_content));
                 if (indexId !== -1) this.dataTestSendSubmit.content_ids.splice(indexId, 1);
 
-                // xóa content ra khỏi mảng 
-                let indexToRemove = this.previewContents.findIndex(content => content.id === id_content);
+                let indexToRemove = this.previewContents.findIndex(content => JSON.stringify(content.id) === JSON.stringify(id_content));
                 if (indexToRemove !== -1) this.previewContents.splice(indexToRemove, 1);
             }
+        },
+        selectedSticker: function(stickerId, packageId) {
+            var id_content = {
+                stickerId: stickerId, 
+                packageId: packageId 
+            }
+            var content = {
+                content_type : 'sticker',
+                id : id_content,
+                content_data : id_content
+            }
+            this.selectedIdContent(content, id_content);
+        },
+        handleIdSticker: function(stickerId, packageId) {
+            return {
+                stickerId: stickerId, 
+                packageId: packageId 
+            };
         },
         getAllMember: async function() {
             try {
@@ -257,12 +242,12 @@ export default {
             }
         },
         updateNewArrayId() {
-            const listItems = document.querySelectorAll('.inner_preview li');
+            const listItems = document.querySelectorAll('.inner_preview_test li');
             const idMessages = [];
             listItems.forEach((item) => {
                 const idMessage = item.getAttribute('data-id_message');
                 if (idMessage) {
-                    idMessages.push(idMessage);
+                    idMessages.push(JSON.parse(idMessage));
                 }
             });
             return idMessages;
@@ -289,7 +274,8 @@ export default {
             }
         },
         checkChecked: function (id_content) {
-            return this.dataTestSendSubmit.content_ids.includes(parseInt(id_content));
+            id_content = JSON.stringify(id_content);
+            return this.dataTestSendSubmit.content_ids.includes(id_content);
         }
     },
     watch: {
@@ -380,7 +366,6 @@ export default {
     border-color: #dee2e6;
     margin-top: -1px;
     padding: 10px;
-    /* min-height: 200px; */
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -396,10 +381,13 @@ export default {
 }
 
 .mainSticker {
-    display: flex;
-    flex-wrap: wrap;
     max-height: 400px;
     overflow-y: scroll;
+}
+
+.mainSticker > div {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .colorImage {
@@ -412,7 +400,6 @@ export default {
 
 .mainTab {
     z-index: 1;
-    /* fix border bottom */
 }
 
 .mainTab>li:hover {
@@ -451,13 +438,13 @@ export default {
     margin: 0px 6px;
 }
 
-.inner_preview {
+.inner_preview_test {
     padding: 10px;
     height: 60vh;   
     background-color: #8CABD9;
     overflow-y: scroll;
 }
-.inner_preview::-webkit-scrollbar-track {
+.inner_preview_test::-webkit-scrollbar-track {
   background: #8CABD9;
 }
 .rowContent {

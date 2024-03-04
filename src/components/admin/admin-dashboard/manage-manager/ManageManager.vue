@@ -61,7 +61,7 @@
             <TableLoading :cols="8" :rows="9"></TableLoading>
         </div>
         <div v-if="!isLoading" class="tableData">
-            <table class="table table-bordered"> <!-- table-striped -->
+            <table class="table table-bordered"> 
                 <thead>
                     <tr>
                         <th scope="col"><input ref="selectAllCheckbox" @change="selectAll()" type="checkbox" class=""></th>
@@ -106,7 +106,6 @@
                                     :class="{ 'fa-solid': true, 'fa-lock': manager.is_block == 0, 'fa-lock-open': manager.is_block == 1 }"></i>
                             </button>
                         </td>
-                        <!-- @click="{manager.is_block = !manager.is_block ; changeIsBlock(manager)}"> -->
                     </tr>
                 </tbody>
             </table>
@@ -169,7 +168,7 @@ export default {
                 name: '',
                 email: '',
                 line_user_id: '',
-                is_block: null // thêm đây dấu , thì eslint sẽ báo lỗi 
+                is_block: null
             },
             selectedManagers: [],
             isLoading: false,
@@ -190,7 +189,7 @@ export default {
             is_block: searchParams.get('is_delete') || '0',
         }
         this.getManagers();
-        onEvent('eventRegetManagers', () => { this.getManagers(); }); // add manager => reget
+        onEvent('eventRegetManagers', () => { this.getManagers(); });
         onEvent('eventUpdateIsBlock', (id_manager) => {
             this.managers.forEach(manager => {
                 if (manager.id == id_manager) {
@@ -244,7 +243,6 @@ export default {
         selectManager: function (managerSelected) {
             this.managerSelected = managerSelected;
         },
-        // delete many 
         isSelected(managerId) {
             return this.selectedManagers.includes(managerId);
         },
@@ -275,8 +273,7 @@ export default {
         },
         search: _.debounce(function () {
             this.getManagers();
-        }, 500), // search thì nên để ENGLISH 
-        // 'search': 'handleSearchSelect', // không nên dùng như này // dẫn đến 429 to many request 
+        }, 500), 
     }
 }
 </script>
@@ -339,7 +336,6 @@ table img {
 .table-cell {
     font-weight: bold;
     vertical-align: middle;
-    /* HAY - Canh giữa nội dung của ô trong table */
 }
 
 table button {

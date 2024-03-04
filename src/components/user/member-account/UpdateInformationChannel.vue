@@ -204,7 +204,7 @@ export default {
             }
         },
         openUpdate: function () {
-            this.newChannel = Object.assign({}, this.channel); // gán không tham chiếu 
+            this.newChannel = Object.assign({}, this.channel); 
         },
         updateInforChannel: async function () {
             try {

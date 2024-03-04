@@ -128,7 +128,6 @@ h4 {
 	border-color: var(--user-color);
 }
 
-/* RESET COLOR INPUT AND BUTTON */
 #main {
 	background: var(--user-color);
 	background: -moz-linear-gradient(-45deg, var(--user-color) 0%, #0076e5 100%);
@@ -248,8 +247,6 @@ h4 {
 	}
 }
 
-/* HIỆU ỨNG BACKGROUND HÌNH TRÒN */
-
 * {
 	margin: 0;
 	padding: 0;
@@ -274,7 +271,6 @@ body {
 	background: linear-gradient(to right, #EF629F, #EECDA3);
 }
 
-/* input */
 .container {
 	border-radius: 10px;
 	width: 450px;

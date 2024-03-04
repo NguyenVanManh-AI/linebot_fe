@@ -10,7 +10,6 @@
       style="display: flex ; flex-direction:column; justify-content: space-between; flex-grow: 1; max-height: calc(100% - 60px); ">
       <div id="my-scroll" style="margin: 0px 14px 0 14px;">
         <ul class="nav-list" style="overflow: visible;">
-          <!-- <span v-tippy="{ content: isAdminOpened ? '' : 'Manager Account' }"> -->
           <span>
             <li>
               <router-link class="links" data-path="manage-manager" :to="{ name: 'ManageManager' }"><i
@@ -35,9 +34,7 @@
 </template>
 
 <script>
-// import useEventBus from '@/composables/useEventBus'
 import $ from 'jquery';
-// const { emitEvent } = useEventBus()
 export default {
   name: 'AdminSideBar',
   props: {
@@ -94,7 +91,6 @@ export default {
         $(this).addClass('active');
       }
     });
-    // this.isAdminOpened = this.isMenuOpen;
     this.admin = JSON.parse(window.localStorage.getItem('admin'));
   },
   computed: {

@@ -128,41 +128,11 @@ export default {
                 status: null,
             },
             previewContents: [],
-            packageStickers: [
-                {
-                    packageId: "446",
-                    stickerIds: {
-                        start: 1988,
-                        end: 2027
-                    }
-                },
-                {
-                    packageId: "789",
-                    stickerIds: {
-                        start: 10855,
-                        end: 10894
-                    }
-                },
-                {
-                    packageId: "6136",
-                    stickerIds: {
-                        start: 10551376,
-                        end: 10551399
-                    }
-                },
-                {
-                    packageId: "6325",
-                    stickerIds: {
-                        start: 10979904,
-                        end: 10979927
-                    }
-                }
-            ],
         }
     },
     mounted() {
         onEvent('selectSimpleBroadcast', (broadcast) => {
-            this.broadcastSelected = Object.assign({}, broadcast); // tránh gán tham chiếu 
+            this.broadcastSelected = Object.assign({}, broadcast);
             this.dateTime = broadcast.sent_at;
             this.previewContents = broadcast.contents;
         });
