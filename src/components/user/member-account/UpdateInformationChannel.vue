@@ -1,12 +1,12 @@
 <template>
-    <div class="col-10">
+    <div class="col-10 infor-channel">
         <div class="row inputInforChannel">
             <div class="col-2">
                 <div class="row mt-3">
                     <div class="col-12">
                         <label><i @click="isShow1i = !isShow1i"
-                                :class="{ 'fa-solid': true, 'fa-eye': !isShow1i, 'fa-eye-slash': isShow1i }"></i> Channel
-                            ID</label>
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow1i, 'fa-eye-slash': isShow1i }"></i><span
+                                class="isHideTitle1">Channel</span> ID</label>
                         <input v-if="!isShow1i" readonly class="form-control" v-model="channel.channel_id"
                             placeholder="Channel ID" :type="isShow1i ? 'text' : 'password'">
                         <input v-if="isShow1i" :content="channel.channel_id" v-tippy="{ maxWidth: '100vw' }" readonly
@@ -15,12 +15,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <div class="row mt-3">
                     <div class="col-12">
                         <label><i @click="isShow2i = !isShow2i"
-                                :class="{ 'fa-solid': true, 'fa-eye': !isShow2i, 'fa-eye-slash': isShow2i }"></i> Channel
-                            Name</label>
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow2i, 'fa-eye-slash': isShow2i }"></i> <span
+                                class="isHideTitle1">Channel</span> Name</label>
                         <input v-if="!isShow2i" class="form-control" readonly v-model="channel.channel_name"
                             placeholder="Channel Name" :type="isShow2i ? 'text' : 'password'">
                         <input v-if="isShow2i" :content="channel.channel_name" v-tippy="{ maxWidth: '100vw' }"
@@ -29,12 +29,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <div class="row mt-3">
                     <div class="col-12">
                         <label><i @click="isShow3i = !isShow3i"
-                                :class="{ 'fa-solid': true, 'fa-eye': !isShow3i, 'fa-eye-slash': isShow3i }"></i> Channel
-                            Secret</label>
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow3i, 'fa-eye-slash': isShow3i }"></i> <span
+                                class="isHideTitle1">Channel</span> Secret</label>
                         <input v-if="!isShow3i" class="form-control" readonly v-model="channel.channel_secret"
                             placeholder="Channel Secret" :type="isShow3i ? 'text' : 'password'">
                         <input v-if="isShow3i" :content="channel.channel_secret" v-tippy="{ maxWidth: '100vw' }"
@@ -47,8 +47,8 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         <label><i @click="isShow4i = !isShow4i"
-                                :class="{ 'fa-solid': true, 'fa-eye': !isShow4i, 'fa-eye-slash': isShow4i }"></i> Channel
-                            Access Token</label>
+                                :class="{ 'fa-solid': true, 'fa-eye': !isShow4i, 'fa-eye-slash': isShow4i }"></i> <span
+                                class="isHideTitle1">Channel</span> <span class="isHideTitle1"> Access</span> Token</label>
                         <input v-if="!isShow4i" class="form-control" readonly v-model="channel.channel_access_token"
                             placeholder="Channel Access Token" :type="isShow4i ? 'text' : 'password'">
                         <input v-if="isShow4i" :content="channel.channel_access_token" v-tippy="{ maxWidth: '100vw' }"
@@ -60,18 +60,22 @@
         </div>
     </div>
     <div class="col-2">
-        <div id="main">
-            <div id="big">
-                <div class="bigContainer">
-                    <button @click="openUpdate()" data-toggle="modal" data-target="#exampleModalChangePassword"
-                        id="openChangePassword" type="button" class="mt-4 btn-pers"><i class="fa-solid fa-gear"></i>
-                        Change</button>
-                    <div class="modal fade" id="exampleModalChangePassword" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div>
+            <div>
+                <div class="big-container">
+                    <button @click="openUpdate()" data-toggle="modal" data-target="#example-modal-change-password"
+                        id="open-change-password" type="button" class="mt-4 btn-pers">
+                        <div class="text-change">
+                            <i class="fa-solid fa-gear"></i>
+                            <span class="isHide">change</span>
+                        </div>
+                    </button>
+                    <div class="modal fade" id="example-modal-change-password" tabindex="-1" role="dialog"
+                        aria-labelledby="example-modal-label" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel"><strong><i class="fa-brands fa-line"></i>
+                                    <h5 class="modal-title" id="example-modal-label"><strong><i class="fa-brands fa-line"></i>
                                             Form Update Information Channel</strong></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true" class="text-danger"><i
@@ -81,9 +85,9 @@
                                 <div class="modal-body">
                                     <form @submit.prevent="updateInforChannel()">
                                         <div class="input-form">
-                                            <input required id="inputPassword" :type="isShow1 ? 'text' : 'password'"
+                                            <input required id="input-password" :type="isShow1 ? 'text' : 'password'"
                                                 v-model="newChannel.channel_id">
-                                            <strong id="iconEye"><i @click="isShow1 = !isShow1"
+                                            <strong id="icon-eye"><i @click="isShow1 = !isShow1"
                                                     :class="{ 'fa-solid': true, 'fa-eye': !isShow1, 'fa-eye-slash': isShow1 }"></i></strong>
                                             <div class="underline"></div><label><i class="fa-brands fa-line"></i> Channel
                                                 ID</label>
@@ -92,9 +96,9 @@
                                         }}<br></span>
                                         <br>
                                         <div class="input-form">
-                                            <input required id="inputPassword" :type="isShow2 ? 'text' : 'password'"
+                                            <input required id="input-password" :type="isShow2 ? 'text' : 'password'"
                                                 v-model="newChannel.channel_name">
-                                            <strong id="iconEye"><i @click="isShow2 = !isShow2"
+                                            <strong id="icon-eye"><i @click="isShow2 = !isShow2"
                                                     :class="{ 'fa-solid': true, 'fa-eye': !isShow2, 'fa-eye-slash': isShow2 }"></i></strong>
                                             <div class="underline"></div><label><i class="fa-solid fa-signature"></i>
                                                 Channel Name</label>
@@ -103,9 +107,9 @@
                                         }}<br></span>
                                         <br>
                                         <div class="input-form">
-                                            <input required id="inputPassword" :type="isShow3 ? 'text' : 'password'"
+                                            <input required id="input-password" :type="isShow3 ? 'text' : 'password'"
                                                 v-model="newChannel.channel_secret">
-                                            <strong id="iconEye"><i @click="isShow3 = !isShow3"
+                                            <strong id="icon-eye"><i @click="isShow3 = !isShow3"
                                                     :class="{ 'fa-solid': true, 'fa-eye': !isShow3, 'fa-eye-slash': isShow3 }"></i></strong>
                                             <div class="underline"></div><label><i class="fa-solid fa-key"></i> Channel
                                                 Secret</label>
@@ -114,9 +118,9 @@
                                             errors.channel_secret[0] }}<br></span>
                                         <br>
                                         <div class="input-form">
-                                            <input required id="inputPassword" :type="isShow4 ? 'text' : 'password'"
+                                            <input required id="input-password" :type="isShow4 ? 'text' : 'password'"
                                                 v-model="newChannel.channel_access_token">
-                                            <strong id="iconEye"><i @click="isShow4 = !isShow4"
+                                            <strong id="icon-eye"><i @click="isShow4 = !isShow4"
                                                     :class="{ 'fa-solid': true, 'fa-eye': !isShow4, 'fa-eye-slash': isShow4 }"></i></strong>
                                             <div class="underline"></div><label><i class="fa-brands fa-keycdn"></i> Channel
                                                 Access Token</label>
@@ -124,7 +128,7 @@
                                         <span v-if="errors.channel_access_token" class="text-danger">{{
                                             errors.channel_access_token[0] }}<br></span>
                                         <br>
-                                        <button type="submit" class="mt-4 btn-pers" id="login_button"><i
+                                        <button type="submit" class="btn-pers" id="login_button"><i
                                                 class="fa-solid fa-floppy-disk"></i> Save</button>
                                     </form>
                                 </div>
@@ -144,12 +148,6 @@ const { emitEvent } = useEventBus();
 
 export default {
     name: "UpdateInformationChannel",
-    props: {
-
-    },
-    setup() {
-
-    },
     data() {
         return {
             channel: {
@@ -184,12 +182,6 @@ export default {
     mounted() {
         this.getInforChannel();
     },
-    components: {
-
-    },
-    computed: {
-
-    },
     methods: {
         getInforChannel: async function () {
             try {
@@ -204,7 +196,7 @@ export default {
             }
         },
         openUpdate: function () {
-            this.newChannel = Object.assign({}, this.channel); 
+            this.newChannel = Object.assign({}, this.channel);
         },
         updateInforChannel: async function () {
             try {
@@ -213,7 +205,7 @@ export default {
                 this.channel = data;
                 this.isShow1 = this.isShow2 = this.isShow3 = this.isShow4 = false;
                 for (let key in this.errors) this.errors[key] = null;
-                var closePW = window.document.getElementById('exampleModalChangePassword');
+                var closePW = window.document.getElementById('example-modal-change-password');
                 closePW.click();
             }
             catch (error) {
@@ -221,10 +213,7 @@ export default {
                 else for (let key in this.errors) this.errors[key] = null;
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
-        },
-    },
-    watch: {
-
+        }
     },
 }
 </script>
@@ -244,7 +233,7 @@ export default {
     color: var(--user-color);
 }
 
-#openChangePassword {
+#open-change-password {
     margin-top: 10px;
     text-align: start;
 }
@@ -261,20 +250,20 @@ body.modal-open {
     margin-top: 100px;
 }
 
-.bigContainer .input-form {
+.big-container .input-form {
     height: 40px;
     width: 100%;
     position: relative;
 }
 
-.bigContainer .input-form input {
+.big-container .input-form input {
     height: 100%;
     width: 100%;
     border: none;
     font-size: 17px;
-    border-bottom: 2px solid silver;
     outline: none !important;
 }
+
 
 .input-form input:focus~label,
 .input-form input:valid~label {
@@ -294,7 +283,7 @@ body.modal-open {
     transition: transform 0.3s ease;
 }
 
-.bigContainer .input-form label {
+.big-container .input-form label {
     position: absolute;
     bottom: 0px;
     left: 0;
@@ -350,6 +339,7 @@ body.modal-open {
     cursor: pointer;
     outline: none;
     transform: translateX(-50%);
+    margin-top: 15px;
 }
 
 .btn-pers:hover {
@@ -384,7 +374,7 @@ body.modal-open {
     transition: width 0.3s;
 }
 
-#iconEye {
+#icon-eye {
     position: absolute;
     top: 10px;
     right: 0px;
@@ -392,8 +382,291 @@ body.modal-open {
     cursor: pointer;
 }
 
-#inputPassword {
+#input-password {
     padding-right: 26px;
+}
+
+.text-change {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.col-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+@media screen and (min-width: 1201px) {
+    .infor-channel {
+        font-size: 15px;
+    }
+
+    .big-container {
+        margin-top: 10px;
+    }
+
+    .text-change {
+        padding: 5px 0px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .infor-channel {
+        font-size: 15px;
+    }
+
+    .big-container {
+        margin-top: 10px;
+    }
+
+    .text-change {
+        padding: 3px 0px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .infor-channel {
+        font-size: 13px;
+    }
+
+    .big-container {
+        margin-top: 25px;
+    }
+
+    .text-change {
+        padding: 3px 0px;
+    }
+
+    .col-12 {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    .isHide {
+        display: none;
+    }
+
+    .btn-pers {
+        padding: 0.5em 1.5em;
+    }
+
+    .inputInforChannel label {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .infor-channel {
+        font-size: 13px;
+    }
+
+    .big-container {
+        margin-top: 25px;
+    }
+
+    .text-change {
+        padding: 3px 0px;
+    }
+
+    .col-12 {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    .isHide,
+    .isHideTitle1 {
+        display: none;
+    }
+
+    .btn-pers {
+        padding: 0.5em 1.5em;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .modal-content {
+        width: 55%;
+    }
+
+    .modal-dialog {
+        margin: auto 120px;
+        margin-right: -200px;
+    }
+
+    .modal-header {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .big-container .fa-regular {
+        font-size: 20px;
+    }
+
+    .big-container .fa-solid {
+        font-size: 13px;
+    }
+
+    .big-container .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+    .infor-channel {
+        font-size: 11px;
+    }
+
+    .big-container {
+        margin-top: 15px;
+    }
+
+    .text-change {
+        padding: 3px 0px;
+    }
+
+    .col-12 {
+        padding-left: 0;
+        padding-right: 3px;
+    }
+
+    .form-control {
+        font-size: 11px;
+        padding: 2px 5px;
+        height: 25px;
+    }
+
+    .isHide,
+    .isHideTitle1,
+    .isHideTitle2 {
+        display: none;
+    }
+
+    .btn-pers {
+        padding: 0.5em 1.5em;
+        font-size: 10px;
+        margin-top: -2px;
+    }
+
+    .modal-content {
+        width: 40%;
+    }
+
+    .modal-dialog {
+        margin: auto 100px;
+        margin-right: -200px;
+    }
+
+    .modal-header {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+    .big-container .fa-regular {
+        font-size: 15px;
+    }
+
+    .big-container .fa-solid {
+        font-size: 10px;
+    }
+
+    .big-container .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 10px;
+    }
+
+    .big-container .input-form {
+        height: 35x;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .infor-channel {
+        font-size: 10px;
+    }
+
+    .big-container {
+        margin-top: 15px;
+    }
+
+    .text-change {
+        padding: 3px 0px;
+    }
+
+    .col-12 {
+        padding-left: 0;
+        padding-right: 3px;
+    }
+
+    .form-control {
+        font-size: 10px;
+        padding: 2px 5px;
+        height: 25px;
+    }
+
+    .isHide,
+    .isHideTitle1,
+    .isHideTitle2 {
+        display: none;
+    }
+
+    .btn-pers {
+        padding: 0.5em 1em;
+        font-size: 10px;
+        margin-top: -2px;
+        margin-right: 1px;
+    }
+
+    .modal-content {
+        width: 40%;
+    }
+
+    .modal-dialog {
+        margin: auto 70px;
+        margin-right: -200px;
+    }
+
+    .modal-header {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    .big-container .fa-regular {
+        font-size: 13px;
+    }
+
+    .big-container .fa-solid {
+        font-size: 10px;
+    }
+
+    .big-container .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 10px;
+    }
+
+    .big-container .input-form {
+        height: 35x;
+    }
+
+    .modal-header .close{
+        padding: 12px;
+        margin: -12px;
+    }
 }
 </style>
 

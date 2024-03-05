@@ -49,9 +49,6 @@
 
 export default {
   name: "CommonFooter",
-  components: {
-
-  },
   methods: {
     gotoAdmin: function () {
       this.$router.push({ name: "LoginAdmin" });

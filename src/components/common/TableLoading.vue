@@ -20,26 +20,6 @@ export default {
         cols: Number,
         rows: Number,
     },
-    setup() {
-
-    },
-    data() {
-
-    },
-    mounted() {
-    },
-    components: {
-
-    },
-    computed: {
-
-    },
-    methods: {
-
-    },
-    watch: {
-
-    },
 }
 </script>
 

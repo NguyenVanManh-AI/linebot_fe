@@ -22,10 +22,6 @@ export default {
     props: {
         type_chart: String,
     },
-    data() {
-        return {
-        }
-    },
     mounted() {
         var barChartMessage = document.getElementById('charBartMessage');
         var chartMessage = new Chart(barChartMessage, {});
@@ -113,8 +109,6 @@ export default {
             });
         });
     },
-    methods: {
-    }
 }
 
 </script>

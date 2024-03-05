@@ -69,12 +69,6 @@ const { emitEvent } = useEventBus();
 
 export default {
     name: "AddContent",
-    props: {
-
-    },
-    setup() {
-
-    },
     data() {
         return {
             isTab: 'text',
@@ -102,14 +96,6 @@ export default {
                 image_content: null,
             },
         }
-    },
-    mounted() {
-    },
-    components: {
-
-    },
-    computed: {
-
     },
     methods: {
         addContent: async function () {

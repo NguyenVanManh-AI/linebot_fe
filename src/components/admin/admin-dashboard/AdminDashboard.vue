@@ -18,22 +18,10 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 
 export default {
     name: "AdminDashboard",
-    mounted() {
-
-    },
-    data() {
-        return {
-
-        };
-    },
     components: {
         AdminSideBar,
         CommonHeader,
     },
-    methods: {
-
-    },
-
 }
 </script>
 <style scoped>
@@ -57,4 +45,15 @@ export default {
     padding-bottom: 20px;
     background-color: white;
 }
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {}
+
 </style>

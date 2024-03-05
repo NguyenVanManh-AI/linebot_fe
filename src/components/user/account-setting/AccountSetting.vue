@@ -134,9 +134,6 @@ const { emitEvent } = useEventBus();
 
 export default {
     name: "AccountSetting",
-    props: {
-
-    },
     data() {
         return {
             user: {
@@ -181,9 +178,6 @@ export default {
     },
     components: {
         ChangePassword,
-    },
-    computed: {
-
     },
     methods: {
         previewImage(event) {
@@ -235,9 +229,6 @@ export default {
 
             }
         }
-
-    },
-    watch: {
 
     },
 }

@@ -194,9 +194,6 @@ export default {
         dataContents: Object,
         packageStickers: Array
     },
-    setup() {
-
-    },
     components: {
         VueDatePicker
     },
@@ -235,10 +232,6 @@ export default {
         });
 
     },
-
-    computed: {
-
-    },
     methods: {
         getStickerImageUrl(stickerId) {
             return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
@@ -246,34 +239,34 @@ export default {
         generateNumbers(start, end) {
             return Array.from({ length: end - start + 1 }, (_, index) => start + index);
         },
-        selectedIdContent: function (content, id_content) {
+        selectedIdContent: function (content, contentId) {
             if (event.target.checked == true) {
                 if (this.dataBroadcastSubmit.content_ids.length == 5) {
                     this.dataBroadcastSubmit.content_ids.shift(); 
                     this.previewContents.shift();
                 }
-                this.dataBroadcastSubmit.content_ids.push(JSON.stringify(id_content));
+                this.dataBroadcastSubmit.content_ids.push(JSON.stringify(contentId));
                 this.previewContents.push(content);
             }
             else {
-                let indexId = this.dataBroadcastSubmit.content_ids.indexOf(JSON.stringify(id_content));
+                let indexId = this.dataBroadcastSubmit.content_ids.indexOf(JSON.stringify(contentId));
                 if (indexId !== -1) this.dataBroadcastSubmit.content_ids.splice(indexId, 1);
 
-                let indexToRemove = this.previewContents.findIndex(content => JSON.stringify(content.id) === JSON.stringify(id_content));
+                let indexToRemove = this.previewContents.findIndex(content => JSON.stringify(content.id) === JSON.stringify(contentId));
                 if (indexToRemove !== -1) this.previewContents.splice(indexToRemove, 1);
             }
         },
         selectedSticker: function(stickerId, packageId) {
-            var id_content = {
+            const contentId = {
                 stickerId: stickerId, 
                 packageId: packageId 
             }
-            var content = {
+            const content = {
                 content_type : 'sticker',
-                id : id_content,
-                content_data : id_content
+                id : contentId,
+                content_data : contentId
             }
-            this.selectedIdContent(content, id_content);
+            this.selectedIdContent(content, contentId);
         },
         handleIdSticker: function(stickerId, packageId) {
             return {
@@ -321,9 +314,9 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
-        checkChecked: function (id_content) {
-            id_content = JSON.stringify(id_content);
-            return this.dataBroadcastSubmit.content_ids.includes(id_content);
+        checkChecked: function (contentId) {
+            contentId = JSON.stringify(contentId);
+            return this.dataBroadcastSubmit.content_ids.includes(contentId);
         }
     },
     watch: {

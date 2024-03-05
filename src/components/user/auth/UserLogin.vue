@@ -75,9 +75,6 @@ const { emitEvent } = useEventBus();
 
 export default {
 	name: "UserLogin",
-	components: {
-
-	},
 	data() {
 		return {
 			user: {
@@ -118,12 +115,6 @@ export default {
 	setup() {
 		document.title = "LINE OA Login | LINE Bot";
 	},
-	beforeCreate() {
-	},
-	created() {
-	},
-	beforeMount() {
-	},
 	mounted() {
 		var appMain = window.document.getElementById('appMain');
 		appMain.style.paddingLeft = '0px'
@@ -163,10 +154,6 @@ export default {
 			closePW.click();
 		}
 	},
-	watch: {
-
-	},
-
 }
 </script>
 <style scoped>

@@ -70,12 +70,6 @@ const { emitEvent } = useEventBus();
 
 export default {
     name: "ChangePassword",
-    props: {
-
-    },
-    setup() {
-
-    },
     data() {
         return {
             newPassword: {
@@ -92,15 +86,6 @@ export default {
                 new_password_confirmation: null,
             }
         }
-    },
-    mounted() {
-
-    },
-    components: {
-
-    },
-    computed: {
-
     },
     methods: {
         changePassword: async function () {
@@ -123,9 +108,6 @@ export default {
             }
 
         },
-    },
-    watch: {
-
     },
 }
 </script>

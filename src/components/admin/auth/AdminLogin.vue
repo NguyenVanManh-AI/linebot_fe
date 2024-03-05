@@ -45,9 +45,6 @@ const { emitEvent } = useEventBus();
 
 export default {
 	name: "AdminLogin",
-	components: {
-
-	},
 	data() {
 		return {
 			admin: {
@@ -76,12 +73,6 @@ export default {
 	setup() {
 		document.title = "Admin Login | LINE Bot";
 	},
-	beforeCreate() {
-	},
-	created() {
-	},
-	beforeMount() {
-	},
 	mounted() {
 		var appMain = window.document.getElementById('appMain');
 		appMain.style.paddingLeft = '0px'
@@ -107,10 +98,6 @@ export default {
 				})
 		}
 	},
-	watch: {
-
-	},
-
 }
 </script>
 <style scoped>

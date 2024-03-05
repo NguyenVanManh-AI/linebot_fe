@@ -126,11 +126,6 @@ export default {
         channel: Object,
         dataContents: Object,
     },
-    setup() {
-
-    },
-    components: {
-    },
     data() {
         return {
             broadcastSelected: {
@@ -185,10 +180,6 @@ export default {
         });
 
     },
-
-    computed: {
-
-    },
     methods: {
         getStickerImageUrl(stickerId) {
             return `https://stickershop.line-scdn.net/stickershop/v1/sticker/${stickerId}/ANDROID/sticker.png`;
@@ -210,8 +201,6 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
-    },
-    watch: {
     },
 }
 </script>

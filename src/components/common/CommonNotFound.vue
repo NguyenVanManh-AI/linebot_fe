@@ -12,12 +12,6 @@
 <script>
 export default {
   name: "CommonNotFound",
-  components: {
-
-  },
-  methods: {
-
-  }
 }
 </script>
 

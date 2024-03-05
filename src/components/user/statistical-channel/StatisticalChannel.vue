@@ -50,9 +50,6 @@ export default {
     setup() {
         document.title = "Statistical Channel | LINE Bot";
     },
-    props: {
-
-    },
     components: {
         BarChart,
         DoughnutChart
@@ -76,9 +73,6 @@ export default {
         this.big_search.end_date = searchParams.get('end_date') || ''; 
         this.big_search.type_chart = searchParams.get('type_chart') || 'bar'; 
         this.getDataChannel();
-    },
-    computed: {
-
     },
     methods: {
         checkManager: function () {

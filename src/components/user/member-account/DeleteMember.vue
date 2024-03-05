@@ -49,9 +49,6 @@ export default {
         memberSelected: Object
     },
 
-    components: {
-    },
-
     data() {
         return {
             dataSubmit: {
@@ -85,4 +82,134 @@ export default {
 <style scoped>
 .modal-header .close {
     outline: none;
-}</style>
+}
+
+@media screen and (min-width: 1201px) {}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 400px;
+        margin: 10px auto;
+        font-size: 13px;;
+    }
+
+    .modal-header{
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .btn{
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 350px;
+        margin: 10px auto;
+        font-size: 11px;;
+    }
+
+    .modal-header{
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .btn{
+        font-size: 12px;
+    }
+
+    .modal-body{
+        padding: 14px 14px 0 14px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 320px;
+        margin: 10px auto;
+        font-size: 9px;;
+    }
+
+    .modal-header{
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn{
+        font-size: 10px;
+    }
+
+    .modal-body{
+        padding: 14px 14px 0 14px;
+    }
+    .alert{
+        padding: 8px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {
+    .modal-dialog {
+        max-width: 275px;
+        margin: 10px auto;
+        font-size: 9px;;
+    }
+
+    .modal-header, .modal-footer{
+        padding: 5px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn{
+        font-size: 8px;
+    }
+
+    .modal-body{
+        padding: 12px 12px 0 12px;
+    }
+
+    .alert{
+        padding: 8px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .modal-dialog {
+        max-width: 180px;
+        margin: 10px auto;
+        font-size: 7px;;
+    }
+
+    .modal-header, .modal-footer{
+        padding: 5px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 9px;
+    }
+
+    .btn{
+        font-size: 7px;
+    }
+
+    .modal-body{
+        padding: 11px 11px 0 11px;
+    }
+    
+    .alert{
+        padding: 6px 10px;
+    }
+}
+</style>

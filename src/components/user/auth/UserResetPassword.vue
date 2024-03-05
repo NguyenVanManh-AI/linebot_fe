@@ -47,9 +47,6 @@ const { emitEvent } = useEventBus();
 
 export default {
 	name: "UserResetPassword",
-	components: {
-
-	},
 	data() {
 		return {
 			token: null,

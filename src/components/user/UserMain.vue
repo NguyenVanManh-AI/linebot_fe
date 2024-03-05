@@ -18,28 +18,17 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 
 export default {
     name: "UserMain",
-    mounted() {
-
-    },
-    data() {
-        return {
-
-        };
-    },
     components: {
         UserSidebar,
         CommonHeader,
     },
-    methods: {
-
-    },
-
 }
 </script>
 <style scoped>
 .rightBar {
     transition: width 0.5s ease;
     min-height: 100vh;
+    min-width: 375px;
 }
 
 .innerContent {
@@ -48,6 +37,7 @@ export default {
     background-color: white;
     padding: 10px;
     margin-top: 16px;
+    min-width: 375px;
 }
 
 .innerContent>div {
@@ -56,5 +46,37 @@ export default {
     padding: 10px 15px;
     padding-bottom: 20px;
     background-color: white;
+}
+
+@media screen and (min-width: 1201px) {}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .innerContent {
+        padding: 9px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .innerContent {
+        padding: 8px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .innerContent {
+        padding: 7px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+    .innerContent {
+        padding: 5px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .innerContent {
+        padding: 5px;
+    }
 }
 </style>

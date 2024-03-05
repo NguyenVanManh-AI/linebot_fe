@@ -27,24 +27,15 @@ const { onEvent } = useEventBus()
 
 export default {
   name: "CommonHeader",
-  components: {
-  },
   data() {
     return {
       title: 'LINE Bot - Support LINE OA',
     }
   },
-  created() {
-  },
-  unmounted() {
-  },
   mounted() {
     onEvent('eventTitleHeader', (title) => {
       this.title = title;
     });
-  },
-  methods: {
-
   },
 }
 </script>

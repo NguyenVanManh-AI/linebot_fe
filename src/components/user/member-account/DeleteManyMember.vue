@@ -18,7 +18,7 @@
                             <div v-for="(member, index) in members" :key="index">
                                 <li class="mb-2" v-if="selectedMembers.includes(member.id)">
                                     <p>{{ index + 1 }}. Name : <strong>{{ member.name }}</strong></p>
-                                    <div class="pl-6">
+                                    <div class="pl-8">
                                         <p>Email : <strong>{{ member.email }}</strong></p>
                                         <p>LINE User ID : <strong>{{ member.line_user_id }}</strong></p>
                                     </div>
@@ -56,8 +56,6 @@ export default {
         members: Object,
         isDeleteChangeMany: Number
     },
-    components: {
-    },
     methods: {
         changeIsDeleteMany: async function () {
             const selectedManagarsArray = Object.values(this.selectedMembers);
@@ -87,5 +85,146 @@ export default {
 
 .modal-dialog {
     max-width: 650px;
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 400px;
+        margin: 10px auto;
+        font-size: 12px;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .btn {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 350px;
+        margin: 10px auto;
+        font-size: 11px;
+        ;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .btn {
+        font-size: 12px;
+    }
+
+    .modal-body {
+        padding: 14px 14px 0 14px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 310px;
+        margin: 10px auto;
+        font-size: 10px;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 10px;
+    }
+
+    .modal-body {
+        padding: 14px 14px 0 14px;
+    }
+
+    .alert{
+        padding: 8px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {
+    .modal-dialog {
+        max-width: 260px;
+        margin: 10px auto;
+        font-size: 8px;
+        ;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: 5px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 8px;
+    }
+
+    .modal-body {
+        padding: 12px 12px 0 12px;
+    }
+
+    .alert{
+        padding: 8px;
+    }
+
+    .pl-8{
+        padding-left: 8px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .modal-dialog {
+        max-width: 240px;
+        margin: 10px auto;
+        font-size: 9px;
+        ;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: 5px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 9px;
+    }
+
+    .btn {
+        font-size: 7px;
+    }
+
+    .modal-body {
+        padding: 11px 11px 0 11px;
+    }
+
+    .alert {
+        padding: 6px 10px;
+    }
+
+    .pl-8{
+        padding-left: 6px;
+    }
 }
 </style>

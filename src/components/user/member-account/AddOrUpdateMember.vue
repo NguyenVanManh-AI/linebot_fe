@@ -2,44 +2,45 @@
     <div>
         <div id="big">
             <div class="bigContainer">
-                <div class="modal fade" id="addManager" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" :id="modalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel"><strong><i class="fa-solid fa-user-plus"></i>
-                                        Add Account Manager</strong></h5>
+                                        {{ modalTitle }}</strong></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" class="text-danger"><i
                                             class="fa-regular fa-circle-xmark"></i></span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form @submit.prevent="addManager()">
+                                <form @submit.prevent="addOrUpdateMember()">
                                     <div class="input-form">
-                                        <input required id="inputPassword" type="text" v-model="manager.name">
+                                        <input required id="input-password" type="text" v-model="member.name">
                                         <div class="underline"></div><label><i class="fa-solid fa-signature"></i> Full
                                             Name</label>
                                     </div>
                                     <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}<br></span>
                                     <br>
                                     <div class="input-form">
-                                        <input required id="inputPassword" type="text" v-model="manager.email">
+                                        <input required id="input-password" type="text" v-model="member.email">
                                         <div class="underline"></div><label><i class="fa-solid fa-envelope"></i>
                                             Email</label>
                                     </div>
                                     <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}<br></span>
                                     <br>
                                     <div class="input-form">
-                                        <input required id="inputPassword" type="text" v-model="manager.line_user_id">
+                                        <input required id="input-password" type="text" v-model="member.line_user_id">
                                         <div class="underline"></div><label><i class="fa-brands fa-line"></i> LINE User
                                             ID</label>
                                     </div>
                                     <span v-if="errors.line_user_id" class="text-danger">{{
                                         errors.line_user_id[0] }}<br></span>
                                     <br>
-                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i
-                                            class="fa-solid fa-user-plus"></i> Add</button>
+                                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid"
+                                            :class="submitIcon"></i> {{ submitText }}</button>
+
                                 </form>
                             </div>
                         </div>
@@ -52,14 +53,17 @@
 
 <script>
 import useEventBus from '@/composables/useEventBus'
-import AdminRequest from '@/restful/AdminRequest';
+import UserRequest from '@/restful/UserRequest';
 const { emitEvent } = useEventBus();
 
 export default {
-    name: "AddManager",
+    name: "AddOrUpdateMember",
+    props: {
+        memberSelected: Object
+    },
     data() {
         return {
-            manager: {
+            member: {
                 name: null,
                 email: null,
                 line_user_id: null,
@@ -71,37 +75,72 @@ export default {
             }
         }
     },
+    computed: {
+        modalId() {
+            return this.memberSelected ? "updateMember" : "addMember";
+        },
+        modalTitle() {
+            return this.memberSelected ? "Update Account Member" : "Add Account Member";
+        },
+        submitIcon() {
+            return this.memberSelected ? "fa-floppy-disk" : "fa-user-plus";
+        },
+        submitText() {
+            return this.memberSelected ? "Update" : "Add";
+        },
+    },
+    mounted() {
+        if (this.memberSelected) {
+            this.member.name = this.memberSelected.name;
+            this.member.email = this.memberSelected.email;
+            this.member.line_user_id = this.memberSelected.line_user_id;
+        }
+    },
     methods: {
-        addManager: async function () {
+        async addOrUpdateMember() {
             try {
-                const { messages } = await AdminRequest.post('admin/add-manager', this.manager, true);
-                emitEvent('eventSuccess', messages[0]);
-                for (let key in this.errors) this.errors[key] = null;
-                var closePW = window.document.getElementById('addManager');
-                closePW.click();
-                this.manager = {
-                    name: null,
-                    email: null,
-                    line_user_id: null,
-                };
-                emitEvent('eventRegetManagers', ''); // reget data 
-            }
-            catch (error) {
+                let closePW;
+                if (this.memberSelected) {
+                    const { messages } = await UserRequest.post('user/update-member/' + this.memberSelected.id, this.member, true);
+                    emitEvent('eventSuccess', messages[0]);
+                    for (let key in this.errors) this.errors[key] = null;
+                    closePW = window.document.getElementById('updateMember');
+                    closePW.click();
+                    emitEvent('updateMemberSuccess', this.member);
+                } else {
+                    const { messages } = await UserRequest.post('user/add-member', this.member, true);
+                    emitEvent('eventSuccess', messages[0]);
+                    for (let key in this.errors) this.errors[key] = null;
+                    closePW = window.document.getElementById('addMember');
+                    closePW.click();
+                    this.member = {
+                        name: null,
+                        email: null,
+                        line_user_id: null,
+                    };
+                    emitEvent('eventRegetMembers', '');
+                }
+            } catch (error) {
                 if (error.errors) this.errors = error.errors;
                 else for (let key in this.errors) this.errors[key] = null;
-                if (error.messages) emitEvent('eventError', error.messages[0]);
+                if (error.messages) emitEvent("eventError", error.messages[0]);
             }
-
+        },
+    },
+    watch: {
+        memberSelected: {
+            immediate: true,
+            handler(newVal) {
+                if (newVal) {
+                    this.member = Object.assign({}, newVal);
+                }
+            },
         },
     },
 }
 </script>
 
 <style scoped>
-body.modal-open {
-    padding-right: 0px !important;
-}
-
 .modal.fade.show {
     padding-left: 0px;
 }
@@ -213,41 +252,8 @@ body.modal-open {
     transform: translate(-50%, -1px);
 }
 
-.under {
-    position: relative;
-    padding: 0px 0px;
-}
-
-.under::after {
-    content: ' ';
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 2px;
-    background: var(--user-color);
-    transition: width 0.3s;
-}
-
-.under:hover::after {
-    width: 100%;
-    transition: width 0.3s;
-}
-
-#iconEye {
-    position: absolute;
-    top: 10px;
-    right: 0px;
-    padding-left: 5px;
-    cursor: pointer;
-}
-
-#inputPassword {
+#input-password {
     padding-right: 26px;
-}
-
-.modal-body{
-    padding: 1rem;
 }
 
 @media screen and (min-width: 993px) and (max-width: 1200px) {
@@ -279,7 +285,7 @@ body.modal-open {
     .bigContainer .input-form input,
     .input-form input:focus~label,
     .input-form input:valid~label{
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .modal-header{
@@ -307,7 +313,7 @@ body.modal-open {
     .input-form input:focus~label,
     .input-form input:valid~label,
     .btn-pers {
-        font-size: 8px;
+        font-size: 10px;
     }
 
     .modal-header{
@@ -331,7 +337,7 @@ body.modal-open {
     .input-form input:focus~label,
     .input-form input:valid~label,
     .btn-pers {
-        font-size: 8px;
+        font-size: 9px;
     }
 
     .modal-header{
@@ -356,7 +362,7 @@ body.modal-open {
     .input-form input:focus~label,
     .input-form input:valid~label,
     .btn-pers {
-        font-size: 7px;
+        font-size: 9px;
     }
 
     .modal-header{

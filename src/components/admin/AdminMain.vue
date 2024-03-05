@@ -7,20 +7,6 @@
 
 export default {
     name: "AdminMain",
-    mounted() {
-
-    },
-    data() {
-        return {
-
-        };
-    },
-    components: {
-    },
-    methods: {
-
-    },
-
 }
 </script>
 <style scoped></style>

@@ -66,11 +66,6 @@ export default {
 
     props: {
     },
-
-    components: {
-
-    },
-
     data() {
         return {
             contentSelected: {
@@ -86,13 +81,11 @@ export default {
             }
         }
     },
-
     mounted() {
         onEvent('selectSimpleContent', (contentSelected) => {
             this.contentSelected = contentSelected;
         });
     },
-
     methods: {
         deleteBook: async function () {
             try {

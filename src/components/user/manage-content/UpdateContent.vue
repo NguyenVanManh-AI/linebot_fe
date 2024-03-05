@@ -69,12 +69,6 @@ const { onEvent, emitEvent } = useEventBus();
 
 export default {
     name: "UpdateContent",
-    props: {
-
-    },
-    setup() {
-
-    },
     data() {
         return {
             isTab: 'text',
@@ -123,12 +117,6 @@ export default {
                     this.previewImageSrc = contentSelected.content_data.originalContentUrl;
             }
         });
-    },
-    components: {
-
-    },
-    computed: {
-
     },
     methods: {
         updateContent: async function () {
@@ -183,9 +171,6 @@ export default {
             this.dataImage.image_content = null;
             this.$refs.fileInput.value = '';
         },
-    },
-    watch: {
-
     },
 }
 </script>

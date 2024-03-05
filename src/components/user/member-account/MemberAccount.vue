@@ -21,8 +21,7 @@
                 </div>
                 <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
                     <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.perPage">
+                        <select content="Pagination" v-tippy class="form-control " v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -30,8 +29,7 @@
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Sort by" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.typesort">
+                        <select content="Sort by" v-tippy class="form-control " v-model="big_search.typesort">
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="gender">Gender</option>
@@ -40,18 +38,16 @@
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="In direction" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.sortlatest">
+                        <select content="In direction" v-tippy class="form-control " v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
                     <div class="col-2 pl-0">
-                        <select content="Filter by delete" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.is_delete">
-                            <option value="all">All Member</option>
-                            <option value="1">Deleted Member</option>
-                            <option value="0">Normal Member</option>
+                        <select content="Filter by delete" v-tippy class="form-control " v-model="big_search.is_delete">
+                            <option value="all">All Members</option>
+                            <option value="1">Deleted Members</option>
+                            <option value="0">Normal Members</option>
                         </select>
                     </div>
                     <div class="col-3 pl-0">
@@ -62,8 +58,8 @@
                             <div @click="startSpeechRecognition" class="div_microphone input-group-prepend">
                                 <div class="input-group-text"><i class="fa-solid fa-microphone"></i></div>
                             </div>
-                            <input v-model="search" type="text" class="form-control form-control-sm"
-                                id="inlineFormInputGroup" placeholder="Search...">
+                            <input v-model="search" type="text" class="form-control " id="inline-form-input-group"
+                                placeholder="Search...">
                         </div>
                     </div>
                     <div class="pr-1">
@@ -101,7 +97,7 @@
                                 <th scope="col"><i class="fa-solid fa-venus-mars"></i> Gender</th>
                                 <th scope="col">Created at</th>
                                 <th scope="col">Updated at</th>
-                                <th scope="col"><i class="fa-solid fa-user-pen"></i> Acction</th>
+                                <th scope="col"><i class="fa-solid fa-user-pen"></i> Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,26 +112,28 @@
                                         <span class="nameMember">{{ member.name }}</span>
                                     </div>
                                 </td>
-                                <td class="table-cell">{{ truncatedTitle(member.email) }}</td>
-                                <td class="table-cell">{{ truncatedTitle(member.line_user_id) }}</td>
+                                <td class="table-cell displaytext break">{{ truncatedTitle(member.email) }}</td>
+                                <td class="table-cell displaytext break">{{ truncatedTitle(member.line_user_id) }}</td>
                                 <td class="table-cell text-center">{{ member.phone ? member.phone : 'N/A' }}</td>
-                                <td class="table-cell">{{ member.address ? truncatedTitle(member.address) : 'N/A' }}</td>
-                                <td class="table-cell text-center">{{ member.gender === 0 ? 'Male' : (member.gender === 1 ?
-                                    'Female'
-                                    : 'Others') }}</td>
+                                <td class="table-cell displaytext">{{ member.address ? truncatedTitle(member.address) :
+                                    'N/A' }}</td>
+                                <td class="table-cell text-center">{{ formatGender(member.gender) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(member.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(member.updated_at) }}</td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#updateMember" v-tippy="{ content: 'Update' }"
-                                        class="updateMember text-primary" @click="changeIsDelete(member)">
-                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#deleteMember"
-                                        v-tippy="{ content: member.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteMember text-danger" @click="changeIsDelete(member)">
-                                        <i
-                                            :class="{ 'fa-solid': true, 'fa-trash': member.is_delete == 0, 'fa-trash-arrow-up': member.is_delete == 1 }"></i>
-                                    </button>
+                                    <div class="action">
+                                        <button data-toggle="modal" data-target="#updateMember"
+                                            v-tippy="{ content: 'Update' }" class="updateMember text-primary"
+                                            @click="changeIsDelete(member)">
+                                            <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
+                                        </button>
+                                        <button data-toggle="modal" data-target="#deleteMember"
+                                            v-tippy="{ content: member.is_delete == 0 ? 'Delete' : 'Backup' }"
+                                            class="deleteMember text-danger" @click="changeIsDelete(member)">
+                                            <i
+                                                :class="{ 'fa-solid': true, 'fa-trash': member.is_delete == 0, 'fa-trash-arrow-up': member.is_delete == 1 }"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -147,12 +145,12 @@
                         :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddMember :getMembers="getMembers"></AddMember>
+                <AddOrUpdateMember></AddOrUpdateMember>
                 <DeleteMember :memberSelected="memberSelected"></DeleteMember>
                 <DeleteManyMember :isDeleteChangeMany="isDeleteChangeMany" :selectedMembers="selectedMembers"
                     :members="members">
                 </DeleteManyMember>
-                <UpdateMember :memberSelected="memberSelected"></UpdateMember>
+                <AddOrUpdateMember :memberSelected="memberSelected"></AddOrUpdateMember>
             </div>
         </div>
     </div>
@@ -165,10 +163,9 @@ import Paginate from 'vuejs-paginate-next';
 import config from '@/config';
 import TableLoading from '@/components/common/TableLoading'
 import _ from 'lodash';
-import AddMember from '@/components/user/member-account/AddMember.vue'
+import AddOrUpdateMember from '@/components/user/member-account/AddOrUpdateMember.vue'
 import DeleteMember from '@/components/user/member-account/DeleteMember.vue'
 import DeleteManyMember from '@/components/user/member-account/DeleteManyMember.vue'
-import UpdateMember from '@/components/user/member-account/UpdateMember.vue'
 import UpdateInformationChannel from '@/components/user/member-account/UpdateInformationChannel.vue'
 
 export default {
@@ -176,10 +173,9 @@ export default {
     components: {
         paginate: Paginate,
         TableLoading,
-        AddMember,
+        AddOrUpdateMember,
         DeleteMember,
         DeleteManyMember,
-        UpdateMember,
         UpdateInformationChannel
     },
     setup() {
@@ -320,9 +316,27 @@ export default {
             if (title.length > maxLength) return title.slice(0, maxLength) + '...';
             else return title;
         },
-
         formatDate: function (date) {
-            return date.split('T')[0]
+            const formattedDate = new Date(date);
+
+            const day = formattedDate.getDate();
+            const month = formattedDate.getMonth() + 1;
+            const year = formattedDate.getFullYear();
+
+            const formattedDateString = `${day}/${month}/${year}`;
+
+            return formattedDateString;
+        },
+
+        formatGender: function (gender) {
+            switch (gender) {
+                case 0:
+                    return 'Male';
+                case 1:
+                    return 'Female';
+                default:
+                    return 'Other';
+            }
         },
 
         clickCallback: function (pageNum) {
@@ -392,6 +406,7 @@ tr th {
 
 .tableData {
     min-height: 20vh;
+    overflow-y: scroll;
 }
 
 .nameAvatar {
@@ -412,12 +427,12 @@ tr th {
 
 .deleteMember {
     transition: all 0.5s ease;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .updateMember {
     transition: all 0.5s ease;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .updateMember .fa-pen:hover {
@@ -435,10 +450,12 @@ tr th {
 
 #main {
     padding: 10px 20px;
+    min-width: 375px !important;
 }
 
 #page {
     margin-right: auto;
+    min-width: 78px;
 }
 
 table {
@@ -459,4 +476,452 @@ table img {
 table button {
     padding: 1px 3px;
     margin-right: 2px;
-}</style>
+}
+
+table thead th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1201px) {
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameAvatar {
+        min-width: 150px;
+    }
+
+    .displaytext {
+        min-width: 150px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+    }
+
+    table img {
+        min-width: 60px;
+        min-height: 60px;
+        max-width: 60px;
+        max-height: 60px;
+        object-fit: cover;
+    }
+
+    td .fa-solid {
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameAvatar {
+        min-width: 120px;
+    }
+
+    .displaytext {
+        min-width: 100px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+
+    }
+
+    .break {
+        word-break: break-all;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 15px;
+    }
+
+    table img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .titleChannel {
+        font-size: 15px;
+    }
+
+    .colorTitle {
+        font-size: 14px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameAvatar {
+        min-width: 140px;
+    }
+
+    .displaytext {
+        min-width: 110px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+
+    }
+
+    .break {
+        word-break: break-all;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 16px;
+    }
+
+    table img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-left: 0;
+        padding-right: 10px;
+    }
+
+    .btn {
+        padding: 0px 4px;
+        margin-top: 3px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+
+    .titleChannel,
+    .colorTitle {
+        font-size: 13px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameAvatar {
+        min-width: 100px;
+    }
+
+    .displaytext {
+        min-width: 90px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+
+    }
+
+    .break {
+        word-break: break-all;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 13px;
+    }
+
+    table img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 5px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #page {
+        min-width: 45px;
+    }
+    
+    .form-control {
+        padding: 1px 1px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 5px;
+    }
+
+    .btn {
+        padding: 0px 4px;
+        margin-top: 3px;
+    }
+
+    .input-group-text {
+        padding: 0 4px;
+    }
+
+    .input-group-prepend {
+        font-size: 12px;
+
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+
+    .titleChannel,
+    .colorTitle {
+        font-size: 12px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameMember {
+        margin-left: 0;
+    }
+
+    .nameAvatar {
+        min-width: 50px;
+        display: grid;
+    }
+
+    .displaytext {
+        min-width: 70px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+
+    }
+
+    .break {
+        word-break: break-all;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    table img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 4px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 10px;
+    }
+
+    .form-control {
+        padding: 1px 1px;
+        height: 25px;
+    }
+
+    #page {
+        min-width: 45px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 5px;
+    }
+
+    .btn {
+        padding: 0px 4px;
+    }
+
+    .input-group-text {
+        padding: 0 0.5px;
+    }
+
+    .input-group-prepend {
+        font-size: 11px;
+
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .titleChannel,
+    .colorTitle {
+        font-size: 11px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameMember {
+        margin-left: 0;
+    }
+
+    .nameAvatar {
+        min-width: 50px;
+        display: grid;
+    }
+
+    .displaytext {
+        min-width: 70px;
+        overflow: hidden;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical;
+
+    }
+
+    .break {
+        word-break: break-all;
+    }
+
+    table {
+        font-size: 9px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    table img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 4px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 9px;
+    }
+
+    .form-control {
+        padding: 0.5px 0;
+        height: 25px;
+    }
+
+    #page {
+        min-width: 40px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 0;
+    }
+
+    .btn {
+        padding: 0px 4px;
+    }
+
+    .input-group-text {
+        padding: 0 0.5px;
+    }
+
+    .input-group-prepend {
+        font-size: 10px;
+
+    }
+
+    #main .ml-2{
+        margin-left: 3px !important;
+    }
+}
+</style>
