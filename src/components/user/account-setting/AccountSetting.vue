@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="colorTitle"><i class="fa-solid fa-pen-to-square"></i> Account Setting</div>
             </div>
-            <div class="row pl-6 pr-6">
+            <div class="contact-info">
                 <div class="col-5">
                     <div class="row colorTitle bigTitle"><span><i class="fa-solid fa-mobile-screen-button"></i> CONTACT
                             INFORMATION</span></div>
@@ -106,10 +106,8 @@
                 </div>
             </div>
             <div>
-                <div>
-                    <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-floppy-disk"></i>
-                        Save</button>
-                </div>
+                <button type="submit" class="mt-4 btn-pers" id="login_button"><i class="fa-solid fa-floppy-disk"></i>
+                    Save</button>
             </div>
         </form>
         <br>
@@ -216,7 +214,7 @@ export default {
 
                 localStorage.setItem('user', JSON.stringify(this.user));
                 emitEvent('eventSuccess', messages[0]);
-                emitEvent('updateProfileUser', JSON.stringify(this.user)); 
+                emitEvent('updateProfileUser', JSON.stringify(this.user));
             } catch (error) {
                 if (error.errors) {
                     this.errors = error.errors;
@@ -234,102 +232,273 @@ export default {
 }
 
 </script>
-<style scoped> .account_setting {
-     font-weight: bold;
- }
+<style scoped>
+.account_setting {
+    font-weight: bold;
+}
 
- .account_setting input {
-     color: #0085FF;
-     font-weight: bold;
- }
+.account_setting input {
+    color: #0085FF;
+    font-weight: bold;
+}
 
- .account_setting label {
-     color: var(--user-color);
-     margin-bottom: 1px;
- }
+.account_setting label {
+    color: var(--user-color);
+    margin-bottom: 1px;
+}
 
- .colorTitle {
-     color: gray;
- }
+.colorTitle {
+    color: gray;
+}
 
- .bigTitle {
-     margin-top: 10px;
-     margin-bottom: 10px;
- }
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 0 15px
+}
 
- .groupCheckbox {
-     border: 1px solid #ced4da;
-     padding: 4px;
-     padding-left: 10px;
-     border-radius: 0.25rem;
-     display: flex;
-     align-content: center;
-     align-items: center;
-     height: 36px;
-     background-color: rgba(255, 255, 255, 0.605);
- }
- .avatarUser {
-     display: flex;
-     align-items: center;
-     align-content: center;
-     height: 100%;
- }
+.bigTitle {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
- .innerAvatar {
-     height: 50%;
- }
+.groupCheckbox {
+    border: 1px solid #ced4da;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 0.25rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.605);
+}
 
- .minAvatar {
-     background-color: #e9ecef;
-     position: relative;
-     text-align: center;
-     width: 170px;
-     height: 170px;
-     border-radius: 6px;
-     cursor: pointer;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     transition: all 0.5s ease;
- }
+.avatarUser {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+}
 
- .minAvatar .preview {
-     width: 150px;
-     height: 150px;
-     object-fit: cover;
-     border-radius: 6px;
-     cursor: default;
- }
+.innerAvatar {
+    height: 50%;
+}
 
- .minAvatar:hover {
-     transition: all 0.5s ease;
-     background: #E8F5E9;
- }
+.minAvatar {
+    background-color: #e9ecef;
+    position: relative;
+    text-align: center;
+    width: 170px;
+    height: 170px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
 
- .input-file {
-     opacity: 0;
-     top: 0px;
-     left: 0px;
-     position: absolute;
-     cursor: pointer;
-     width: 150px;
-     height: 150px;
- }
+.minAvatar .preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: default;
+}
 
- .box-preview {
-     position: relative;
- }
+.minAvatar:hover {
+    transition: all 0.5s ease;
+    background: #E8F5E9;
+}
 
- .iconClound {
-     cursor: pointer;
-     font-size: 60px;
-     color: var(--user-color);
- }
+.input-file {
+    opacity: 0;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+}
 
- .close {
-     position: absolute;
-     top: -6px;
-     right: -6px;
-     width: 16px;
- }
+.box-preview {
+    position: relative;
+}
+
+.iconClound {
+    cursor: pointer;
+    font-size: 60px;
+    color: var(--user-color);
+}
+
+.close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+}
+
+@media screen and (min-width: 1201px) {
+
+    .col-5,
+    .col-2 {
+        padding-right: 30px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .minAvatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .minAvatar .preview {
+        width: 130px;
+        height: 130px;
+    }
+
+    .col-5,
+    .col-2 {
+        padding-right: 2%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .innerContent>div {
+        padding: 8px 11px;
+        font-size: 15px;
+    }
+
+    .minAvatar {
+        width: 110px;
+        height: 110px;
+    }
+
+    .minAvatar .preview {
+        width: 100px;
+        height: 100px;
+    }
+
+    .contact-info .col-12 {
+        padding-right: 20px;
+        padding-left: 3px;
+    }
+
+    .col-5,
+    .col-2 {
+        padding-right: 2%;
+        padding-left: 1%;
+        font-size: 14px;
+    }
+
+    .form-control,
+    .groupCheckbox,
+    .input-group-text {
+        font-size: 13px;
+    }
+    .btn-pers {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .contact-info{
+        flex-direction: column;
+    }
+
+    .innerContent>div {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+
+    .minAvatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .minAvatar .preview {
+        width: 130px;
+        height: 130px;
+    }
+
+    .contact-info .col-12 {
+        padding-right: 20px;
+        padding-left: 3px;
+    }
+
+    .col-5,
+    .col-2 {
+        padding: 0 5%;
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    .col-2{
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .form-control,
+    .groupCheckbox,
+    .input-group-text {
+        font-size: 13px;
+    }
+
+    .btn-pers {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 576px) {
+    .contact-info{
+        flex-direction: column;
+    }
+
+    .innerContent>div {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+
+    .minAvatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .minAvatar .preview {
+        width: 130px;
+        height: 130px;
+    }
+
+    .contact-info .col-12 {
+        padding-right: 20px;
+        padding-left: 3px;
+    }
+
+    .col-5,
+    .col-2 {
+        padding: 0 5%;
+        font-size: 13px;
+        max-width: 100%;
+    }
+
+    .col-2{
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .form-control,
+    .groupCheckbox,
+    .input-group-text {
+        font-size: 12px;
+    }
+
+    .btn-pers{
+        font-size: 11px;
+    }
+}
 </style>

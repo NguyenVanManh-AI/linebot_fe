@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :class="isAdminOpened ? 'open' : ''" :style="cssVars">
+  <div class="sidebar" :class="isAdminOpened ? 'open' : ''" :style="cssVars" ref="sidebar">
     <div class="logo-details" style="margin: 10px 14px 0 14px;">
       <img src="@/assets/logo.png" alt="menu-logo" class="menu-logo icon" style="" @click="compadmin">
       <div class="logo_name" @click="compadmin"> Admin </div>
@@ -35,6 +35,7 @@
 
 <script>
 import $ from 'jquery';
+
 export default {
   name: 'AdminSideBar',
   props: {
@@ -62,15 +63,6 @@ export default {
     }
   },
   methods: {
-    displaySidebar() {
-      const mediumScreenMin = 993;
-      const screenWidth = window.innerWidth;
-      if (screenWidth < mediumScreenMin) {
-        this.isAdminOpened = false;
-        this.openSiderbar();
-        this.isAdminOpened = false;
-      }
-    },
     openSiderbar: function () {
       this.isAdminOpened = !this.isAdminOpened;
       localStorage.setItem('isAdminOpened', this.isAdminOpened);
@@ -80,7 +72,27 @@ export default {
       this.$router.push({ name: "AdminLogin" });
       var appMain = window.document.getElementById('appMain');
       appMain.style.paddingLeft = '0px'
-    }
+    },
+    updateSidebarVisibility() {
+      const isSmallScreen = window.innerWidth < 1200;
+      if (isSmallScreen) {
+        this.isAdminOpened = false;
+      } else {
+        const storedState = localStorage.getItem('isAdminOpened');
+        if (storedState) {
+          this.isAdminOpened = JSON.parse(storedState);
+        }
+      }
+      var appMain = window.document.getElementById('appMain');
+      appMain.style.paddingLeft = this.isAdminOpened ? this.menuOpenedPaddingLeftBody : this.menuClosedPaddingLeftBody;
+    },
+    handleOutsideClick(event) {
+      const isSmallScreen = window.innerWidth < 1200;
+      if (isSmallScreen && this.isAdminOpened && this.$refs.sidebar && !this.$refs.sidebar.contains(event.target)) {
+        this.isAdminOpened = false;
+        localStorage.setItem('isAdminOpened', false);
+      }
+    },
   },
   mounted() {
     const isAdminOpened = localStorage.getItem('isAdminOpened');
@@ -101,6 +113,13 @@ export default {
       }
     });
     this.admin = JSON.parse(window.localStorage.getItem('admin'));
+    this.updateSidebarVisibility();
+    window.addEventListener('resize', this.updateSidebarVisibility);
+    document.addEventListener('click', this.handleOutsideClick);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.updateSidebarVisibility);
+    document.removeEventListener('click', this.handleOutsideClick);
   },
   computed: {
     cssVars() {
@@ -124,7 +143,6 @@ export default {
 </script>
   
 <style scoped>
-/* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import url('https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css');
 

@@ -73,6 +73,7 @@ export default {
         this.big_search.end_date = searchParams.get('end_date') || ''; 
         this.big_search.type_chart = searchParams.get('type_chart') || 'bar'; 
         this.getDataChannel();
+        window.addEventListener('resize', this.handleResize);
     },
     methods: {
         checkManager: function () {
@@ -93,6 +94,12 @@ export default {
                 if (error.messages) emitEvent('eventError', error.messages[0]);
             }
         },
+        handleResize() {
+            emitEvent('eventPropStatistical', this.dataChannel)
+        },
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.handleResize);
     },
     watch: {
         big_search: {
@@ -117,5 +124,64 @@ export default {
 
 .shadow {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+@media screen and (min-width: 1201px) {
+
+
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .form-control , .label_date {
+        font-size: 12px !important;
+    }
+    .titleChannel {
+        font-size: 15px;
+    }
+    
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .form-control , .label_date {
+        font-size: 10px !important;
+        padding: 4px !important;
+    }
+    .titleChannel {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .form-control , .label_date {
+        font-size: 10px !important;
+        padding: 4px !important;
+    }
+    .titleChannel {
+        font-size: 12px;
+    }
+    .col-2 {
+        max-width: 24% !important;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 576px) {
+    .form-control , .label_date {
+        font-size: 10px !important;
+        padding: 4px !important;
+    }
+    .titleChannel {
+        font-size: 12px;
+    }
+    .col-2 {
+        max-width: 30% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .col-3 {
+        max-width: 45% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
 }
 </style>

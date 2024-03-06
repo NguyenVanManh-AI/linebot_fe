@@ -21,7 +21,7 @@
                 </div>
                 <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
                     <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control " v-model="big_search.perPage">
+                        <select content="Pagination" v-tippy class="form-control" v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -489,6 +489,14 @@ table thead th {
     justify-content: center;
 }
 
+.form-control{
+    height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: 0.2rem;
+    line-height: 1.5;
+}
+
 @media screen and (min-width: 1201px) {
     table {
         max-width: 100%;
@@ -749,12 +757,11 @@ table thead th {
     }
 
     .nameMember {
-        margin-left: 0;
+        margin-left: 8px;
     }
 
     .nameAvatar {
-        min-width: 50px;
-        display: grid;
+        min-width: 100px;
     }
 
     .displaytext {
@@ -841,12 +848,11 @@ table thead th {
     }
 
     .nameMember {
-        margin-left: 0;
+        margin-left: 8px;
     }
 
     .nameAvatar {
-        min-width: 50px;
-        display: grid;
+        min-width: 80px;
     }
 
     .displaytext {

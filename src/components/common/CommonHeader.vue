@@ -12,14 +12,21 @@
         <a class="linkedin" href="https://www.linkedin.com/in/nvmanhfullstack/" target="_blank"><i
             class="fa-brands fa-linkedin"></i></a>
       </li>
-      <li class="contact_email"><a href="mailto:linebot.support@gmail.com"><i class="fa-solid fa-envelope"></i> Email:
-          linebot.support@gmail.com</a></li>
-      <li class="contact_phone"><a href="tel:+84702518919"><i class="fa-solid fa-phone"></i> Hotline 24/7 Phone:
-          +84702518919</a></li>
-      <li class="contact_help"><a href="#"><i class="fa-regular fa-circle-question"></i> Help </a></li>
+      <div class="email-phone">
+        <li class="contact_email"><a href="mailto:linebot.support@gmail.com"><i class="fa-solid fa-envelope"></i> <span
+              class="hidde">Email:</span>
+            <span> linebot.support@gmail.com</span></a></li>
+        <li class="contact_phone"><a href="tel:+84702518919"><i class="fa-solid fa-phone"></i> <span
+              class="hidde">Hotline
+              24/7 Phone:</span>
+            <span> +84702518919</span></a></li>
+      </div>
+      <li class="contact_help"><a href="#"><i class="fa-regular fa-circle-question"></i> <span class="hidde">Help</span>
+        </a></li>
     </div>
   </div>
 </template>
+
 <script>
 
 import useEventBus from '@/composables/useEventBus';
@@ -88,7 +95,7 @@ export default {
   width: 100%;
   height: 30px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   color: black;
   line-height: 30%;
   align-content: center;
@@ -103,6 +110,7 @@ export default {
 .contact_phone,
 .contact_help {
   color: rgb(112, 112, 112);
+  line-height: 1.5;
 }
 
 .contact_email a:hover {
@@ -126,7 +134,6 @@ export default {
   color: rgb(112, 112, 112);
 }
 
-
 .facebook:hover {
   color: #0863F7;
 }
@@ -137,4 +144,170 @@ export default {
 
 .linkedin:hover {
   color: #0073B1;
-}</style>
+}
+
+.email-phone {
+  display: flex;
+}
+
+@media screen and (min-width: 1201px) {
+  .list_contact a {
+    font-size: 145%;
+  }
+
+  .list_contact {
+    min-width: 80px;
+  }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  #header {
+    font-size: 15px;
+  }
+
+  .title {
+    width: 80%;
+  }
+
+
+  .list_contact a {
+    font-size: 140%;
+  }
+
+  #contact {
+    padding: 20px 0;
+    ;
+  }
+
+  .email-phone {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  #header {
+    font-size: 80%;
+  }
+
+  .title {
+    width: 70%;
+  }
+
+  #contact li {
+    margin-left: 10px;
+  }
+
+  .list_contact a {
+    font-size: 150%;
+  }
+
+  #contact {
+    padding: 20px 0;
+    ;
+  }
+
+  .email-phone {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+  #header {
+    font-size: 80%;
+    padding: 2px 5px;
+  }
+
+  .title {
+    width: 50%;
+  }
+
+  #contact li {
+    margin-left: 10px;
+  }
+
+  .list_contact a {
+    font-size: 120%;
+  }
+
+  #contact {
+    padding: 20px 0;
+    ;
+  }
+
+  .email-phone {
+    display: block;
+  }
+
+  .hidde {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+  #header {
+    font-size: 70%;
+    padding: 2px 5px;
+    margin-right: 1px;
+  }
+
+  .title {
+    width: 55%;
+  }
+
+  #contact li {
+    margin-left: 0px;
+  }
+
+  .list_contact a {
+    font-size: 120%;
+  }
+
+  #contact {
+    padding: 20px 0;
+    ;
+  }
+
+  .email-phone {
+    font-size: 95%;
+    display: block;
+  }
+
+  .hidde {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+  #header {
+    font-size: 70%;
+    padding: 2px 5px;
+    margin-right: 1px;
+  }
+
+  .title {
+    width: 55%;
+  }
+
+  #contact li {
+    margin-left: 0px;
+  }
+
+  .list_contact a {
+    font-size: 120%;
+  }
+
+  #contact {
+    padding: 20px 0;
+    ;
+  }
+
+  .email-phone {
+    font-size: 95%;
+    display: block;
+  }
+
+  .hidde {
+    display: none;
+  }
+}
+</style>

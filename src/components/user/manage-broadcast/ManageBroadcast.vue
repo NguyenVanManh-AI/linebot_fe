@@ -1,15 +1,15 @@
 <template>
     <div id="main">
         <div>
-            <h3 class="titleChannel"><i class="fa-brands fa-line"></i> Manage Broadcast - Mutilcast </h3>
+            <h3 class="title-channel"><i class="fa-brands fa-line"></i> Manage Broadcast - Mutilcast </h3>
         </div>
         <div class="ml-2 mt-2">
             <div class="mt-3">
                 <div class="mb-2">
-                    <div class="colorTitle"><i class="fa-solid fa-comments"></i> Manage Broadcast of Channel</div>
+                    <div class="color-title"><i class="fa-solid fa-comments"></i> Manage Broadcast of Channel</div>
                 </div>
-                <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
-                    <div class="col-1 pl-0" id="page">
+                <div class="row m-0 pb-2 d-flex justify-content-end gap-2" id="search-sort">
+                    <div class="pl-0" id="page">
                         <select content="Pagination" v-tippy class="form-control form-control-sm"
                             v-model="big_search.perPage">
                             <option value="5">5</option>
@@ -18,7 +18,7 @@
                             <option value="20">20</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0">
+                    <div class="pl-0">
                         <select content="Sort by" v-tippy class="form-control form-control-sm"
                             v-model="big_search.typesort">
                             <option value="new">New</option>
@@ -27,14 +27,14 @@
                             <option value="title">Title</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0">
+                    <div class="pl-0">
                         <select content="In direction" v-tippy class="form-control form-control-sm"
                             v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
-                    <div class="col-2 pl-0">
+                    <div class="pl-0">
                         <select content="Filter by delete" v-tippy class="form-control form-control-sm"
                             v-model="big_search.is_delete">
                             <option value="all">All Broadcast</option>
@@ -42,60 +42,62 @@
                             <option value="0">Normal Broadcast</option>
                         </select>
                     </div>
-                    <div class="col-2 pl-0">
+                    <div class="pl-0">
                         <select content="Filter by broadcast status" v-tippy class="form-control form-control-sm"
                             v-model="big_search.status">
                             <option value="all">All Broadcast</option>
-                            <option value="draf">Draf</option>
+                            <option value="draf">Draft</option>
                             <option value="scheduled">Scheduled</option>
                             <option value="sent">Sent</option>
                             <option value="failed">Failed</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0" v-if="user.role == 'manager'">
+                    <div class="pl-0" v-if="user.role == 'manager'">
                         <select content="Role" v-tippy class="form-control form-control-sm" v-model="big_search.role">
                             <option value="all">All</option>
                             <option value="manager">Manager</option>
-                            <option value="user">User</option>
+                            <option value="user">Member</option>
                         </select>
                     </div>
-                    <div class="col-2 pl-0">
+                    <div class="pl-0">
                         <div content="Search information broadcast" v-tippy class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                             </div>
                             <input v-model="search" type="text" class="form-control form-control-sm"
-                                id="inlineFormInputGroup" placeholder="Seach...">
+                                id="inlineFormInputGroup" placeholder="Search...">
                         </div>
                     </div>
-                    <div class="pr-1">
-                        <div class="input-group ">
-                            <button content="Test Send Mutilcast" v-tippy data-toggle="modal"
-                                data-target="#testSendMutilcast" type="button" class="btn btn-info"><i
-                                    class="fa-solid fa-message"></i></button>
+                    <div class="flex gap-2">
+                        <div>
+                            <div class="input-group ">
+                                <button content="Test Send Mutilcast" v-tippy data-toggle="modal"
+                                    data-target="#testSendMutilcast" type="button" class="btn btn-info"><i
+                                        class="fa-solid fa-message"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pr-1">
-                        <div class="input-group ">
-                            <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast"
-                                type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+                        <div>
+                            <div class="input-group ">
+                                <button content="Add Broadcast" v-tippy data-toggle="modal" data-target="#addBroadcast"
+                                    type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pr-0" v-if="selectedBroadcasts.length > 0">
-                        <div class="input-group">
-                            <button @click="changedeleteManyBroadcast(1)" content="Delete Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
-                                class="btn btn-outline-danger mr-1"><i class="fa-solid fa-trash"></i></button>
-                            <button @click="changedeleteManyBroadcast(0)" content="Backup Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
-                                class="btn btn-outline-success"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                        <div v-if="selectedBroadcasts.length > 0">
+                            <div class="input-group">
+                                <button @click="changedeleteManyBroadcast(1)" content="Delete Many Broadcast" v-tippy
+                                    data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
+                                    class="btn btn-outline-danger mr-1"><i class="fa-solid fa-trash"></i></button>
+                                <button @click="changedeleteManyBroadcast(0)" content="Backup Many Broadcast" v-tippy
+                                    data-toggle="modal" data-target="#deleteManyBroadcast" type="button"
+                                    class="btn btn-outline-success"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div v-if="isLoading">
                     <TableLoading :cols="6" :rows="9"></TableLoading>
                 </div>
-                <div v-if="!isLoading" class="tableData">
+                <div v-if="!isLoading" class="table-data">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -106,56 +108,63 @@
                                 <th scope="col"><i class="fa-solid fa-heading"></i> Title</th>
                                 <th scope="col"><i class="fa-solid fa-user-clock"></i> Sender</th>
                                 <th scope="col" class="text-center"><i class="fa-solid fa-clock"></i> Send At</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at
                                 </th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Acction</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated
+                                    at
+                                </th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(broadcast, index) in broadcasts" :key="index">
                                 <th class="table-cell" scope="row"><input :checked="isSelected(broadcast.id)"
                                         type="checkbox" class="" @change="handleSelect(broadcast.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage + index +
-                                    1 }}</th>
+                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage +
+                                index +
+                                1 }}</th>
                                 <td :class="{
-                                    'table-cell': true, 'text-uppercase': true,
-                                    'colorDraf': broadcast.status == 'draf',
-                                    'colorScheduled': broadcast.status == 'scheduled',
-                                    'colorSent': broadcast.status == 'sent',
-                                    'colorFailed': broadcast.status == 'failed',
-                                }">
+                                'table-cell': true, 'text-uppercase': true,
+                                'colorDraf': broadcast.status == 'draft',
+                                'colorScheduled': broadcast.status == 'scheduled',
+                                'colorSent': broadcast.status == 'sent',
+                                'colorFailed': broadcast.status == 'failed',
+                            }">
                                     {{ broadcast.status }}</td>
                                 <td class="table-cell ">
                                     <div class="contentTextTable" v-html="broadcast.title"></div>
                                 </td>
                                 <td class="table-cell">
-                                    <div class="nameAvatar">
+                                    <div class="name-avatar">
                                         <img :src="broadcast.sender_avatar ? broadcast.sender_avatar : require('@/assets/avatar.jpg')"
                                             alt="">
                                         <span class="nameMember">{{ broadcast.sender_name }}</span>
                                     </div>
                                 </td>
-                                <td class="table-cell text-center">{{ broadcast.sent_at }}</td>
-                                <td class="table-cell text-center">{{ formatDate(broadcast.created_at) }}</td>
-                                <td class="table-cell text-center">{{ formatDate(broadcast.updated_at) }}</td>
+                                <td class="table-cell text-center display-date">{{ broadcast.sent_at }}</td>
+                                <td class="table-cell text-center display-date">{{ formatDate(broadcast.created_at) }}
+                                </td>
+                                <td class="table-cell text-center display-date">{{ formatDate(broadcast.updated_at) }}
+                                </td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#viewDetailBroadcast"
-                                        v-tippy="{ content: 'View Detail' }" class="viewDetailBroadcast text-success"
-                                        @click="selectBroadcast(broadcast)">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#updateBroadcast"
-                                        v-tippy="{ content: 'Update' }" class="updateBroadcast text-primary"
-                                        @click="selectBroadcast(broadcast)">
-                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
-                                    </button>
-                                    <button 
-                                        v-tippy="{ content: broadcast.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteBroadcast text-danger" @click="showAlert(broadcast)">
-                                        <i
-                                            :class="{ 'fa-solid': true, 'fa-trash': broadcast.is_delete == 0, 'fa-trash-arrow-up': broadcast.is_delete == 1 }"></i>
-                                    </button>
+                                    <div class="action">
+                                        <button data-toggle="modal" data-target="#viewDetailBroadcast"
+                                            v-tippy="{ content: 'View Detail' }"
+                                            class="viewDetailBroadcast text-success"
+                                            @click="selectBroadcast(broadcast)">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button data-toggle="modal" data-target="#updateBroadcast"
+                                            v-tippy="{ content: 'Update' }" class="updateBroadcast text-primary"
+                                            @click="selectBroadcast(broadcast)">
+                                            <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
+                                        </button>
+                                        <button v-tippy="{ content: broadcast.is_delete == 0 ? 'Delete' : 'Backup' }"
+                                            class="deleteBroadcast text-danger" @click="showAlert(broadcast)">
+                                            <i
+                                                :class="{ 'fa-solid': true, 'fa-trash': broadcast.is_delete == 0, 'fa-trash-arrow-up': broadcast.is_delete == 1 }"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -167,10 +176,12 @@
                         :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></AddBroadcast>
-                <TestSendMulticast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"></TestSendMulticast>
-                <UpdateBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel" :getBroadcasts="getBroadcasts"
-                    :broadcastSelected="broadcastSelected"></UpdateBroadcast>
+                <AddBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel"
+                    :getBroadcasts="getBroadcasts"></AddBroadcast>
+                <TestSendMulticast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel"
+                    :getBroadcasts="getBroadcasts"></TestSendMulticast>
+                <UpdateBroadcast :packageStickers="packageStickers" :dataContents="dataContents" :channel="channel"
+                    :getBroadcasts="getBroadcasts" :broadcastSelected="broadcastSelected"></UpdateBroadcast>
                 <DetailBroadcast :dataContents="dataContents" :channel="channel" :broadcastSelected="broadcastSelected"
                     :getStickerImageUrl="getStickerImageUrl"></DetailBroadcast>
                 <DeleteManyBroadcast :isDeleteChangeMany="isDeleteChangeMany" :selectedBroadcasts="selectedBroadcasts"
@@ -179,6 +190,7 @@
         </div>
     </div>
 </template>
+
 <script>
 import useEventBus from '@/composables/useEventBus'
 import UserRequest from '@/restful/UserRequest';
@@ -310,13 +322,13 @@ export default {
         const searchParams = new URLSearchParams(queryString);
         this.search = searchParams.get('search') || '';
         this.big_search = {
-            perPage : parseInt(searchParams.get('paginate')) || 5,
-            page : searchParams.get('page') || 1,
-            typesort : searchParams.get('typesort') || 'new',
-            sortlatest : searchParams.get('sortlatest') || 'true',
-            is_delete : searchParams.get('is_delete') || '0',
-            role : searchParams.get('role') || 'all',
-            status : searchParams.get('status') || 'all',
+            perPage: parseInt(searchParams.get('paginate')) || 5,
+            page: searchParams.get('page') || 1,
+            typesort: searchParams.get('typesort') || 'new',
+            sortlatest: searchParams.get('sortlatest') || 'true',
+            is_delete: searchParams.get('is_delete') || '0',
+            role: searchParams.get('role') || 'all',
+            status: searchParams.get('status') || 'all',
         }
         this.getInforChannel();
         this.getBroadcasts();
@@ -361,7 +373,7 @@ export default {
                 }
             });
         },
-        async deleteBroadcast (broadcast) {
+        async deleteBroadcast(broadcast) {
             var dataSubmit = {
                 is_delete: '',
             };
@@ -411,7 +423,7 @@ export default {
             }
         },
         reRenderPaginate: function () {
-            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page; 
+            if (this.big_search.page > this.last_page) this.big_search.page = this.last_page;
             this.paginateVisible = false;
             this.$nextTick(() => { this.paginateVisible = true; });
         },
@@ -476,8 +488,8 @@ export default {
             handler: function () {
                 this.getBroadcasts();
             },
-            deep: true 
-        }, 
+            deep: true
+        },
         search: _.debounce(function () {
             this.getBroadcasts();
         }, 500),
@@ -494,7 +506,7 @@ export default {
     -webkit-box-orient: vertical;
 }
 
-.titleChannel {
+.title-channel {
     font-size: 19px;
     color: var(--user-color);
 }
@@ -503,21 +515,28 @@ tr th {
     color: var(--user-color);
 }
 
-.colorTitle {
+.color-title {
     color: gray;
 }
 
-.tableData {
+.table-data {
     min-height: 20vh;
+    overflow-y: scroll;
 }
 
-.nameAvatar {
+table thead th,
+table tbody th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.name-avatar {
     display: flex;
     align-items: center;
     align-content: center;
 }
 
-.nameAvatar img {
+.name-avatar img {
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -558,7 +577,7 @@ tr th {
     color: var(--user-color);
 }
 
-.nameAvatar img {
+.name-avatar img {
     border-radius: 6px;
 }
 
@@ -617,5 +636,431 @@ table button {
 
 .colorFailed {
     color: red;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-date {
+    min-width: 90px;
+}
+
+#search-sort {
+    padding-right: 12px;
+}
+
+@media screen and (min-width: 1201px) {
+    td .fa-solid {
+        font-size: 20px;
+    }
+
+    .contentTextTable {
+        max-width: 150px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .title-channel {
+        font-size: 17px;
+    }
+
+    .color-title {
+        font-size: 15px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    .fa-solid {
+        font-size: 15px;
+    }
+
+    .name-avatar img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 13px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    table button {
+        padding: 1px 2px;
+    }
+
+    .btn {
+        padding: 2px 7px;
+    }
+
+    div:where(.swal2-container) div:where(.swal2-popup) {
+        font-size: 8px !important;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .title-channel {
+        font-size: 15px;
+    }
+
+    .color-title {
+        font-size: 14px;
+    }
+
+    .name-avatar {
+        min-width: 140px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 14px;
+    }
+
+    .name-avatar img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-left: 0;
+        padding-right: 3px;
+    }
+
+    .btn {
+        padding: 1px 5px 0 5px;
+    }
+
+    table button {
+        padding: 1px 2px;
+    }
+
+    table img {
+        max-width: 100px;
+    }
+
+    .contentTextTable {
+        max-width: 110px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 14px;
+    }
+
+    .name-avatar {
+        min-width: 120px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 13px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    .form-control {
+        padding: 1px 1px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .btn {
+        padding: 1px 6px 0 6px;
+    }
+
+    table button {
+        padding: 1px;
+    }
+
+    table img {
+        max-width: 130px;
+    }
+
+    .gap-2 {
+        gap: 0.3rem;
+    }
+
+    .mt-3 {
+        margin-top: 5px !important;
+    }
+
+    .contentTextTable {
+        min-width: 100px;
+        max-width: 150px;
+    }
+
+    .action {
+        min-width: 56px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 12px;
+    }
+
+    .nameMember {
+        margin-left: 8px;
+    }
+
+    .name-avatar {
+        min-width: 100px;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 6px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 10px;
+    }
+
+    .input-group>.form-control {
+        max-width: 61px;
+    }
+
+    .form-control {
+        padding: 1px 1px;
+        height: 25px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .btn {
+        padding: 0px 6px;
+    }
+
+    .input-group-text {
+        padding: 0 1px;
+    }
+
+    .input-group-prepend {
+        font-size: 11px;
+    }
+
+    .mr-3 {
+        margin-left: -2% !important;
+        margin-right: 0px !important
+    }
+
+    table button {
+        padding: 1px;
+    }
+
+    .mt-3 {
+        margin-top: 0 !important;
+    }
+
+    table img {
+        max-width: 80px;
+    }
+
+    .gap-2 {
+        gap: 0.2rem;
+    }
+
+    .mt-3 {
+        margin-top: 5px !important;
+    }
+
+    .contentTextTable {
+        min-width: 100px;
+        max-width: 150px;
+    }
+
+    .display-date {
+        min-width: 80px;
+    }
+
+    .action {
+        min-width: 50px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 11px;
+    }
+
+
+    .nameMember {
+        margin-left: 8px;
+    }
+
+    .name-avatar {
+        min-width: 100px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 6px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 9px;
+    }
+
+    .form-control {
+        padding: 0.5px 0;
+        height: 25px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .btn {
+        padding: 0px 6px;
+    }
+
+    .input-group-text {
+        padding: 0 2px;
+    }
+
+    .input-group-prepend {
+        font-size: 10px;
+
+    }
+
+    #main .ml-2 {
+        margin-left: 3px !important;
+    }
+
+    table button {
+        padding: 0.7px;
+    }
+
+    .gap-2 {
+        gap: 0.2rem;
+    }
+
+    .mt-3 {
+        margin-top: 0 !important;
+    }
+
+    table img {
+        max-width: 70px;
+    }
+
+    .contentTextTable {
+        min-width: 80px;
+        max-width: 130px;
+    }
+
+    .display-date {
+        min-width: 75px;
+    }
+
+    .action {
+        min-width: 50px;
+    }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :class="isUserOpened ? 'open' : ''" :style="cssVars">
+  <div class="sidebar" :class="isUserOpened ? 'open' : ''" :style="cssVars" ref="sidebar">
     <div class="logo-details" style="margin: 10px 14px 0 14px;">
       <img src="@/assets/logo.png" alt="menu-logo" class="menu-logo icon" style="" @click="compadmin">
       <div class="logo_name" @click="compadmin"> LINEBot </div>
@@ -17,7 +17,7 @@
                   setting</span></router-link>
             </li>
           </span>
-          <span :class="{ 'hide': user.role != 'manager' }"> 
+          <span :class="{ 'hide': user.role != 'manager' }">
             <li>
               <router-link class="links" data-path="member-account" :to="{ name: 'MemberAccount' }"><i
                   class="fa-solid fa-users"></i><span class="links_name">Channel manages</span></router-link>
@@ -59,9 +59,11 @@
 </template>
 
 <script>
+
 import useEventBus from '@/composables/useEventBus'
 import $ from 'jquery';
 const { onEvent } = useEventBus()
+
 export default {
   name: 'UserSidebar',
   props: {
@@ -110,7 +112,27 @@ export default {
       this.$router.push({ name: "UserLogin" });
       var appMain = window.document.getElementById('appMain');
       appMain.style.paddingLeft = '0px'
-    }
+    },
+    updateSidebarVisibility() {
+      const isSmallScreen = window.innerWidth < 1200;
+      if (isSmallScreen) {
+        this.isUserOpened = false;
+      } else {
+        const storedState = localStorage.getItem('isUserOpened');
+        if (storedState) {
+          this.isUserOpened = JSON.parse(storedState);
+        }
+      }
+      var appMain = window.document.getElementById('appMain');
+      appMain.style.paddingLeft = this.isUserOpened ? this.menuOpenedPaddingLeftBody : this.menuClosedPaddingLeftBody;
+    },
+    handleOutsideClick(event) {
+      const isSmallScreen = window.innerWidth < 1200;
+      if (isSmallScreen && this.isAdminOpened && this.$refs.sidebar && !this.$refs.sidebar.contains(event.target)) {
+        this.isAdminOpened = false;
+        localStorage.setItem('isUserOpened', false);
+      }
+    },
   },
   mounted() {
     const isUserOpened = localStorage.getItem('isUserOpened');
@@ -131,7 +153,15 @@ export default {
       }
     });
     this.user = JSON.parse(window.localStorage.getItem('user'));
-    onEvent('updateProfileUser', (user) => { this.user = JSON.parse(user); }) 
+    onEvent('updateProfileUser', (user) => { this.user = JSON.parse(user); })
+
+    this.updateSidebarVisibility();
+    window.addEventListener('resize', this.updateSidebarVisibility);
+    document.addEventListener('click', this.handleOutsideClick);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.updateSidebarVisibility);
+    document.removeEventListener('click', this.handleOutsideClick);
   },
   computed: {
     cssVars() {
@@ -443,5 +473,19 @@ body {
 #my-scroll::-webkit-scrollbar {
   display: none;
 }
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  .fa-solid {
+    font-size: 4px;
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {}
 </style>
   

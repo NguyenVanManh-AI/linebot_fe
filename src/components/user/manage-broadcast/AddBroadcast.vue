@@ -2,8 +2,8 @@
     <div>
         <div id="big">
             <div class="bigContainer">
-                <div class="modal fade" id="addBroadcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="addBroadcast" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -16,7 +16,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
+                                <div class="broadcast-time">
                                     <div class="col-12">
                                         <form action="">
                                             <div class="row">
@@ -25,33 +25,34 @@
                                                 </div>
                                                 <div class="col-10">
                                                     <div class="row">
-                                                        <input v-model="optionSendnow" class="form-check-input" type="radio"
-                                                            name="sent_at" id="exampleRadios1" value="send_now"> Send Now
+                                                        <input v-model="optionSendnow" class="form-check-input"
+                                                            type="radio" name="sent_at" id="exampleRadios1"
+                                                            value="send_now"> Send Now
                                                     </div>
                                                     <div class="row">
-                                                        <input v-model="optionSendnow" class="form-check-input" type="radio"
-                                                            name="sent_at" id="exampleRadios1" value="select_time">
-                                                        <VueDatePicker class="col-6 ml-0 pl-0" v-model="dateTime" required>
+                                                        <input v-model="optionSendnow" class="form-check-input"
+                                                            type="radio" name="sent_at" id="exampleRadios1"
+                                                            value="select_time">
+                                                        <VueDatePicker class="col-6 ml-0 pl-0" v-model="dateTime"
+                                                            required>
                                                         </VueDatePicker>
                                                     </div>
                                                     <span v-if="errors.sent_at" class="text-danger">{{
-                                                        errors.sent_at[0] }}<br></span>
+                                                            errors.sent_at[0] }}<br></span>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <hr>
-                                            <br>
                                         </form>
                                     </div>
                                 </div>
+                                <hr class="my-3">
                                 <form>
-                                    <div class="row">
-                                        <div class="col-9">
+                                    <div class="form">
+                                        <div class="">
                                             <div class="row pr-2 mb-2 ">
                                                 <input class="form-control form-control-sm col-12" required
                                                     v-model="dataBroadcastSubmit.title" type="text" placeholder="Title">
                                                 <span v-if="errors.title" class="text-danger">{{
-                                                    errors.title[0] }}<br></span>
+                                                            errors.title[0] }}<br></span>
                                             </div>
                                             <div class="row pr-2">
                                                 <ul class="nav nav-tabs mainTab">
@@ -77,16 +78,22 @@
                                                                 :checked="checkChecked(text.id)" class="mr-2"
                                                                 type="checkbox" name="exampleRadios" id="exampleRadios1"
                                                                 value="option1">{{
-                                                                    text.content_data.text }}</p>
+                                                            text.content_data.text }}</p>
                                                         <hr>
                                                     </li>
                                                 </div>
                                                 <div class="loadContent col-12 mainSticker" v-if="isTab == 'sticker'">
                                                     <div v-for="(packageSticker, indexPackageSticker) in packageStickers"
                                                         :key="indexPackageSticker">
-                                                        <li class="itemSticker" v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
+                                                        <li class="itemSticker"
+                                                            v-for="stickerId in generateNumbers(packageSticker.stickerIds.start, packageSticker.stickerIds.end)"
                                                             :key="stickerId">
-                                                            <input :checked="checkChecked(handleIdSticker(String(stickerId), packageSticker.packageId))" @click="selectedSticker(String(stickerId), packageSticker.packageId)" class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1">
+                                                            <input
+                                                                :checked="checkChecked(handleIdSticker(String(stickerId), packageSticker.packageId))"
+                                                                @click="selectedSticker(String(stickerId), packageSticker.packageId)"
+                                                                class="form-check-input" type="checkbox"
+                                                                name="exampleRadios" id="exampleRadios1"
+                                                                value="option1">
                                                             <img :src="getStickerImageUrl(stickerId)" alt="Sticker" />
                                                         </li>
                                                     </div>
@@ -98,14 +105,15 @@
                                                             :checked="checkChecked(image.id)" class="form-check-input"
                                                             type="checkbox" name="exampleRadios" id="exampleRadios1"
                                                             value="option1">
-                                                        <img :src="image.content_data.originalContentUrl" alt="Sticker" />
+                                                        <img :src="image.content_data.originalContentUrl"
+                                                            alt="Sticker" />
                                                     </li>
                                                 </div>
                                                 <span v-if="errors.content_ids" class="text-danger">{{
-                                                    errors.content_ids[0] }}<br></span>
+                                                            errors.content_ids[0] }}<br></span>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12 mt-4">
+                                            <div class="button">
+                                                <div class="mt-4">
                                                     <div>
                                                         <button @click="addBroadcast('draf')" type="button"
                                                             class="mt-4 btn-pers" id="login_button"><i
@@ -117,9 +125,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3 preViewMessage p-0">
+                                        <div class="preview-message p-0">
                                             <div class="title_preview"> <i class="fa-solid fa-caret-down"></i>
-                                                <span>Preview</span> <i class="fa-solid fa-circle-question"></i> </div>
+                                                <span>Preview</span> <i class="fa-solid fa-circle-question"></i>
+                                            </div>
                                             <ul class="inner_preview_add">
                                                 <li v-for="content, index in previewContents" :key="index"
                                                     :data-id_message="JSON.stringify(content.id)">
@@ -185,7 +194,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { formatDate } from '@/helper.js';
 import $ from 'jquery';
-import 'jquery-ui-dist/jquery-ui'; 
+import 'jquery-ui-dist/jquery-ui';
 
 export default {
     name: "AddBroadcast",
@@ -223,7 +232,7 @@ export default {
         }
     },
     mounted() {
-        $(this.$el).find(".inner_preview_add").sortable(); 
+        $(this.$el).find(".inner_preview_add").sortable();
     },
     methods: {
         getStickerImageUrl(stickerId) {
@@ -235,7 +244,7 @@ export default {
         selectedIdContent: function (content, contentId) {
             if (event.target.checked == true) {
                 if (this.dataBroadcastSubmit.content_ids.length == 5) {
-                    this.dataBroadcastSubmit.content_ids.shift(); 
+                    this.dataBroadcastSubmit.content_ids.shift();
                     this.previewContents.shift();
                 }
                 this.dataBroadcastSubmit.content_ids.push(JSON.stringify(contentId));
@@ -249,22 +258,22 @@ export default {
                 if (indexToRemove !== -1) this.previewContents.splice(indexToRemove, 1);
             }
         },
-        selectedSticker: function(stickerId, packageId) {
+        selectedSticker: function (stickerId, packageId) {
             const contentId = {
-                stickerId: stickerId, 
-                packageId: packageId 
+                stickerId: stickerId,
+                packageId: packageId
             }
             const content = {
-                content_type : 'sticker',
-                id : contentId,
-                content_data : contentId
+                content_type: 'sticker',
+                id: contentId,
+                content_data: contentId
             }
             this.selectedIdContent(content, contentId);
         },
-        handleIdSticker: function(stickerId, packageId) {
+        handleIdSticker: function (stickerId, packageId) {
             return {
-                stickerId: stickerId, 
-                packageId: packageId 
+                stickerId: stickerId,
+                packageId: packageId
             };
         },
         updateNewArrayId() {
@@ -298,7 +307,7 @@ export default {
                     sent_at: null,
                     status: null,
                 },
-                this.previewContents = [];
+                    this.previewContents = [];
                 emitEvent('eventRegetBroadcast', '');
             }
             catch (error) {
@@ -326,13 +335,13 @@ export default {
 
 <style scoped>
 .itemSticker {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     display: flex;
     justify-content: center;
     border: 1px solid silver;
     position: relative;
-    margin: 10px;
+    margin: 1%;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -361,11 +370,11 @@ export default {
 }
 
 .itemImage {
-    width: 80px;
+    width: 90px;
     display: flex;
     justify-content: center;
     position: relative;
-    margin: 10px;
+    margin: 1%;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -381,8 +390,8 @@ export default {
     transition: all 0.5s ease;
     object-fit: cover;
     transition: all 0.5s ease;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 6px;
 }
 
@@ -408,9 +417,15 @@ export default {
     border-bottom-right-radius: 6px;
 }
 
+.col-12 {
+    max-width: 90%;
+}
+
 .mainImage {
     display: flex;
     flex-wrap: wrap;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .mainText {
@@ -423,7 +438,7 @@ export default {
     overflow-y: scroll;
 }
 
-.mainSticker > div {
+.mainSticker>div {
     display: flex;
     flex-wrap: wrap;
 }
@@ -481,6 +496,7 @@ export default {
     height: 60vh;
     background-color: #8CABD9;
     overflow-y: scroll;
+    min-width: 350px;
 }
 
 .inner_preview_add::-webkit-scrollbar-track {
@@ -569,8 +585,504 @@ export default {
     padding-right: 26px;
 }
 
+.form {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.row {
+    margin-right: -70px;
+    margin-left: 0;
+}
+
+.preview-message {
+    min-width: 350px;
+}
 
 .modal-dialog {
     max-width: 90vw;
-}</style>
+    width: 90vw;
+    margin: 1.75rem auto;
+}
 
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 970px;
+        margin: 13px auto;
+        font-size: 14px;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        height: 670px;
+    }
+
+    .mainImage,
+    .mainSticker,
+    .mainText {
+        max-height: 300px;
+    }
+
+    .itemImage,
+    .itemSticker {
+        width: 85px;
+        height: 85px;
+    }
+
+    .btn,
+    .title_preview,
+    .form-control,
+    .dp__input {
+        font-size: 14px !important;
+    }
+
+    .dp__menu_inner {
+        font-size: 14px !important;
+        padding: 3px !important;
+    }
+
+    .row {
+        margin-right: -60px;
+        margin-left: 0;
+    }
+
+    .preview-message,
+    .inner_preview_add {
+        min-width: 300px;
+        height: 400px;
+        font-size: 14px;
+    }
+
+    .content_chat img {
+        max-width: 180px;
+        max-height: 100px;
+    }
+
+    .contentText {
+        max-width: 200px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 900px;
+        margin: 13px auto;
+        font-size: 13px;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        height: 700px;
+    }
+
+    .mainImage,
+    .mainSticker,
+    .mainText {
+        max-height: 350px;
+    }
+
+    .itemImage,
+    .itemSticker,
+    .itemImage img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .btn,
+    .title_preview,
+    .form-control,
+    .dp__input {
+        font-size: 13px !important;
+    }
+
+    .dp__menu_inner {
+        font-size: 13px !important;
+        padding: 3px !important;
+    }
+
+    .row {
+        margin-right: -40px;
+        margin-left: 0;
+    }
+
+    .preview-message,
+    .inner_preview_add {
+        min-width: 270px;
+        height: 400px;
+        font-size: 13px;
+    }
+
+    .content_chat img {
+        max-width: 155px;
+        max-height: 90px;
+    }
+
+    .contentText {
+        max-width: 185px;
+        padding: 9px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 40px;
+        height: 40px;
+    }
+
+    button .mt-4 {
+        margin-top: 2px;
+    }
+
+    .btn-pers {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 900px;
+        margin: 13px auto;
+        font-size: 12px;
+    }
+
+    .modal-body {
+        padding: 1rem 0;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .modal-content {
+        height: 675px;
+    }
+
+    .mainImage,
+    .mainSticker,
+    .mainText {
+        max-height: 350px;
+    }
+
+    .itemImage,
+    .itemSticker,
+    .itemImage img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .btn,
+    .title_preview,
+    .form-control,
+    .dp__input {
+        font-size: 12px !important;
+    }
+
+    .dp__menu_inner {
+        font-size: 12px !important;
+        padding: 3px !important;
+    }
+
+    .row {
+        margin-right: -30px;
+        margin-left: 0;
+    }
+
+    .preview-message,
+    .inner_preview_add {
+        min-width: 220px;
+        height: 400px;
+        font-size: 12px;
+    }
+
+    .content_chat img {
+        max-width: 150px;
+        max-height: 65px;
+    }
+
+    .contentText {
+        max-width: 185px;
+        padding: 9px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 5px;
+    }
+
+    .rowContent {
+        margin-bottom: 2px;
+    }
+
+    .mt-4 {
+        margin-top: 2px;
+    }
+
+    .btn-pers {
+        font-size: 9px;
+    }
+
+    .broadcast-time .row {
+        margin-left: -15px;
+        margin-right: -101px;
+        display: flex;
+        gap: 38px;
+        flex-wrap: nowrap;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {
+    .modal-dialog {
+        max-width: 800px;
+        margin: 13px auto;
+        font-size: 11px;
+    }
+
+    .modal-body {
+        padding: 1rem 0;
+    }
+
+    .modal-header {
+        padding: 5px;
+        padding-top: 10px;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .modal-content {
+        height: 610px;
+    }
+
+    .mainImage,
+    .mainSticker,
+    .mainText {
+        max-height: 340px;
+    }
+
+    .itemImage,
+    .itemSticker,
+    .itemImage img {
+        width: 47px;
+        height: 47px;
+    }
+
+    .btn,
+    .title_preview,
+    .form-control,
+    .dp__input {
+        font-size: 11px !important;
+    }
+
+    .dp__menu_inner {
+        font-size: 11px !important;
+        padding: 3px !important;
+    }
+
+    .row {
+        margin-right: -20px;
+        margin-left: 0;
+    }
+
+    .preview-message,
+    .inner_preview_add {
+        min-width: 160px;
+        height: 360px;
+        font-size: 11px;
+    }
+
+    .content_chat img {
+        max-width: 95px;
+        max-height: 60px;
+        border-radius: 5px;
+    }
+
+    .contentText {
+        max-width: 100px;
+        padding: 9px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 5px;
+    }
+
+    .rowContent {
+        margin-bottom: 2px;
+    }
+
+    .mt-4 {
+        margin-top: 10px !important;
+    }
+
+    .btn-pers {
+        font-size: 9px;
+        padding: 6px 9px;
+    }
+
+    .nav-link {
+        padding: 2px 4px;
+    }
+
+    .broadcast-time .row {
+        margin-left: -15px;
+        margin-right: -101px;
+        display: flex;
+        gap: 38px;
+        flex-wrap: nowrap;
+    }
+
+    .form .pr-2 {
+        padding-right: 0;
+    }
+
+    .button .row {
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .modal-dialog {
+        max-width: 800px;
+        margin: 13px auto;
+        font-size: 10px;
+    }
+
+    .modal-body {
+        padding: 1rem 0;
+    }
+
+    .modal-header {
+        padding: 5px;
+        padding-top: 10px;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .modal-content {
+        height: 475px;
+    }
+
+    .mainImage,
+    .mainSticker,
+    .mainText {
+        max-height: 231px;
+    }
+
+    .itemImage,
+    .itemSticker,
+    .itemImage img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn,
+    .title_preview,
+    .form-control,
+    .dp__input {
+        font-size: 10px !important;
+    }
+
+    .dp__menu_inner {
+        font-size: 10px !important;
+        padding: 3px !important;
+    }
+
+    .row {
+        margin-right: -20px;
+        margin-left: 0;
+    }
+
+    .preview-message,
+    .inner_preview_add {
+        min-width: 145px;
+        height: 250px;
+        font-size: 10px;
+    }
+
+    .inner_preview_add {
+        padding: 8px;
+    }
+
+    .content_chat img {
+        max-width: 85px;
+        max-height: 45px;
+        border-radius: 5px;
+    }
+
+    .contentText {
+        max-width: 100px;
+        padding: 9px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 5px;
+    }
+
+    .rowContent {
+        margin-bottom: 2px;
+    }
+
+    .mt-4 {
+        margin-top: 10px !important;
+    }
+
+    .btn-pers {
+        font-size: 9px;
+        padding: 6px 9px;
+    }
+
+    .nav-link {
+        padding: 2px 4px;
+    }
+
+    .broadcast-time .row {
+        margin-left: -15px;
+        margin-right: -101px;
+        display: flex;
+        gap: 38px;
+        flex-wrap: nowrap;
+    }
+
+    .form .pr-2 {
+        padding-right: 0;
+    }
+
+    .button .row {
+        padding-right: 0;
+    }
+}
+</style>

@@ -65,18 +65,21 @@ export default {
 @media screen and (min-width: 577px) and (max-width: 768px) {
     .innerContent {
         padding: 7px;
+        margin-top: 13px;
     }
 }
 
 @media screen and (min-width: 425px) and (max-width: 576px) {
     .innerContent {
         padding: 5px;
+        margin-top: 10px;
     }
 }
 
 @media screen and (min-width: 375px) and (max-width: 424px) {
     .innerContent {
         padding: 5px;
+        margin-top: 10px;
     }
 }
 </style>

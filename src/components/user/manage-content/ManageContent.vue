@@ -1,90 +1,89 @@
 <template>
     <div id="main">
         <div>
-            <h3 class="titleChannel"><i class="fa-solid fa-envelope-open-text"></i> Manage Content </h3>
+            <h3 class="title-channel"><i class="fa-solid fa-envelope-open-text"></i> Manage Content </h3>
         </div>
         <div class="ml-2 mt-2">
             <div class="mt-3">
                 <div class="mb-2">
-                    <div class="colorTitle"><i class="fa-solid fa-bars-staggered"></i> Manage Content of Channel</div>
+                    <div class="color-title"><i class="fa-solid fa-bars-staggered"></i> Manage Content of Channel</div>
                 </div>
-                <div class="row m-0 pb-2 d-flex justify-content-end" id="search-sort">
-                    <div class="col-1 pl-0" id="page">
-                        <select content="Pagination" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.perPage">
+                <div class="row m-0 pb-2 d-flex justify-content-end gap-2" id="search-sort">
+                    <div class="pl-0" id="page">
+                        <select content="Pagination" v-tippy class="form-control " v-model="big_search.perPage">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
                             <option value="20">20</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0">
-                        <select content="Sort by" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.typesort">
+                    <div class="pl-0 mr-3">
+                        <select content="Sort by" v-tippy class="form-control " v-model="big_search.typesort">
                             <option value="new">New</option>
                             <option value="name">Name</option>
                             <option value="content_type">Content type</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0">
-                        <select content="In direction" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.sortlatest">
+                    <div class="pl-0 mr-3">
+                        <select content="In direction" v-tippy class="form-control " v-model="big_search.sortlatest">
                             <option value="false">Ascending</option>
                             <option value="true">Decrease</option>
                         </select>
                     </div>
-                    <div class="col-2 pl-0">
-                        <select content="Filter by delete" v-tippy class="form-control form-control-sm"
-                            v-model="big_search.is_delete">
+                    <div class="pl-0 mr-3">
+                        <select content="Filter by delete" v-tippy class="form-control " v-model="big_search.is_delete">
                             <option value="all">All Content</option>
                             <option value="1">Deleted Content</option>
                             <option value="0">Normal Content</option>
                         </select>
                     </div>
-                    <div class="col-2 pl-0">
-                        <select content="Filter by content type" v-tippy class="form-control form-control-sm"
+                    <div class="pl-0 mr-3">
+                        <select content="Filter by content type" v-tippy class="form-control "
                             v-model="big_search.content_type">
                             <option value="all">All Content</option>
                             <option value="text">Text</option>
                             <option value="image">Image</option>
                         </select>
                     </div>
-                    <div class="col-1 pl-0" v-if="user.role == 'manager'">
-                        <select content="Role" v-tippy class="form-control form-control-sm" v-model="big_search.role">
+                    <div class="pl-0 mr-3" v-if="user.role == 'manager'">
+                        <select content="Role" v-tippy class="form-control " v-model="big_search.role">
                             <option value="all">All</option>
                             <option value="manager">Manager</option>
                         </select>
                     </div>
-                    <div class="col-3 pl-0">
+                    <div class="pl-0 ">
                         <div content="Search information content" v-tippy class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                             </div>
-                            <input v-model="search" type="text" class="form-control form-control-sm"
-                                id="inlineFormInputGroup" placeholder="Search...">
+                            <input v-model="search" type="text" class="form-control " id="inlineFormInputGroup"
+                                placeholder="Search...">
                         </div>
                     </div>
-                    <div class="pr-1">
+                    <div class="mr-3">
                         <div class="input-group ">
-                            <button content="Add Content" v-tippy data-toggle="modal" data-target="#addContent"
-                                type="button" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+                            <button content="Add Content" v-tippy data-toggle="modal" data-target="#modal-add-content"
+                                type="button" class="btn btn-success form-control"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="pr-0" v-if="selectedContents.length > 0">
+                    <div class="pr-0 mr-3" v-if="selectedContents.length > 0">
                         <div class="input-group">
                             <button @click="changeDeleteManyContent(1)" content="Delete Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyContent" type="button"
-                                class="btn btn-outline-danger mr-1"><i class="fa-solid fa-trash"></i></button>
+                                data-toggle="modal" data-target="#modal-delete-many-content" type="button"
+                                class="btn btn-outline-danger mr-1 form-control"><i
+                                    class="fa-solid fa-trash"></i></button>
                             <button @click="changeDeleteManyContent(0)" content="Backup Many Content" v-tippy
-                                data-toggle="modal" data-target="#deleteManyContent" type="button"
-                                class="btn btn-outline-success"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                                data-toggle="modal" data-target="#modal-delete-many-content" type="button"
+                                class="btn btn-outline-success form-control"><i
+                                    class="fa-solid fa-trash-arrow-up"></i></button>
                         </div>
                     </div>
                 </div>
                 <div v-if="isLoading">
                     <TableLoading :cols="6" :rows="9"></TableLoading>
                 </div>
-                <div v-if="!isLoading" class="tableData">
+                <div v-if="!isLoading" class="table-data">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -95,26 +94,29 @@
                                 <th scope="col"><i class="fa-solid fa-database"></i> Content Data</th>
                                 <th scope="col"><i class="fa-solid fa-user-pen"></i> Creator</th>
                                 <th scope="col"><i class="fa-solid fa-user-check"></i> Updater</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at</th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated at
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-day"></i> Created at
                                 </th>
-                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Acction</th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-calendar-check"></i> Updated
+                                    at
+                                </th>
+                                <th scope="col" class="text-center"><i class="fa-solid fa-user-pen"></i> Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(content, index) in contents" :key="index">
-                                <th class="table-cell" scope="row"><input :checked="isSelected(content.id)" type="checkbox"
-                                        class="" @change="handleSelect(content.id)"></th>
-                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage + index +
-                                    1 }}
+                                <th class="table-cell" scope="row"><input :checked="isSelected(content.id)"
+                                        type="checkbox" class="" @change="handleSelect(content.id)"></th>
+                                <th class="table-cell" scope="row">#{{ (big_search.page - 1) * big_search.perPage +
+                                index +
+                                1 }}
                                 </th>
                                 <td :class="{
-                                    'table-cell': true, 'text-uppercase': true,
-                                    'colorText': content.content_type == 'text',
-                                    'colorImage': content.content_type == 'image'
-                                }">
+                                'table-cell': true, 'text-uppercase': true,
+                                'colorText': content.content_type == 'text',
+                                'colorImage': content.content_type == 'image'
+                            }">
                                     {{ content.content_type }}</td>
-                                <td class="table-cell ">
+                                <td class="table-cell">
                                     <div class="contentTextTable " v-if="content.content_type == 'text'"
                                         v-html="content.content_data.text">
                                     </div>
@@ -123,14 +125,14 @@
                                     </div>
                                 </td>
                                 <td class="table-cell">
-                                    <div class="nameAvatar">
+                                    <div class="name-avatar">
                                         <img :src="content.creator_avatar ? content.creator_avatar : require('@/assets/avatar.jpg')"
                                             alt="">
                                         <span class="nameMember">{{ content.creator_name }}</span>
                                     </div>
                                 </td>
                                 <td class="table-cell">
-                                    <div class="nameAvatar">
+                                    <div class="name-avatar">
                                         <img :src="content.updater_avatar ? content.updater_avatar : require('@/assets/avatar.jpg')"
                                             alt="">
                                         <span class="nameMember">{{ content.updater_name }}</span>
@@ -139,21 +141,24 @@
                                 <td class="table-cell text-center">{{ formatDate(content.created_at) }}</td>
                                 <td class="table-cell text-center">{{ formatDate(content.updated_at) }}</td>
                                 <td class="table-cell text-center">
-                                    <button data-toggle="modal" data-target="#viewDetailContent"
-                                        v-tippy="{ content: 'View Detail' }" class="viewDetailContent text-success"
-                                        @click="selectContent(content)">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#updateContent" v-tippy="{ content: 'Update' }"
-                                        class="updateContent text-primary" @click="selectContent(content)">
-                                        <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
-                                    </button>
-                                    <button data-toggle="modal" data-target="#deleteContent"
-                                        v-tippy="{ content: content.is_delete == 0 ? 'Delete' : 'Backup' }"
-                                        class="deleteContent text-danger" @click="selectContent(content)">
-                                        <i
-                                            :class="{ 'fa-solid': true, 'fa-trash': content.is_delete == 0, 'fa-trash-arrow-up': content.is_delete == 1 }"></i>
-                                    </button>
+                                    <div class="action">
+                                        <button data-toggle="modal" data-target="#modal-view-detail-content"
+                                            v-tippy="{ content: 'View Detail' }" class="view-detail-content text-success"
+                                            @click="selectContent(content,'detail')">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                        <button data-toggle="modal" data-target="#modal-update-content"
+                                            v-tippy="{ content: 'Update' }" class="updateContent text-primary"
+                                            @click="selectContent(content,'update')">
+                                            <i :class="{ 'fa-solid': true, 'fa-pen': true }"></i>
+                                        </button>
+                                        <button data-toggle="modal" data-target="#modal-delete-content"
+                                            v-tippy="{ content: content.is_delete == 0 ? 'Delete' : 'Backup' }"
+                                            class="deleteContent text-danger" @click="selectContent(content,'delete')">
+                                            <i
+                                                :class="{ 'fa-solid': true, 'fa-trash': content.is_delete == 0, 'fa-trash-arrow-up': content.is_delete == 1 }"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -165,15 +170,16 @@
                         :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'">
                     </paginate>
                 </div>
-                <AddContent :getContents="getContents"></AddContent>
-                <UpdateContent :getContents="getContents" :contentSelected="contentSelected"></UpdateContent>
-                <DeleteContent :contentSelected="contentSelected" ></DeleteContent>
-                <DetailContent :contentSelected="contentSelected" ></DetailContent>
-                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents" ></DeleteManyContent>
+                <AddOrUpdateContent :getContents="getContents"></AddOrUpdateContent>
+                <AddOrUpdateContent :getContents="getContents" :contentSelected="contentSelected"></AddOrUpdateContent>
+                <DeleteContent :contentSelected="contentSelected"></DeleteContent>
+                <DetailContent :contentSelected="contentSelected"></DetailContent>
+                <DeleteManyContent :isDeleteChangeMany="isDeleteChangeMany" :selectedContents="selectedContents"></DeleteManyContent>
             </div>
         </div>
     </div>
 </template>
+
 <script>
 import useEventBus from '@/composables/useEventBus'
 import UserRequest from '@/restful/UserRequest';
@@ -182,10 +188,9 @@ import Paginate from 'vuejs-paginate-next';
 import config from '@/config';
 import TableLoading from '@/components/common/TableLoading'
 import _ from 'lodash';
-import AddContent from '@/components/user/manage-content/AddContent.vue'
+import AddOrUpdateContent from '@/components/user/manage-content/AddOrUpdateContent.vue'
 import DeleteContent from '@/components/user/manage-content/DeleteContent.vue'
 import DetailContent from '@/components/user/manage-content/DetailContent.vue'
-import UpdateContent from '@/components/user/manage-content/UpdateContent.vue'
 import DeleteManyContent from '@/components/user/manage-content/DeleteManyContent.vue'
 
 export default {
@@ -193,11 +198,10 @@ export default {
     components: {
         paginate: Paginate,
         TableLoading,
-        AddContent,
         DeleteContent,
         DeleteManyContent,
         DetailContent,
-        UpdateContent,
+        AddOrUpdateContent,
     },
 
     data() {
@@ -329,15 +333,31 @@ export default {
         },
 
         formatDate: function (date) {
-            return date.split('T')[0]
+            const formattedDate = new Date(date);
+
+            const day = formattedDate.getDate();
+            const month = formattedDate.getMonth() + 1;
+            const year = formattedDate.getFullYear();
+
+            const formattedDateString = `${day}/${month}/${year}`;
+
+            return formattedDateString;
         },
 
         clickCallback: function (pageNum) {
             this.big_search.page = pageNum;
         },
 
-        selectContent: function (contentSelected) {
-            emitEvent('selectSimpleContent', contentSelected);
+        selectContent: function (contentSelected, status) {
+            if(status == 'detail') {
+                emitEvent('selectSimpleContentDetail', contentSelected);
+            }
+            else if(status == 'delete') {
+                emitEvent('selectSimpleContentDelete', contentSelected);
+            }
+            else{
+                emitEvent('selectSimpleContent', contentSelected);
+            }
             this.contentSelected = contentSelected;
         },
 
@@ -390,7 +410,7 @@ export default {
     -webkit-box-orient: vertical;
 }
 
-.titleChannel {
+.title-channel {
     font-size: 19px;
     color: var(--user-color);
 }
@@ -399,21 +419,22 @@ tr th {
     color: var(--user-color);
 }
 
-.colorTitle {
+.color-title {
     color: gray;
 }
 
-.tableData {
+.table-data {
     min-height: 20vh;
+    overflow-y: scroll;
 }
 
-.nameAvatar {
+.name-avatar {
     display: flex;
     align-items: center;
     align-content: center;
 }
 
-.nameAvatar img {
+.name-avatar img {
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -444,17 +465,17 @@ tr th {
     color: #3366FF;
 }
 
-.viewDetailContent {
+.view-detail-content {
     transition: all 0.5s ease;
     font-size: 22px;
 }
 
-.viewDetailContent i:hover {
+.view-detail-content i:hover {
     transition: all 0.5s ease;
     color: var(--user-color);
 }
 
-.nameAvatar img {
+.name-avatar img {
     border-radius: 6px;
 }
 
@@ -475,7 +496,7 @@ table {
 }
 
 table img {
-    max-width: 100px;
+    max-width: 150px;
     height: auto;
     object-fit: cover;
 }
@@ -485,13 +506,18 @@ table img {
     vertical-align: middle;
 }
 
+table thead th,
+table tbody th {
+    vertical-align: middle;
+    text-align: center;
+}
+
 .imgInTable {
     display: flex;
-    justify-content: start ;
+    justify-content: center;
 }
 
 .imgInTable img {
-    height: 100px;
     border-radius: 4px;
 }
 
@@ -506,5 +532,480 @@ table button {
 
 .colorText {
     color: var(--brown-color)
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-control {
+    height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: 0.2rem;
+    line-height: 1.5;
+}
+
+.row-multi-btn {
+    display: flex;
+}
+
+#search-sort {
+    line-height: 1.5;
+}
+
+@media screen and (min-width: 1201px) {
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    td .fa-solid {
+        font-size: 20px;
+    }
+
+    .contentTextTable{
+        max-width: 150px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .name-avatar {
+        min-width: 120px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 15px;
+    }
+
+    .name-avatar img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 8px;
+    }
+
+    table button {
+        padding: 1px 2px;
+    }
+
+    table img {
+        max-width: 110px;
+    }
+
+    .contentTextTable{
+        max-width: 130px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .title-channel {
+        font-size: 15px;
+    }
+
+    .color-title {
+        font-size: 14px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .name-avatar {
+        min-width: 140px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 16px;
+    }
+
+    .name-avatar img {
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    .input-group-text {
+        padding: 0 2px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    #page {
+        min-width: 65px;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-left: 0;
+        padding-right: 3px;
+    }
+
+    .btn {
+        padding: 1px 5px 0 5px;
+    }
+
+    table button {
+        padding: 1px 2px;
+    }
+
+    table img {
+        max-width: 100px;
+    }
+
+    .contentTextTable{
+        max-width: 110px;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 13px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .name-avatar {
+        min-width: 120px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    .fa-solid {
+        font-size: 13px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 8px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 12px;
+    }
+
+    #page {
+        min-width: 45px;
+    }
+
+    .form-control {
+        padding: 1px 1px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 5px;
+    }
+
+    .btn {
+        padding: 1px 4px 0 4px;
+    }
+
+    .input-group-text {
+        padding: 0 4px;
+    }
+
+    .input-group-prepend {
+        font-size: 12px;
+
+    }
+
+    .mr-3 {
+        margin-left: -1% !important;
+        margin-right: 0px !important
+    }
+
+    table button {
+        padding: 1px;
+    }
+
+    table img {
+        max-width: 100px;
+    }
+
+    .contentTextTable{
+        max-width: 110px;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 12px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameMember {
+        margin-left: 8px;
+    }
+
+    .name-avatar {
+        min-width: 100px;
+    }
+
+    table {
+        font-size: 10px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 5px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 10px;
+    }
+
+    .form-control {
+        padding: 1px 1px;
+        height: 25px;
+    }
+
+    #page {
+        min-width: 45px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 5px;
+    }
+
+    .btn {
+        padding: 0px 4px;
+    }
+
+    .input-group-text {
+        padding: 0 0.5px;
+    }
+
+    .input-group-prepend {
+        font-size: 11px;
+    }
+
+    .mr-3 {
+        margin-left: -2% !important;
+        margin-right: 0px !important
+    }
+
+    table button {
+        padding: 1px;
+    }
+
+    .mt-3{
+        margin-top: 0 !important;
+    }
+
+    table img {
+        max-width: 80px;
+    }
+
+    .contentTextTable{
+        max-width: 90px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+
+    .title-channel,
+    .color-title {
+        font-size: 11px;
+    }
+
+    table {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .nameMember {
+        margin-left: 8px;
+    }
+
+    .name-avatar {
+        min-width: 100px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+
+    .fa-solid {
+        font-size: 10px;
+    }
+
+    .name-avatar img {
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+        object-fit: cover;
+    }
+
+    .table td,
+    .table th {
+        padding: 4px;
+    }
+
+    .form-control,
+    .pagination {
+        font-size: 9px;
+    }
+
+    .form-control {
+        padding: 0.5px 0;
+        height: 25px;
+    }
+
+    #page {
+        min-width: 40px;
+    }
+
+    #main {
+        padding: 1% 1%;
+        margin: 0;
+    }
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        padding-right: 0;
+    }
+
+    .btn {
+        padding: 0px 4px;
+    }
+
+    .input-group-text {
+        padding: 0 0.5px;
+    }
+
+    .input-group-prepend {
+        font-size: 10px;
+
+    }
+
+    #main .ml-2 {
+        margin-left: 3px !important;
+    }
+
+    .mr-3 {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    table button {
+        padding: 0.7px;
+    }
+
+    .mt-3{
+        margin-top: 0 !important;
+    }
+
+    table img {
+        max-width: 70px;
+    }
+
+    .contentTextTable{
+        max-width: 80px;
+    }
 }
 </style>

@@ -19,9 +19,9 @@
                             <div class="modal-body">
                                 <form @submit.prevent="changePassword()">
                                     <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow1 ? 'text' : 'password'"
+                                        <input required id="input-password" :type="isShow1 ? 'text' : 'password'"
                                             v-model="newPassword.current_password">
-                                        <strong id="iconEye"><i @click="isShow1 = !isShow1"
+                                        <strong id="icon-eye"><i @click="isShow1 = !isShow1"
                                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow1, 'fa-eye-slash': isShow1 }"></i></strong>
                                         <div class="underline"></div><label><i class="fa-solid fa-lock"></i> Current
                                             Password</label>
@@ -30,9 +30,9 @@
                                     }}<br></span>
                                     <br>
                                     <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow2 ? 'text' : 'password'"
+                                        <input required id="input-password" :type="isShow2 ? 'text' : 'password'"
                                             v-model="newPassword.new_password">
-                                        <strong id="iconEye"><i @click="isShow2 = !isShow2"
+                                        <strong id="icon-eye"><i @click="isShow2 = !isShow2"
                                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow2, 'fa-eye-slash': isShow2 }"></i></strong>
                                         <div class="underline"></div><label><i class="fa-solid fa-lock"></i> New
                                             Password</label>
@@ -41,9 +41,9 @@
                                     }}<br></span>
                                     <br>
                                     <div class="input-form">
-                                        <input required id="inputPassword" :type="isShow3 ? 'text' : 'password'"
+                                        <input required id="input-password" :type="isShow3 ? 'text' : 'password'"
                                             v-model="newPassword.new_password_confirmation">
-                                        <strong id="iconEye"><i @click="isShow3 = !isShow3"
+                                        <strong id="icon-eye"><i @click="isShow3 = !isShow3"
                                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow3, 'fa-eye-slash': isShow3 }"></i></strong>
                                         <div class="underline"></div><label><i class="fa-solid fa-lock"></i> New Password
                                             Confirmation </label>
@@ -253,7 +253,7 @@ body.modal-open {
     transition: width 0.3s;
 }
 
-#iconEye {
+#icon-eye {
     position: absolute;
     top: 10px;
     right: 0px;
@@ -261,7 +261,109 @@ body.modal-open {
     cursor: pointer;
 }
 
-#inputPassword {
+#input-password {
     padding-right: 26px;
-}</style>
+}
+
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 400px;
+    }
+
+    .modal-content,
+    .bigContainer .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 14px;
+    }
+
+    .modal-header {
+        padding: 13px 15px 10px 15px;
+    }
+
+    .fa-regular {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 300px;
+    }
+
+    .modal-content,
+    .bigContainer .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 12px;
+    }
+
+    .modal-header {
+        padding: 13px 15px 10px 15px;
+    }
+
+    .fa-regular {
+        font-size: 18px;
+    }
+
+    .btn-pers {
+        font-size: 11px;
+        margin-bottom: 10px !important;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 250px;
+    }
+
+    .modal-content,
+    .modal-header,
+    .bigContainer .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 12px;
+    }
+
+    .modal-header {
+        padding: 8px 10px 5px 10px;
+    }
+
+    .fa-regular {
+        font-size: 13px;
+    }
+
+    .btn-pers {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 576px) {
+    .modal-dialog {
+        max-width: 220px;
+        margin: 0 auto;
+    }
+
+    .modal-content,
+    .modal-header,
+    .bigContainer .input-form input,
+    .input-form input:focus~label,
+    .input-form input:valid~label {
+        font-size: 11px;
+    }
+
+    .modal-header {
+        padding: 8px 10px 5px 10px;
+    }
+
+    .fa-regular {
+        font-size: 13px;
+    }
+
+    .btn-pers {
+        font-size: 11px;
+    }
+}
+</style>
 

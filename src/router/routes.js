@@ -12,7 +12,6 @@ import AdminLogin from '@/components/admin/auth/AdminLogin'
 // user 
 import UserMain from '@/components/user/UserMain'
 import AccountSetting from '@/components/user/account-setting/AccountSetting'
-import InformationChannel from '@/components/user/information-channel/InformationChannel'
 import MemberAccount from '@/components/user/member-account/MemberAccount'
 import ManageContent from '@/components/user/manage-content/ManageContent'
 import ManageBroadcast from '@/components/user/manage-broadcast/ManageBroadcast'
@@ -68,7 +67,6 @@ const routes = [
         beforeEnter: authUser,
         children: [
             { path: 'account-setting', name: 'AccountSetting', component: AccountSetting },
-            { path: 'information-channel', name: 'InformationChannel', component: InformationChannel },
             { path: 'member-account', name: 'MemberAccount', component: MemberAccount },
             { path: 'manage-content', name: 'ManageContent', component: ManageContent },
             { path: 'manage-broadcast', name: 'ManageBroadcast', component: ManageBroadcast },

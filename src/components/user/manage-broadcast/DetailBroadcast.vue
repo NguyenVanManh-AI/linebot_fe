@@ -18,20 +18,24 @@
                             <div class="modal-body">
                                 <form>
                                     <div class="row">
-                                        <div class="col-12 preViewMessage p-0">
+                                        <div class="col-12 preview-message p-0">
                                             <div class="row font-weight-bold">
-                                                <div class="col-4 text-info"><i class="fa-solid fa-user-clock"></i> Sender
+                                                <div class="col-4 text-info"><i class="fa-solid fa-user-clock"></i>
+                                                    Sender
                                                     Name</div>
-                                                <div class="col-8 text-success"> : {{ this.broadcastSelected.sender_name }}
+                                                <div class="col-8 text-success"> : {{ this.broadcastSelected.sender_name
+                                                    }}
                                                 </div>
                                             </div>
                                             <div class="row font-weight-bold">
                                                 <div class="col-4 text-info"><i class="fa-solid fa-heading"></i> Title
                                                     Broadcast</div>
-                                                <div class="col-8 text-success"> : {{ this.broadcastSelected.title }}</div>
+                                                <div class="col-8 text-success"> : {{ this.broadcastSelected.title }}
+                                                </div>
                                             </div>
                                             <div class="row font-weight-bold">
-                                                <div class="col-4 text-info"><i class="fa-solid fa-shapes"></i> Status</div>
+                                                <div class="col-4 text-info"><i class="fa-solid fa-shapes"></i> Status
+                                                </div>
                                                 <div :class="{
                                                     'col-8': true, 'text-uppercase': true,
                                                     'colorDraf': broadcastSelected.status == 'draf',
@@ -41,12 +45,14 @@
                                                 }"> : {{ broadcastSelected.status }}</div>
                                             </div>
                                             <div class="row mb-2 font-weight-bold">
-                                                <div class="col-4 text-info"><i class="fa-solid fa-clock"></i> Sent At</div>
+                                                <div class="col-4 text-info"><i class="fa-solid fa-clock"></i> Sent At
+                                                </div>
                                                 <div class="col-8 text-success"> : {{ this.broadcastSelected.sent_at }}
                                                 </div>
                                             </div>
                                             <div class="title_preview"> <i class="fa-solid fa-caret-down"></i>
-                                                <span>Preview</span> <i class="fa-solid fa-circle-question"></i> </div>
+                                                <span>Preview</span> <i class="fa-solid fa-circle-question"></i>
+                                            </div>
                                             <div class="inner_preview">
                                                 <div v-for="content, index in previewContents" :key="index">
                                                     <div class="rowContent" v-if="content.content_type == 'text'">
@@ -241,5 +247,197 @@ export default {
 
 .colorFailed {
     color: red;
-}</style>
+}
 
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 440px;
+        margin: 13px auto;
+        font-size: 14px;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        height: 620px;
+    }
+
+    .title_preview {
+        font-size: 14px !important;
+    }
+
+    .preview-message,
+    .inner_preview {
+        height: 400px;
+        font-size: 14px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 400px;
+        margin: 13px auto;
+        font-size: 13px;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        height: 575px;
+    }
+
+    .title_preview {
+        font-size: 13px !important;
+    }
+
+    .preview-message,
+    .inner_preview {
+        height: 350px;
+        font-size: 13px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 45px;
+        height: 45px;
+    }
+
+    .col-4,
+    .col-8 {
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 340px;
+        margin: 13px auto;
+        font-size: 12px;
+    }
+
+    .modal-header {
+        padding: 8px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .modal-content {
+        height: 575px;
+    }
+
+    .title_preview {
+        font-size: 12px !important;
+    }
+
+    .preview-message,
+    .inner_preview {
+        height: 350px;
+        font-size: 12px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 40px;
+        height: 40px;
+    }
+
+    .col-4,
+    .col-8 {
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 576px) {
+    .modal-dialog {
+        max-width: 315px;
+        margin: 13px auto;
+        font-size: 11px;
+    }
+
+    .modal-header {
+        padding: 8px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 16px;
+    }
+
+    .modal-content {
+        height: 475px;
+    }
+
+    .title_preview {
+        font-size: 11px !important;
+    }
+
+    .preview-message,
+    .inner_preview {
+        height: 300px;
+        font-size: 11px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 38px;
+        height: 38px;
+    }
+
+    .col-4,
+    .col-8 {
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .modal-dialog {
+        max-width: 315px;
+        margin: 13px auto;
+        font-size: 11px;
+    }
+
+    .modal-header {
+        padding: 8px 5px;
+    }
+
+    .modal-header .close {
+        font-size: 16px;
+    }
+
+    .modal-content {
+        height: 475px;
+    }
+
+    .title_preview {
+        font-size: 11px !important;
+    }
+
+    .preview-message,
+    .inner_preview {
+        height: 300px;
+        font-size: 11px;
+    }
+
+    .avatar_chat img,
+    .avatar_chat {
+        width: 35px;
+        height: 35px;
+    }
+
+    .col-4,
+    .col-8 {
+        padding-right: 0;
+    }
+}
+</style>

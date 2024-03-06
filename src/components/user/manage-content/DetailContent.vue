@@ -1,11 +1,12 @@
 <template>
     <div>
-        <div class="modal fade" id="viewDetailContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="modal-view-detail-content" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-envelope-open-text"></i> Detail
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-envelope-open-text"></i>
+                            Detail
                             Content</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></span>
@@ -19,16 +20,14 @@
                             </div>
                             <div v-if="contentSelected.content_type == 'text'">
                                 <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorText"> {{ contentSelected.content_type
-                                    }} </strong><br>
+                                    Content Type : <strong class="text-uppercase colorText"> {{ contentSelected.content_type }} </strong><br>
                                     Content Data : <strong class="contentText">{{ contentSelected.content_data.text
-                                    }}</strong>
+                                        }}</strong>
                                 </div>
                             </div>
                             <div class="imgInTable" v-if="contentSelected.content_type == 'image'">
                                 <div class="ml-3">
-                                    Content Type : <strong class="text-uppercase colorImage"> {{
-                                        contentSelected.content_type }} </strong><br>
+                                    Content Type : <strong class="text-uppercase colorImage"> {{ contentSelected.content_type }} </strong><br>
                                     <div class="innerData">
                                         Content Data : <img :src="contentSelected.content_data.originalContentUrl"
                                             alt="Image" />
@@ -46,6 +45,7 @@
         </div>
     </div>
 </template>
+
 <script>
 
 import useEventBus from '@/composables/useEventBus';
@@ -69,8 +69,8 @@ export default {
         }
     },
     mounted() {
-        onEvent('selectSimpleContent', (contentSelected) => {
-            this.contentSelected = contentSelected;
+        onEvent('selectSimpleContentDetail', (contentSelected) => {
+            this.contentSelected = contentSelected; 
         });
     },
 }
@@ -113,4 +113,152 @@ export default {
     color: var(--brown-color)
 }
 
+.alert {
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .modal-dialog {
+        max-width: 400px;
+        margin: 10px auto;
+        font-size: 12px;
+        ;
+    }
+
+    .modal-header {
+        padding: auto;
+    }
+
+    .modal-header .close {
+        font-size: 20px;
+    }
+
+    .btn {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .modal-dialog {
+        max-width: 350px;
+        margin: 10px auto;
+        font-size: 12px;
+    }
+
+    .modal-header {
+        font-size: 13px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .modal-header .close {
+        font-size: 18px;
+    }
+
+    .btn {
+        font-size: 12px;
+    }
+
+    .ml-3 {
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .modal-dialog {
+        max-width: 320px;
+        margin: 10px auto;
+        font-size: 11px;
+    }
+
+    .modal-header {
+        font-size: 12px;
+        padding-bottom: 9px;
+        padding-top: 9px;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 10px;
+    }
+
+    .modal-body {
+        padding: 12px;
+    }
+
+    .ml-3 {
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (min-width: 425px) and (max-width: 575px) {
+    .modal-dialog {
+        max-width: 275px;
+        margin: 10px auto;
+        font-size: 9px;
+    }
+
+    .modal-header,
+    .modal-footer {
+        font-size: 10px;
+        padding-bottom: 8px;
+        padding-top: 8px;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 9px;
+        padding: 3px 8px;
+    }
+
+    .modal-body {
+        padding: 12px;
+    }
+
+    .ml-3 {
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    .modal-dialog {
+        max-width: 180px;
+        margin: 10px auto;
+        font-size: 8px;
+    }
+
+    .modal-header,
+    .modal-footer {
+        font-size: 10px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    .modal-header .close {
+        font-size: 11px;
+    }
+
+    .btn {
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+
+    .modal-body {
+        padding: 12px;
+    }
+
+    .ml-3 {
+        margin-left: 0 !important;
+    }
+
+    .alert {
+        padding: 5px 10px;
+    }
+}
 </style>
