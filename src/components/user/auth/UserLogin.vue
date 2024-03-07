@@ -50,7 +50,7 @@
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label"><i
 												class="fa-solid fa-envelope"></i> Email</label>
-										<input required v-model="resetPassword.email" type="email" class="form-control" id="input-font-size style=" margin: 15px 0; padding: 0 10px;">
+										<input required v-model="resetPassword.email" type="email" class="form-control" id="input-font-size" style=" margin: 15px 0; padding: 0 10px;">
 									</div>
 								</div>
 								<div class="modal-footer" style=" padding: 15px 20px; gap: 10px;">
