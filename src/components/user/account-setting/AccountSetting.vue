@@ -397,7 +397,7 @@ export default {
     .form-control,
     .groupCheckbox,
     .input-group-text {
-        font-size: 13px;
+        font-size: 13px !important;
     }
     .btn-pers {
         font-size: 11px;
@@ -433,7 +433,7 @@ export default {
     .col-2 {
         padding: 0 5%;
         font-size: 13px;
-        max-width: 100%;
+        max-width: 100% !important;
     }
 
     .col-2{
@@ -445,7 +445,7 @@ export default {
     .form-control,
     .groupCheckbox,
     .input-group-text {
-        font-size: 13px;
+        font-size: 13px !important;
     }
 
     .btn-pers {
@@ -482,7 +482,7 @@ export default {
     .col-2 {
         padding: 0 5%;
         font-size: 13px;
-        max-width: 100%;
+        max-width: 100% !important;
     }
 
     .col-2{
@@ -494,7 +494,7 @@ export default {
     .form-control,
     .groupCheckbox,
     .input-group-text {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .btn-pers{

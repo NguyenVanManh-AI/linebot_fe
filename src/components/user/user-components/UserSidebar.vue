@@ -136,7 +136,7 @@ export default {
   },
   mounted() {
     const isUserOpened = localStorage.getItem('isUserOpened');
-    if (isUserOpened !== null) {
+    if (isUserOpened) {
       this.isUserOpened = JSON.parse(isUserOpened);
     }
     var appMain = window.document.getElementById('appMain');

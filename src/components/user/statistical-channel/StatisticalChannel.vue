@@ -126,11 +126,6 @@ export default {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-@media screen and (min-width: 1201px) {
-
-
-}
-
 @media screen and (min-width: 993px) and (max-width: 1200px) {
     .form-control , .label_date {
         font-size: 12px !important;

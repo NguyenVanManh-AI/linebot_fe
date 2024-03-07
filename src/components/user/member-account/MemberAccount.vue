@@ -573,7 +573,7 @@ table thead th {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     #main {
@@ -635,7 +635,7 @@ table thead th {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     #main {
@@ -653,6 +653,10 @@ table thead th {
     .btn {
         padding: 0px 4px;
         margin-top: 3px;
+    }
+
+    .input-group-text {
+        padding: 0 8px;
     }
 }
 
@@ -707,7 +711,7 @@ table thead th {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     #page {
@@ -799,7 +803,7 @@ table thead th {
 
     .form-control,
     .pagination {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .form-control {
@@ -890,7 +894,7 @@ table thead th {
 
     .form-control,
     .pagination {
-        font-size: 9px;
+        font-size: 9px !important;
     }
 
     .form-control {

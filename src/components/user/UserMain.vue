@@ -28,7 +28,7 @@ export default {
 .rightBar {
     transition: width 0.5s ease;
     min-height: 100vh;
-    min-width: 375px;
+    /* min-width: 375px; */
 }
 
 .innerContent {
@@ -37,7 +37,7 @@ export default {
     background-color: white;
     padding: 10px;
     margin-top: 16px;
-    min-width: 375px;
+    /* min-width: 375px; */
 }
 
 .innerContent>div {

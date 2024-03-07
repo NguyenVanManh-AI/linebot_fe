@@ -3,7 +3,7 @@
         <div class="row inputInforChannel">
             <div class="col-2">
                 <div class="row mt-3">
-                    <div class="col-12">
+                    <div class="col-12 " id="input-text">
                         <label><i @click="isShow1i = !isShow1i"
                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow1i, 'fa-eye-slash': isShow1i }"></i><span
                                 class="isHideTitle1">Channel</span> ID</label>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-3">
                 <div class="row mt-3">
-                    <div class="col-12">
+                    <div class="col-12" id="input-text">
                         <label><i @click="isShow2i = !isShow2i"
                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow2i, 'fa-eye-slash': isShow2i }"></i> <span
                                 class="isHideTitle1">Channel</span> Name</label>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-3">
                 <div class="row mt-3">
-                    <div class="col-12">
+                    <div class="col-12" id="input-text">
                         <label><i @click="isShow3i = !isShow3i"
                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow3i, 'fa-eye-slash': isShow3i }"></i> <span
                                 class="isHideTitle1">Channel</span> Secret</label>
@@ -45,7 +45,7 @@
             </div>
             <div class="col-4">
                 <div class="row mt-3">
-                    <div class="col-12">
+                    <div class="col-12" id="input-text">
                         <label><i @click="isShow4i = !isShow4i"
                                 :class="{ 'fa-solid': true, 'fa-eye': !isShow4i, 'fa-eye-slash': isShow4i }"></i> <span
                                 class="isHideTitle1">Channel</span> <span class="isHideTitle1"> Access</span> Token</label>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="col-2">
+    <div class="flex">
         <div>
             <div>
                 <div class="big-container">
@@ -444,7 +444,7 @@ body.modal-open {
     }
 
     .form-control {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .isHide {
@@ -460,6 +460,11 @@ body.modal-open {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    #open-change-password{
+        margin-left: 40%;
+        padding: 7px 25px
     }
 }
 
@@ -482,7 +487,7 @@ body.modal-open {
     }
 
     .form-control {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .isHide,
@@ -523,6 +528,11 @@ body.modal-open {
     .input-form input:valid~label {
         font-size: 13px;
     }
+
+    #open-change-password{
+        margin-left: 30%;
+        margin-top: 18px !important;
+    }
 }
 
 @media screen and (min-width: 425px) and (max-width: 576px) {
@@ -538,15 +548,10 @@ body.modal-open {
         padding: 3px 0px;
     }
 
-    .col-12 {
-        padding-left: 0;
-        padding-right: 3px;
-    }
-
     .form-control {
-        font-size: 11px;
-        padding: 2px 5px;
-        height: 25px;
+        font-size: 11px !important;
+        padding: 2px 5px !important;
+        height: 25px !important;
     }
 
     .isHide,
@@ -592,6 +597,10 @@ body.modal-open {
     .big-container .input-form {
         height: 35x;
     }
+
+    #input-text{
+        padding-right: 12px;
+    }
 }
 
 @media screen and (min-width: 375px) and (max-width: 424px) {
@@ -607,15 +616,10 @@ body.modal-open {
         padding: 3px 0px;
     }
 
-    .col-12 {
-        padding-left: 0;
-        padding-right: 3px;
-    }
-
     .form-control {
-        font-size: 10px;
-        padding: 2px 5px;
-        height: 25px;
+        font-size: 10px !important;
+        padding: 2px 5px !important;
+        height: 25px !important;
     }
 
     .isHide,
@@ -666,6 +670,10 @@ body.modal-open {
     .modal-header .close{
         padding: 12px;
         margin: -12px;
+    }
+
+    #input-text{
+        padding-right: 12px;
     }
 }
 </style>

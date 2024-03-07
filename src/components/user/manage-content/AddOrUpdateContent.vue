@@ -374,7 +374,7 @@ img.close {
     }
 
     textarea.form-control {
-        font-size: 14px;
+        font-size: 14px !important;
     }
 }
 
@@ -400,7 +400,7 @@ img.close {
     }
 
     textarea.form-control {
-        font-size: 13px;
+        font-size: 13px !important;
     }
 
     .minAvatar {
@@ -443,8 +443,8 @@ img.close {
         padding: 12px;
     }
 
-    textarea.form-control {
-        font-size: 12px;
+    textarea .form-control {
+        font-size: 12px !important;
     }
 
     .minAvatar {
@@ -489,7 +489,7 @@ img.close {
     }
 
     textarea.form-control {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .minAvatar {
@@ -538,7 +538,7 @@ img.close {
     }
 
     textarea.form-control {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .minAvatar {

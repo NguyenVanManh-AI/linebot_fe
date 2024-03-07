@@ -158,6 +158,10 @@ export default {
   .list_contact {
     min-width: 80px;
   }
+
+  #header {
+    padding: 7px 6px !important;
+  }
 }
 
 @media screen and (min-width: 993px) and (max-width: 1200px) {

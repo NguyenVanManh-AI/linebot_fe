@@ -125,7 +125,7 @@
                                 1 }}</th>
                                 <td :class="{
                                 'table-cell': true, 'text-uppercase': true,
-                                'colorDraf': broadcast.status == 'draft',
+                                'colorDraf': broadcast.status == 'draf',
                                 'colorScheduled': broadcast.status == 'scheduled',
                                 'colorSent': broadcast.status == 'sent',
                                 'colorFailed': broadcast.status == 'failed',
@@ -694,7 +694,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 13px;
+        font-size: 13px !important;
     }
 
     #main {
@@ -751,7 +751,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     #main {
@@ -817,7 +817,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .form-control {
@@ -897,7 +897,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .input-group>.form-control {
@@ -1004,7 +1004,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 9px;
+        font-size: 9px !important;
     }
 
     .form-control {

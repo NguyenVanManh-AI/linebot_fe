@@ -604,7 +604,11 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
+    }
+
+    .input-group-text{
+        padding: 1px 9px;
     }
 
     #main {
@@ -672,11 +676,11 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .input-group-text {
-        padding: 0 2px;
+        padding: 0 6px;
     }
 
     #main {
@@ -751,7 +755,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     #page {
@@ -847,7 +851,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .form-control {
@@ -875,7 +879,7 @@ table button {
     }
 
     .input-group-text {
-        padding: 0 0.5px;
+        padding: 0 3px;
     }
 
     .input-group-prepend {
@@ -947,7 +951,7 @@ table button {
 
     .form-control,
     .pagination {
-        font-size: 9px;
+        font-size: 9px !important;
     }
 
     .form-control {
@@ -975,7 +979,7 @@ table button {
     }
 
     .input-group-text {
-        padding: 0 0.5px;
+        padding: 0 2px;
     }
 
     .input-group-prepend {
