@@ -37,26 +37,26 @@
 				</div>
 				<div class="modal fade" id="exampleModalForgotPassword" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document">
+					<div class="modal-dialog" role="document" style="margin: 1.75rem auto; ">
 						<div class="modal-content">
-							<div class="modal-header">
+							<div class="modal-header" style="padding: 10px 20px; ">
 								<h5 class="modal-title" id="exampleModalLabel"><i class="fa-brands fa-keycdn"></i>
 									Forgot your password !</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 										aria-hidden="true"><i class="fa-regular fa-circle-xmark"></i></span></button>
 							</div>
 							<form @submit.prevent="userResetPassword">
-								<div class="modal-body">
+								<div class="modal-body" style="padding: 20px; ">
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label"><i
 												class="fa-solid fa-envelope"></i> Email</label>
-										<input required v-model="resetPassword.email" type="email" class="form-control">
+										<input required v-model="resetPassword.email" type="email" class="form-control" style=" margin: 15px 0; padding: 0 10px;">
 									</div>
 								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+								<div class="modal-footer" style=" padding: 15px 20px; gap: 10px;">
+									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style=" padding: 6px 15px; "
 										id="closePW">Close</button>
-									<button type="submit" class="btn btn-outline-primary">Submit</button>
+									<button type="submit" class="btn btn-outline-primary" style=" padding: 6px 15px; ">Submit</button>
 								</div>
 							</form>
 						</div>
@@ -203,7 +203,7 @@ h4 {
 
 #container-inside {
 	position: relative;
-	min-width: 960px;
+	min-width: 375px;
 	max-width: 1280px;
 	height: auto;
 	min-height: 100%;

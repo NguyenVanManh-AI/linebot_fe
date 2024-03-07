@@ -147,7 +147,7 @@ h4 {
 
 #container-inside {
 	position: relative;
-	min-width: 960px;
+	min-width: 375px;
 	max-width: 1280px;
 	height: auto;
 	min-height: 100%;
