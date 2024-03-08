@@ -541,7 +541,7 @@ export default {
     border-radius: 10px;
     width: fit-content;
     padding: 10px;
-
+    max-width: 270px;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Ink');
